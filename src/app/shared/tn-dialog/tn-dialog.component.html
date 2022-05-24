@@ -1,0 +1,17 @@
+<p-dialog #dialog [closeOnEscape]="closeOnEscape" [appendTo]="'body'" [focusOnShow]="false" [focusTrap]="false"
+  [header]="header" [(visible)]="visible" [modal]="modal" [responsive]="true" [maximizable]="maximizable"
+  [autoZIndex]="true" [styleClass]="styleClass" [maskStyleClass]="maskClass"
+  [style]="{'width': popupSize.width + 'px', 'min-width': popupSize.width + 'px', 'height': popupSize.height + 'px', 'min-height': popupSize.height + 'px'}"
+  (onShow)="handleShowDialog($event)" (onHide)="handleHideDialog($event)">
+  <tn-scrollbar #scrollbar [useDefaultScrollBar]="useDefaultScrollBar" [class]="scrollBarStyleClass"
+    [config]="scrollConfig" [style]="scrollStyle" class="tn-dialog-scrollbar">
+    <ng-content></ng-content>
+  </tn-scrollbar>
+  <p-footer *ngIf="showFooter && formBase && formBase.buttonTemplate">
+    <ng-container *ngTemplateOutlet="formBase.buttonTemplate">
+    </ng-container>
+  </p-footer>
+  <p-footer *ngIf="showFooter && footer">
+    <ng-container *ngTemplateOutlet="footer"></ng-container>
+  </p-footer>
+</p-dialog>

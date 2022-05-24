@@ -1,0 +1,18 @@
+<div style="display: none;" [innerHtml]="_styleText">
+</div>
+<div *ngIf="useDefaultScrollBar" #defaulScrollbar [ngStyle]="style" [ngClass]="class"
+    (scroll)="onDefaultScrollY($event)"
+    style="padding:0 !important; margin:0 !important; overflow: auto; width: 100%; height: 100%">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</div>
+<perfect-scrollbar *ngIf="!useDefaultScrollBar" #scrollbar [config]="_config" [ngStyle]="style" [ngClass]="class"
+    class="tn-scroll-bar" [class.bgWhite]="whiteBackGround" (psScrollY)="onScrollY($event)"
+    (psYReachEnd)="onScrollYReachEnd($event)" (psYReachStart)="onScrollYReachStart($event)"
+    (psXReachEnd)="onScrollXReachEnd($event)" (psXReachStart)="onScrollXReachStart($event)"
+    (psScrollUp)="onScrollUp($event)" (psScrollDown)="onScrollDown($event)" (psScrollLeft)="onScrollLeft($event)"
+    (psScrollRight)="onScrollRight($event)">
+    <ng-container *ngTemplateOutlet="content"></ng-container>
+</perfect-scrollbar>
+<ng-template #content>
+    <ng-content></ng-content>
+</ng-template>

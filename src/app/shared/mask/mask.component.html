@@ -1,0 +1,7 @@
+<div class="p-inputgroup">
+  <span *ngIf="prefix" class="p-inputgroup-addon">{{prefix}}</span>
+  <input type="text" pInputText [placeholder]="_placeholder" [attr.disabled]="disabled ? true : null"
+    [mask]="getMaskByType(maskType)" [thousandSeparator]="getThousandSeperator()" [class]="inputStyleClass"
+    [(ngModel)]="model" (focus)="handleFocus()" (blur)="handleBlur()" (change)="handleChangedValue()" />
+  <span *ngIf="suffix" class="p-inputgroup-addon">({{suffix}})</span>
+</div>

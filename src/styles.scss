@@ -1,0 +1,28 @@
+@import "./layout.scss";
+@import "./control.scss";
+
+crud-form {
+  .control-container {
+
+    >.label,
+    >.control {
+      width: 100%;
+
+      input,
+      textarea,
+      .p-calendar,
+      .tn-dropdown {
+        width: 100%;
+      }
+    }
+
+    >.label {
+      font-weight: 500;
+      margin-bottom: 5px;
+
+      .rq {
+        color: red
+      }
+    }
+  }
+}

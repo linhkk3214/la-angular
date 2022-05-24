@@ -1,0 +1,22 @@
+<div class="file-container">
+  <div class="top-bar-button">
+    <button type="button" pButton icon="pi pi-upload" class="p-button-text" label="Tải lên"
+      (click)="triggerUpload()"></button>
+  </div>
+  <div class="file-list">
+    <div *ngFor="let file of value; index as i" class="file-row">
+      <div class="stt">{{i + 1}}.</div>
+      <div class="name">{{file.filename}}</div>
+      <div class="extension">.xxx</div>
+      <div class="action">
+        <button type="button" pButton icon="pi pi-times" class="p-button-text p-button-rounded p-button-danger"
+          (click)="removeRow(i)"></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="display: none">
+  <p-fileUpload name="file" url="http://localhost:3000/file/upload" [auto]="true"
+    (onUpload)="handleFileUploaded($event)">
+  </p-fileUpload>
+</div>

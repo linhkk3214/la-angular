@@ -1,0 +1,416 @@
+$border-color: #ced4da;
+
+.container-table {
+    display: flex;
+    overflow: hidden;
+    flex-direction: column;
+}
+
+.container-table .container-table-inner {
+    display: flex;
+    position: relative;
+    height: auto;
+    max-height: 100%;
+    min-height: 60px;
+}
+
+.container-table-inner > tn-scrollbar {
+    width: 100%;
+}
+
+.cell-checkbox {
+    text-align: center;
+}
+
+.pick-color-row {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    width: 1.4em;
+    height: 1.4em;
+    border: 1px solid #d1d1d1;
+    border-radius: 2px;
+    cursor: pointer;
+
+    > div {
+        flex: 0 0 50%;
+        background: #84d140;
+        border: 1px solid #fff;
+
+        &:nth-child(2) {
+            background: #fc6868;
+        }
+
+        &:nth-child(3) {
+            background: #fbc02d;
+        }
+
+        &:nth-child(4) {
+            background: #7dc5ff;
+        }
+    }
+}
+
+.cell-header-function {
+    display: flex;
+    align-items: center;
+
+    > span {
+        text-align: center;
+        flex: 1 1;
+    }
+
+    button {
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        margin: 0;
+    }
+}
+
+.group-icon {
+    font-weight: normal;
+    color: #256aa2;
+
+    i {
+        font-size: 0.8em;
+        margin-right: 5px;
+    }
+}
+
+.center {
+    text-align: center !important;
+}
+
+.row-card {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 5px;
+    height: 100%;
+}
+
+.column-function {
+    min-width: 100px;
+    padding: 0;
+}
+
+.custom-search-area {
+    margin: -0.5em -1em 0.5em -1em;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    background-color: #f2f2f2;
+    position: relative;
+    .collapse-expand {
+        position: absolute;
+        cursor: pointer;
+        width: 100%;
+        height: 1em;
+        left: 0;
+        bottom: 0;
+        text-align: center;
+        background: #e5e5e5;
+        &:hover {
+            background: #ebebeb;
+        }
+    }
+    &.collapsed {
+        height: 1em;
+        overflow: hidden;
+        .collapse-expand {
+            bottom: -0.5em;
+        }
+    }
+}
+
+.main-container-search-inner {
+    margin-bottom: -0.5em;
+}
+
+.main-title > h1 {
+    font-size: 1.2em;
+}
+
+.filter-row > th:not(.sticky):not(.chkbox) {
+    padding: 3px !important;
+}
+
+.container-text-workflow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .link-or-action {
+        color: #2196f3;
+        cursor: pointer;
+    }
+    .content {
+        flex: 1 1;
+    }
+}
+
+.btnReload {
+    height: 2rem;
+    width: 2rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, calc(-50% + -1px));
+}
+
+.toggle-showfull {
+    color: blue;
+    cursor: pointer;
+    font-size: 0.8rem;
+    white-space: nowrap;
+    font-weight: bold;
+}
+
+.col-share-permission {
+    > div:not(:last-child) {
+        margin-bottom: 5px;
+    }
+}
+
+.advance-search-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+::ng-deep crud-list {
+    advance-search {
+        display: block;
+        flex: 1;
+        max-width: 400px;
+    }
+
+    .ps__rail-x,
+    .ps__rail-y {
+        z-index: 5;
+    }
+
+    .p-datatable .p-datatable-thead > tr > th {
+        &.cell-fixed-filter {
+            z-index: 999;
+
+            .fixed-filter {
+                z-index: 10;
+                position: fixed;
+                min-width: 200px;
+            }
+        }
+
+        .container-icon-loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    .check-all-custom {
+        position: absolute;
+        width: 0;
+        height: 0;
+    }
+
+    .cell-header-filter {
+        position: relative;
+
+        .tn-dropdown {
+            height: 32px;
+        }
+
+        tn-mask .p-inputtext {
+            width: 100%;
+        }
+
+        .filter-box {
+            display: flex;
+            min-width: 0px;
+            background-color: #fff;
+            border-radius: 3px;
+
+            > div {
+                flex: 1;
+                border: 1px solid $border-color;
+                border-right: none;
+                border-radius: 3px 0 0 3px;
+                outline: none;
+                overflow: hidden;
+            }
+
+            > span {
+                cursor: pointer;
+                min-width: unset;
+                flex-basis: 32px;
+                height: 32px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                background: #f5f6f8;
+                color: #6c757d;
+                border: 1px solid $border-color;
+                outline: none;
+            }
+
+            > span.action-clear {
+                border-radius: 0 3px 3px 0;
+
+                &.dirty {
+                    color: #008eff;
+                }
+            }
+
+            input {
+                padding-left: 5px;
+                padding-right: 5px;
+                border: none;
+                box-shadow: none !important;
+            }
+
+            &:not(.no-transition) {
+                transition: min-width 100ms;
+            }
+
+            &.boolean-filter {
+                > div {
+                    flex: 0 0 109px;
+                    width: 109px;
+                }
+            }
+        }
+
+        .p-multiselect-label.p-placeholder {
+            padding-left: 0.5rem;
+            padding-right: 0.5rem;
+        }
+    }
+
+    // khi cell-header-filter co event focus-within hoac co class focus-within
+    .cell-header-filter:focus-within,
+    .cell-header-filter.focus-within {
+        z-index: 10 !important;
+
+        .filter-boolean-box {
+            .p-button {
+                z-index: 10;
+            }
+        }
+
+        .filter-box {
+            > div {
+                box-shadow: 0 0 0 0.2rem #a6d5fa;
+                border-color: #2196f3;
+                z-index: 0;
+            }
+        }
+
+        .short-filter-box {
+            position: absolute;
+            top: calc(50% - 16px);
+            min-width: 250px;
+            z-index: 2;
+            box-shadow: 5px 0px 15px 1px #00000045;
+
+            > div {
+                flex: 1;
+                box-shadow: 0 0 0 0.2rem #a6d5fa;
+                border-color: #2196f3;
+                z-index: 0;
+            }
+
+            > span.action-clear {
+                display: flex;
+            }
+
+            &.boolean-filter {
+                min-width: 140px;
+                > div {
+                    flex: 0 0 109px;
+                    width: 109px;
+                }
+            }
+        }
+
+        &:nth-last-child(2) {
+            .short-filter-box {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    }
+
+    .cell-header-filter:last-child {
+        .filter-box {
+            right: 3px;
+        }
+    }
+
+    .table-border-line {
+        position: absolute;
+        z-index: 5;
+        background-color: #eee;
+
+        &.--left,
+        &.--right {
+            top: 0;
+            bottom: 0;
+            width: 1px;
+        }
+
+        &.--top,
+        &.--bottom {
+            left: 0;
+            right: 0;
+            height: 1px;
+        }
+
+        &.--left {
+            left: 0;
+        }
+
+        &.--right {
+            right: 0;
+        }
+
+        &.--top {
+            top: 0;
+        }
+
+        &.--bottom {
+            bottom: 0;
+        }
+    }
+
+    .filter-boolean-box {
+        text-align: center;
+        .p-selectbutton {
+            white-space: nowrap;
+        }
+    }
+
+    .custom-search-area {
+        crud-form {
+            width: 100%;
+        }
+    }
+
+    // fix loi xuat hien thanh scroll khi reload cac man danh sach,
+    // vi p-contextmenu da append to body nen display none khong gay anh huong den luong hoat dong
+    > p-contextmenu {
+        display: none;
+    }
+}
+
+@media (max-width: 640px) {
+    ::ng-deep crud-list .--table-responsive {
+        .p-datatable-wrapper {
+            padding: 1px;
+        }
+    }
+}

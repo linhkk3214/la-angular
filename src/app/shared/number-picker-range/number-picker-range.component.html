@@ -1,0 +1,9 @@
+<div class="tn-number-picker-range">
+  <input type="text" [placeholder]="'Từ'" [attr.disabled]="disabled ? true : null" [mask]="getMaskByType(maskType)"
+      [thousandSeparator]="getThousandSeperator()" pInputText [(ngModel)]="model[0]" (change)="onChanged($event)"
+      (focus)="onFocus($event, 0)" />
+  <span>-</span>
+  <input type="text" [placeholder]="'Đến'" [attr.disabled]="disabled ? true : null" [mask]="getMaskByType(maskType)"
+      [thousandSeparator]="getThousandSeperator()" pInputText [(ngModel)]="model[1]" (change)="onChanged($event)"
+      (focus)="onFocus($event, 1)" />
+</div>

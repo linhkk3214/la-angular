@@ -1,0 +1,391 @@
+<div #container class="custom-card card card-w-title flex-container-fit-child" [attr.height-type]="setting.heightType"
+  [ngStyle]="_style">
+  <div class="ui-helper-clearfix crud-list-header-area">
+    <div *ngIf="hasTemplate('searchCustom')" class="grid ui-fluid custom-p-col custom-search-area"
+      [class.collapsed]="!expandedSearch">
+      <div class="col-12 main-container-search">
+        <div class="grid main-container-search-inner">
+          <ng-container>
+            <ng-container *ngTemplateOutlet="getTemplate('searchCustom'); context: {$implicit: this}">
+            </ng-container>
+          </ng-container>
+        </div>
+      </div>
+      <div class="collapse-expand" (click)="expandedSearch = !expandedSearch">
+        <span class="pi" [class.pi-caret-up]="expandedSearch" [class.pi-caret-down]="!expandedSearch"></span>
+      </div>
+    </div>
+    <div *ngIf="!setting.hiddenHeader" class="grid ui-fluid custom-p-col page-title-area">
+      <div *ngIf="!setting.hiddenPageTitle" class="main-title">
+        <h1 *ngIf="!hasTemplate('customTitle')">
+          {{setting.title != null ? setting.title : 'Danh sách ' + setting.objectName}}
+        </h1>
+
+        <ng-container *ngIf="hasTemplate('customTitle')" [ngTemplateOutlet]="getTemplate('customTitle')"
+          [ngTemplateOutletContext]="{crudList: this}">
+        </ng-container>
+      </div>
+
+      <div *ngIf="!setting.hiddenPageSetting" class="paginator-table">
+        <ng-container *ngIf="hasTemplate('customPageSetting')" [ngTemplateOutlet]="getTemplate('customPageSetting')"
+          [ngTemplateOutletContext]="{crudList: this}">
+
+        </ng-container>
+        <ng-container *ngIf="!hasTemplate('customPageSetting')">
+          <paging [model]="model" [setting]="setting" (onChanged)="getData()">
+          </paging>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+  <div class="fit-content crud-list-body-area">
+    <div class="crud-list-body-area-inner" style="overflow: unset;">
+      <div class="flex-container-fit-child" style="overflow: unset;">
+        <div *ngIf="!setting.hiddenToolbar" class="grid crudListToolbar">
+          <ng-container>
+            <div *ngIf="!setting.hiddenButtons && hasTemplate('toolbar')"
+              [ngClass]="setting.hiddenAdvanceSearch ? 'md:col-12 lg:col-12' : 'md:col-7 lg:col-8'"
+              class="col-12 button-group function-topbar custom-toolbar">
+              <ng-container [ngTemplateOutletContext]="{selectedItems: model.selectedItems, crudList: this}"
+                [ngTemplateOutlet]="getTemplate('toolbar')"></ng-container>
+            </div>
+            <div *ngIf="!setting.hiddenButtons && !hasTemplate('toolbar')"
+              [ngClass]="setting.hiddenAdvanceSearch ? 'md:col-12 lg:col-12' : 'md:col-7 lg:col-8'"
+              class="col-12 button-group function-topbar">
+              <button *ngIf="!setting.hiddenAdd" type="button" pButton pRipple label="Thêm mới" icon="pi pi-plus"
+                class="p-button-text" (click)="add()"></button>
+              <ng-container [ngTemplateOutlet]="getTemplate('buttonAfterToolbar')"
+                [ngTemplateOutletContext]="{crudList: this}"></ng-container>
+            </div>
+          </ng-container>
+          <div *ngIf="!setting.hiddenAdvanceSearch" class="col-12 advance-search-container"
+            [ngClass]="setting.hiddenButtons ? 'md:col-12 lg:col-12' : 'md:col-5 lg:col-4'">
+            <input type="text" pInputText placeholder="Tìm kiếm" [disabled]="!fieldSearchText"
+              [pTooltip]="tooltipSearchText" [(ngModel)]="keyword" (keyup.enter)="handleChangedSearchBox()" />
+          </div>
+        </div>
+        <div *ngIf="hasTemplate('topGrid')" class="extend-content-top-grid">
+          <ng-container [ngTemplateOutletContext]="{selectedItems: model.selectedItems, crudList: this}"
+            [ngTemplateOutlet]="getTemplate('topGrid')"></ng-container>
+        </div>
+        <div class="container-table fit-content --table-responsive">
+          <div class="container-table-inner">
+            <tn-scrollbar *ngIf="showScrollBar" #scrollbar>
+              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+              </ng-container>
+              <ng-container *ngIf="hasTemplate('afterCrudList')">
+                <ng-container [ngTemplateOutlet]="getTemplate('afterCrudList')"></ng-container>
+              </ng-container>
+            </tn-scrollbar>
+            <div *ngIf="!showScrollBar">
+              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+              </ng-container>
+            </div>
+
+            <div class="table-border-line --top"></div>
+            <div class="table-border-line --right"></div>
+            <div class="table-border-line --bottom"></div>
+            <div class="table-border-line --left"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<after-view-checked (loaded)="handleReady()"></after-view-checked>
+<ng-template #tableGetGroupFieldFalse>
+  <p-table #table [dataKey]="'id'" [scrollable]="false" [scrollHeight]="null" [columns]="setting.cols"
+    [paginator]="false" [value]="_dataSource" (onSort)="onSort($event, table)" [class]="_tableClass" [responsive]="true"
+    [lazy]="true" [loading]="model.loading" [(selection)]="model.selectedItems">
+    <ng-template *ngIf="hasTemplate('colgroup')" pTemplate="colgroup" let-columns>
+      <ng-container *ngTemplateOutlet="getTemplate('colgroup'); context: {$implicit: columns}"></ng-container>
+    </ng-template>
+    <ng-template *ngIf="hasTemplate('header')" pTemplate="header" let-columns>
+      <ng-container
+        *ngTemplateOutlet="getTemplate('header'), context: {$implicit: columns, crudList: this, rowHeaderFilter: rowHeaderFilter, contentTh: contentTh, containerSticky: containerSticky}">
+      </ng-container>
+    </ng-template>
+    <ng-template *ngIf="!hasTemplate('header')" pTemplate="header" let-columns>
+      <ng-container *ngTemplateOutlet="trHeader; context: {$implicit: columns}">
+      </ng-container>
+    </ng-template>
+    <ng-template pTemplate="body" let-rowData let-columns="columns" let-index="rowIndex" let-expanded="expanded">
+      <ng-container
+        *ngTemplateOutlet="trBody; context: {$implicit: rowData, columns: columns, index: index, expanded: expanded}">
+      </ng-container>
+      <after-view-checked *ngIf="index == _dataSource.length - 1" style="display: none;" [renderKey]="_dataSource"
+        (loaded)="handleTableRendered()">
+      </after-view-checked>
+    </ng-template>
+  </p-table>
+</ng-template>
+<ng-template #trHeader let-columns let-funcCheckAll="funcCheckAll">
+  <tr class="title-row">
+    <th *ngIf="!setting.hiddenOrderColumn" [style.width]="setting.widthOrderColumn" class="stt nopad center">
+      TT
+      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+    </th>
+    <ng-container *ngFor="let col of columns; let i = index">
+      <th *ngIf="col && col.visible && col.field!='function'" [style.width]="col.width" [pTooltip]="col.title"
+        tooltipStyleClass="unset-width" [class.first-th]="i==0" [escape]="false" tooltipPosition="top"
+        [tnSortableColumn]="col.field" [tnSortableColumnDisabled]="!col.sort">
+        <ng-container *ngTemplateOutlet="contentTh; context: {$implicit: col}"></ng-container>
+        <ng-container *ngIf="col.sort || col.sortClient">
+          <ng-container *ngTemplateOutlet="sortIcon; context: {field: col.field}"></ng-container>
+        </ng-container>
+      </th>
+    </ng-container>
+    <ng-container *ngTemplateOutlet="colFunctionHeader"></ng-container>
+  </tr>
+  <ng-container *ngTemplateOutlet="rowHeaderFilter; context: {columns: columns, funcCheckAll: funcCheckAll}">
+  </ng-container>
+</ng-template>
+<ng-template #rowHeaderFilter let-columns="columns" let-funcCheckAll="funcCheckAll">
+  <tr class="filter-row" *ngIf="!setting.hiddenFilterRow">
+    <th *ngIf="!setting.hiddenOrderColumn" class="stt center v-top">
+      <button type="button" pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-text btnReload"
+        pTooltip="Làm mới dữ liệu" tooltipPosition="top" [disabled]="model.loading" (click)="reload()"></button>
+      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+    </th>
+    <ng-container *ngFor="let col of columns; let i = index">
+      <th *ngIf="col.visible && col.field != 'function'" class="cell-header-filter center">
+        <ng-container *ngIf="col.allowFilter">
+          <ng-container *ngIf="col.templateFilter">
+            <ng-container [ngTemplateOutlet]="col.templateFilter"
+              [ngTemplateOutletContext]="{col: col, filterData: filterData, onSearch: onSearch, onShowFilterDropdownPanel: onShowFilterDropdownPanel, onHideFilterDropdownPanel: onHideFilterDropdownPanel}">
+            </ng-container>
+          </ng-container>
+          <ng-container *ngIf="!col.templateFilter" [ngSwitch]="col.controlType">
+            <ng-container *ngSwitchCase="'dropdown'">
+              <ng-container [ngTemplateOutlet]="filterDropdown" [ngTemplateOutletContext]="{col: col.rawColumn}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'number'">
+              <ng-container [ngTemplateOutlet]="filterNumber" [ngTemplateOutletContext]="{col: col}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'date'">
+              <ng-container [ngTemplateOutlet]="filterDate" [ngTemplateOutletContext]="{col: col}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchCase="'datetime'">
+              <ng-container [ngTemplateOutlet]="filterDate" [ngTemplateOutletContext]="{col: col}">
+              </ng-container>
+            </ng-container>
+            <ng-container *ngSwitchDefault>
+              <ng-container [ngSwitch]="col.dataType">
+                <ng-container *ngSwitchCase="'int'">
+                  <ng-container [ngTemplateOutlet]="filterNumber" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'decimal'">
+                  <ng-container [ngTemplateOutlet]="filterNumber" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'date'">
+                  <ng-container [ngTemplateOutlet]="filterDate" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'datetime'">
+                  <ng-container [ngTemplateOutlet]="filterDate" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchCase="'boolean'">
+                  <ng-container [ngTemplateOutlet]="filterBoolean" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngSwitchDefault>
+                  <ng-container [ngTemplateOutlet]="filterText" [ngTemplateOutletContext]="{col: col}">
+                  </ng-container>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+          </ng-container>
+        </ng-container>
+        <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+      </th>
+    </ng-container>
+    <th *ngIf="!setting.hiddenFunctionColumn" class="center setting-cell column-function">
+      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+    </th>
+  </tr>
+</ng-template>
+<ng-template #colFunctionHeader>
+  <ng-container *ngIf="!setting.hiddenFunctionColumn">
+    <th class="column-function" [style.width]="setting.widthFunctionColumn">
+      <div class="cell-header-function">
+        <span>Chức năng</span>
+      </div>
+      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+    </th>
+  </ng-container>
+</ng-template>
+<ng-template #contentTh let-col>
+  {{col.label}}
+  <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+</ng-template>
+<ng-template #trBody let-rowData let-columns="columns" let-index="index" let-expanded="expanded"
+  let-eventChecked="eventChecked">
+  <tr [tnReorderableRow]="index" [attr.rowIndex]="index" [ngClass]="rowData.objStyleClass"
+    [class.ui-state-highlight]="rowData._checked" [pTooltip]="rowData.tooltip" tooltipPosition="top"
+    [tooltipStyleClass]="rowData.tooltipClass" [escape]="true">
+    <td *ngIf="!setting.hiddenOrderColumn && (!rowData.hidden || !rowData.hidden[fieldOrder])"
+      [style.width]="setting.widthOrderColumn" class="stt" style="text-align: center;"
+      [attr.colSpan]="rowData.colSpan && rowData.colSpan[fieldOrder]"
+      [attr.rowSpan]="rowData.rowSpan && rowData.rowSpan[fieldOrder]">
+      <span class="row-card" [ngStyle]="rowData.bookmarkStyle"></span>
+      {{rowData[fieldOrder]}}
+      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+    </td>
+    <ng-container
+      *ngTemplateOutlet="dynamicColBodys; context: {$implicit: columns, rowData: rowData, index: index, expanded: expanded}">
+    </ng-container>
+    <ng-container *ngIf="!setting.hiddenFunctionColumn">
+      <td class="text-center column-function" style="text-align: center;">
+        <div *ngIf="hasTemplate('function')" class="p-toolbar-group-center button-group">
+          <ng-container [ngTemplateOutlet]="getTemplate('function')"
+            [ngTemplateOutletContext]="{rowData: rowData, rowIndex: index}"></ng-container>
+          <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+        </div>
+        <div *ngIf="!hasTemplate('function')" class="p-toolbar-group-center button-group">
+          <ng-container [ngTemplateOutletContext]="{rowData: rowData, rowIndex: index}"
+            [ngTemplateOutlet]="getTemplate('buttonBefore')"></ng-container>
+          <button *ngIf="!rowData.hiddenEdit" type="button" pButton pRipple [disabled]="disableEdit(rowData)"
+            [pTooltip]="'Sửa'" tooltipPosition="top" class="p-button-rounded p-button-text p-button-info link-or-action"
+            icon="pi pi-pencil" (click)="edit(rowData)"></button>
+          <button *ngIf="!rowData.hiddenDelete" type="button" pButton pRipple [disabled]="disableDelete(rowData)"
+            [pTooltip]="'Xóa'" tooltipPosition="top"
+            class="p-button-rounded p-button-text p-button-danger link-or-action" icon="pi pi-trash"
+            (click)="delete(rowData)"></button>
+        </div>
+        <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+      </td>
+    </ng-container>
+  </tr>
+</ng-template>
+<ng-template #dynamicColBodys let-columns let-rowData="rowData" let-index="index" let-expanded="expanded">
+  <ng-container *ngFor="let col of columns; let i = index">
+    <ng-container
+      *ngTemplateOutlet="contentTd; context: {$implicit: rowData, col: col, index: index, i: i, expanded: expanded}">
+    </ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #contentTd let-rowData let-col="col" let-index="index" let-expanded="expanded" let-i="i">
+  <td *ngIf="col && col.visible && col.field != 'function' && (!rowData.hidden || !rowData.hidden[col.field])"
+    [attr.colSpan]="rowData.colSpan && rowData.colSpan[col.field]"
+    [attr.rowSpan]="rowData.rowSpan && rowData.rowSpan[col.field]" [class]="col.cellClass" [class.first-td]="i == 0">
+    <ng-container [ngTemplateOutlet]="contentCell"
+      [ngTemplateOutletContext]="getContextCell(rowData, index, col, expanded, this)">
+    </ng-container>
+    <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+  </td>
+</ng-template>
+<ng-template #contentCell let-col="col" let-rowData="rowData" let-rowIndex="rowIndex" let-field="field"
+  let-expanded="expanded">
+  <ng-container *ngIf="col.template">
+    <ng-container [ngTemplateOutlet]="col.template"
+      [ngTemplateOutletContext]="getContextCell(rowData, rowIndex, col, expanded,this)">
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="!col.template">
+    <ng-container [ngSwitch]="col.dataType">
+      <span *ngSwitchCase="'date'" [pTooltip]="rowData[field] | date:'dd/MM/yyyy'" tooltipPosition="top">
+        {{rowData[field] | tnDate:col.dataType:col.format}}
+      </span>
+      <span *ngSwitchCase="'int'">
+        {{rowData[field]}}
+      </span>
+      <span *ngSwitchCase="'decimal'">
+        {{rowData[field]}}
+      </span>
+      <span *ngSwitchCase="'boolean'">
+        <p-checkbox class="boolean-data-type" [(ngModel)]="rowData[field]" binary="true"
+          [disabled]="col.disableCheckBox">
+        </p-checkbox>
+      </span>
+      <ng-container *ngSwitchCase="'string'">
+        {{rowData[field]}}
+      </ng-container>
+      <ng-container *ngSwitchCase="null">
+        {{rowData[field]}}
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        <ng-container [ngTemplateOutlet]="getComponentByType(col.dataType)"
+          [ngTemplateOutletContext]="getContextCell(rowData, rowIndex, col, expanded, this)">
+        </ng-container>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-template>
+<ng-template #containerSticky>
+  <span class="fix-sticky top"></span>
+  <span class="fix-sticky right"></span>
+  <span class="fix-sticky left"></span>
+</ng-template>
+<ng-template #sortIcon let-field="field">
+  <i class="p-sortable-column-icon pi" style="font-size: 0.8em;"
+    [ngClass]="{'pi-sort-amount-up-alt': field == _sortField && _sortDir === 1, 'pi-sort-amount-down': field == _sortField && _sortDir === -1, 'pi-sort-alt': field != _sortField || _sortDir === 0}"></i>
+</ng-template>
+<ng-template #filterDropdown let-col="col">
+  <div #filterBox style="width: 100%; border-radius: 4px;">
+    <dropdown *ngIf="col && filterSchema.dropdown[col.field]" [control]="filterSchema.dropdown[col.field]"
+      [dataSource]="filterSchema.dropdown[col.field].dataSource" [(ngModel)]="filterData[col.field]"
+      (onHideSmartEvent)="onSearch()" (onShow)="onShowFilterDropdownPanel($event)"
+      (onHide)="onHideFilterDropdownPanel($event)" (mousedown)="initFilterBoxFocus(filterBox)"></dropdown>
+  </div>
+</ng-template>
+<ng-template #filterText let-col="col">
+  <div #filterBox class="text-filter filter-box" tabindex="-1" (mousedown)="initFilterBoxFocus(filterBox)">
+    <div tabindex="-1">
+      <input pInputText type="text" class="input-search" [placeholder]="col.label" [(ngModel)]="filterData[col.field]"
+        (change)="onSearch()" (keyup.esc)="onClearSearch(filterBox, col.field)">
+    </div>
+    <span [ngClass]="{'action-clear': true, 'dirty': filterData[col.field] != null && filterData[col.field] !== ''}"
+      [pTooltip]="'Bỏ filter'" tooltipPosition="top" (mousedown)="onClearSearch(filterBox, col.field)" tabindex="-1"><i
+        class="pi pi-filter-slash"></i></span>
+    <after-view-checked style="display: none;" (loaded)="initFilterBoxFocus(filterBox)">
+    </after-view-checked>
+  </div>
+</ng-template>
+<ng-template #filterNumber let-col="col">
+  <div #filterBox class="number-picker-range filter-box" tabindex="-1" (mousedown)="initFilterBoxFocus(filterBox)">
+    <div tabindex="-1">
+      <tn-number-picker-range #numberRange [maskType]="col.dataType" [(ngModel)]="filterData[col.field]" [min]="col.min"
+        [max]="col.max" (change)="onSearch()">
+      </tn-number-picker-range>
+    </div>
+    <span
+      [ngClass]="{'action-clear': true, 'dirty': filterData[col.field] && ((filterData[col.field][0] != null && filterData[col.field][0] !== '') || (filterData[col.field][1] != null && filterData[col.field][1] !== ''))}"
+      [pTooltip]="'Bỏ filter'" tooltipPosition="top" (mousedown)="onClearNumberSearch(filterBox, numberRange)"
+      tabindex="-1">
+      <i class="pi pi-filter-slash"></i></span>
+    <after-view-checked style="display: none;" (loaded)="initFilterBoxFocus(filterBox)">
+    </after-view-checked>
+  </div>
+</ng-template>
+<ng-template #filterDate let-col="col">
+  <div #filterBox class="date-picker-range filter-box" tabindex="-1" (mousedown)="initFilterBoxFocus(filterBox)">
+    <div tabindex="-1">
+      <tn-datetime-picker-range #dateRange [control]="filterSchema.dateRange"
+        (onChanged)="onChangeDateTime($event, col.field)">
+      </tn-datetime-picker-range>
+    </div>
+    <span
+      [ngClass]="{'action-clear': true, 'dirty': filterData[col.field] && ((filterData[col.field][0] != null && filterData[col.field][0] !== '') || (filterData[col.field][1] != null && filterData[col.field][1] !== ''))}"
+      [pTooltip]="'Bỏ filter'" tooltipPosition="top" (mousedown)="onClearDateSearch(filterBox, dateRange, col.field)"
+      tabindex="-1"><i class="pi pi-filter-slash"></i></span>
+    <after-view-checked style="display: none;" (loaded)="initFilterBoxFocus(filterBox)">
+    </after-view-checked>
+  </div>
+</ng-template>
+<ng-template #filterBoolean let-col="col">
+  <div class="filter-boolean-box">
+    <p-selectButton
+      [options]="[{value: true, label: 'Có', icon: 'pi pi-check'}, {value: false, label: 'Không', icon: 'pi pi-times'}]"
+      [multiple]="true" [(ngModel)]="filterData[col.field]" (onChange)="onChangeBoolean($event, col.field)">
+      <ng-template let-item>
+        <i style="padding: 3px 0;" [class]="item.icon"></i>
+      </ng-template>
+    </p-selectButton>
+  </div>
+</ng-template>

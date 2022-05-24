@@ -1,0 +1,38 @@
+<div class="paging-container" [ngClass]="ngClass">
+  <div class="paging-info">
+    <ng-container>
+      <div *ngIf="getFirstIndex()<=model.total && !setting.hiddenTextPage" #targetOverlay
+        class="paging-item paging-info-detail" (click)="op.toggle($event)">
+        {{getFirstIndex()}} -
+        {{getLastIndex()}}
+        trong {{model.total}}
+      </div>
+      <div *ngIf="(getFirstIndex()>model.total || model.total == 0) && !setting.hiddenTextPage"
+        class="paging-item paging-info-detail">
+        Không tìm thấy dữ liệu
+      </div>
+      <div class="paging-item text" [class.disabled]="model.loading" (click)="goPrev($event)" style="margin-right: 5px;"
+        pTooltip="'Trang trước'" tooltipPosition="top" [class.disabled]="isFirst()">
+        <a href="javascript:" tabindex="{{isFirst()?'-1':''}}"><i class="pi pi-chevron-left"></i></a>
+      </div>
+      <div class="block-page-size">
+        <tn-mask [maskType]="'int'" [min]="1" [max]="1000" [disabled]="model.loading ? true : null"
+          [(ngModel)]="setting.pageSetting.pageSize" (onChanged)="saveChangeHandle()"
+          (keyup.enter)="saveChangeHandle()">
+        </tn-mask>
+      </div>
+      <div class="paging-item text" [class.disabled]="model.loading" (click)="goNext($event)" style="margin-left: 5px;"
+        pTooltip="'Trang sau'" tooltipPosition="left" [class.disabled]="isLast()">
+        <a href="javascript:" tabindex="{{isLast()?'-1':''}}"><i class="pi pi-chevron-right"></i></a>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<p-overlayPanel #op [styleClass]="'paging-advance-overlay'" [appendTo]="'body'"
+  (onShow)="handleOverlayShow($event, targetOverlay)">
+  <ul class="paging-advance">
+    <li [class.disabled]="isFirst()" (click)="goLatest($event)">Trang đầu tiên</li>
+    <li [class.disabled]="isLast()" (click)="goOldest($event)">Trang cuối cùng</li>
+  </ul>
+</p-overlayPanel>

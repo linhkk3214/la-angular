@@ -1,0 +1,63 @@
+<div #container class="grid" style="padding: 0.5em">
+  <div *ngFor="let schema of setting.schema" [class]="'control-container col-' + schema.width">
+    <div class="label">
+      <ng-container *ngIf="schema.label">{{schema.label}} <span *ngIf="schema.required" class="rq">*</span>
+      </ng-container>
+    </div>
+    <div class="control" [class.error]="_errors[schema.field].length > 0">
+      <ng-container *ngTemplateOutlet="control; context: {$implicit: schema, data: data}"></ng-container>
+    </div>
+  </div>
+</div>
+
+<ng-template #control let-schema let-data="data">
+  <ng-container [ngSwitch]="schema.nameType">
+    <ng-container *ngSwitchCase="'TextControlSchema'">
+      <input type="text" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
+        (change)="handleFieldValueChange(schema, $event, 'change')" />
+    </ng-container>
+    <ng-container *ngSwitchCase="'TextAreaControlSchema'">
+      <textarea pInputTextarea [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
+        (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
+    </ng-container>
+    <ng-container *ngSwitchCase="'DropdownControlSchema'">
+      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"></dropdown>
+    </ng-container>
+    <ng-container *ngSwitchCase="'DateTimeControlSchema'">
+      <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"></datetime-picker>
+    </ng-container>
+    <ng-container *ngSwitchCase="'MaskControlSchema'">
+      <tn-mask [prefix]="schema.prefix" [decimalPlaces]="schema.decimalPlaces" [suffix]="schema.suffix"
+        [placeholder]="schema.placeholder" [maskType]="schema.maskType" [min]="schema.min" [max]="schema.max"
+        [(ngModel)]="data[schema.field]">
+      </tn-mask>
+    </ng-container>
+    <ng-container *ngSwitchCase="'FileControlSchema'">
+      <file-upload></file-upload>
+    </ng-container>
+    <ng-container *ngSwitchDefault>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngTemplateOutlet="validation; context: {$implicit: schema, data: data}">
+  </ng-container>
+</ng-template>
+
+<ng-template #validation let-schema let-data="data">
+  <ng-container *ngIf="_errors[schema.field].length > 0">
+    <div class="error-container">
+      <ng-container *ngFor="let error of _errors[schema.field]">
+        <div class="error-item" *ngIf="error">
+          <ng-container [ngTemplateOutlet]="errorMessage" [ngTemplateOutletContext]="{content: error}">
+          </ng-container>
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
+
+<ng-template #errorMessage let-content="content">
+  <div class="error-content">
+    <i class="pi pi-ban"></i>
+    <span> {{content}}</span>
+  </div>
+</ng-template>

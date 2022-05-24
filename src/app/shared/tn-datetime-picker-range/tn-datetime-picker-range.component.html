@@ -1,0 +1,9 @@
+<div class="tn-datetime-picker-range">
+  <datetime-picker [control]="control" [(ngModel)]="_controlModelData[0]" [disabled]="disabled"
+     (onChanged)="handleChanged($event)" (onClose)="handleCloseCalendar($event)">
+  </datetime-picker>
+  <span>-</span>
+  <datetime-picker [control]="control" [(ngModel)]="_controlModelData[1]" [disabled]="disabled"
+     (onChanged)="handleChanged($event)" (onClose)="handleCloseCalendar($event)">
+  </datetime-picker>
+</div>
