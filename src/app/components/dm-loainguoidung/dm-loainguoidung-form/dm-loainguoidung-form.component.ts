@@ -1,23 +1,23 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
-import { UserService } from '../services/user.service';
+import { DM_LoaiNguoiDungService } from '../services/dm-loainguoidung.service';
 
 @Component({
-  selector: 'user-form',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.scss']
+  selector: 'dm-loainguoidung-form',
+  templateUrl: './dm-loainguoidung-form.component.html',
+  styleUrls: ['./dm-loainguoidung-form.component.scss']
 })
-export class UserFormComponent extends FormBase implements OnInit {
+export class DM_LoaiNguoiDungFormComponent extends FormBase implements OnInit {
   constructor(
     injector: Injector,
-    private _userService: UserService,
+    private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService,
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.setting.service = this._userService;
+    this.setting.service = this._dm_LoaiNguoiDungService;
     this.setting.schema = [
       new TextControlSchema({
         field: 'ten',

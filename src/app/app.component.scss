@@ -1,0 +1,27 @@
+$border-color: #d1d1d1;
+.root-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    flex: 0 0 auto;
+    border-bottom: 1px solid $border-color;
+  }
+
+  .body {
+    flex: 1 1;
+    display: flex;
+
+    .menu {
+      flex: 0 0 250px;
+      border-right: 1px solid $border-color;
+    }
+
+    .content {
+      flex: 1 1;
+    }
+  }
+}

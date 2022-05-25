@@ -1,6 +1,9 @@
 @import "./layout.scss";
 @import "./control.scss";
-
+body {
+  margin: 0;
+  padding: 0;
+}
 crud-form {
   .control-container {
 

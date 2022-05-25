@@ -9,10 +9,16 @@
   }
 </style>
 
-<div sttyle="width: 100%">
-  <user></user>
-</div>
 <p-toast></p-toast>
-<p-confirmDialog [style]="{width: '25vw'}">
-</p-confirmDialog>
-<router-outlet></router-outlet>
+<p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
+<div class="root-container">
+  <div class="header">Header</div>
+  <div class="body">
+    <div class="menu">
+      <la-menu></la-menu>
+    </div>
+    <div class="content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

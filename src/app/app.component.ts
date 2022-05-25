@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
@@ -8,11 +9,13 @@ import { ConfirmationService, MessageService } from 'primeng/api';
   providers: [MessageService, ConfirmationService]
 })
 export class AppComponent implements OnInit {
-  constructor() {
-
+  constructor(
+    private _router: Router
+  ) {
+    console.log(this._router.url);
   }
 
   ngOnInit(): void {
-
+    console.log(this._router.url);
   }
 }

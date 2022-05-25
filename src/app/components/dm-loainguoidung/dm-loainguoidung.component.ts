@@ -1,24 +1,24 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
-import { UserService } from './services/user.service';
+import { DM_LoaiNguoiDungService } from './services/dm-loainguoidung.service';
 
 @Component({
-  selector: 'user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.scss']
+  selector: 'dm-loainguoidung',
+  templateUrl: './dm-loainguoidung.component.html',
+  styleUrls: ['./dm-loainguoidung.component.scss']
 })
-export class UserComponent extends ListBase implements OnInit {
+export class DM_LoaiNguoiDungComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
-    private _userService: UserService
+    private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
     this.setting.objectName = 'người dùng';
-    this.setting.service = this._userService;
+    this.setting.service = this._dm_LoaiNguoiDungService;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ten',

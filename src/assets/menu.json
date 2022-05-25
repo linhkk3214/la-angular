@@ -1,0 +1,20 @@
+[
+  {
+    "path": "/user2",
+    "label": "Danh sách người dùng"
+  },
+  {
+    "path": "",
+    "label": "Danh mục",
+    "children": [
+      {
+        "path": "/dm-loainguoidung",
+        "label": "Loại người dùng"
+      },
+      {
+        "path": "/user",
+        "label": "Danh sách người dùng"
+      }
+    ]
+  }
+]
