@@ -30,6 +30,7 @@ export class DropdownComponent implements OnInit {
   }
 
   @Output('onChanged') onChanged = new EventEmitter<any>();
+  @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
 
   dataSourceInternal: any[] = [];
   required = false;
@@ -38,15 +39,22 @@ export class DropdownComponent implements OnInit {
   selectedValueBefore: any;
   selectedValue: any;
 
+  filterFromParents: Filter[];
+
   constructor() {
   }
 
   ngOnInit() {
     this.control._component = this;
-    if (this.control.service) {
-      this.getDataByBaseService();
+    if (!this.control.placeholder) {
+      this.control.placeholder = `Chọn ${this.control.label}`;
     }
-    else {
+    if (this.control.service) {
+      if (this.control.loadOnInit) {
+        this.getDataByBaseService();
+      }
+    }
+    else if (this.control.dataSource) {
       this.setDataSource(this.control.dataSource);
     }
   }
@@ -104,6 +112,7 @@ export class DropdownComponent implements OnInit {
   }
 
   writeValue(obj: any): void {
+    console.log(this.control.field, obj);
     if (obj !== undefined && obj !== '' && obj !== null) {
       if (!this.control.multiple) {
         this.selectedValue = obj;
@@ -126,6 +135,7 @@ export class DropdownComponent implements OnInit {
       }
     }
     this.selectedValueBefore = this.selectedValue;
+    this.checkFirstOnChanged();
   }
 
   registerOnChange(fn: any): void {
@@ -147,16 +157,39 @@ export class DropdownComponent implements OnInit {
     }
   }
 
-  async getDataByBaseService(): Promise<void> {
+  getData(filterParents?: Filter[]) {
+    if (!filterParents) filterParents = [];
+    this.filterFromParents = filterParents;
+    this.getDataByBaseService();
+  }
+
+  private async getDataByBaseService(): Promise<void> {
     const filters: Filter[] = [];
     const defaultFilters = [];
 
     if (defaultFilters && defaultFilters.length) {
       filters.push(...defaultFilters);
     }
+    if (this.filterFromParents) {
+      filters.push(...this.filterFromParents);
+    }
     this.control.service.getAllByFilter(filters)
       .then(res => {
         this.setDataSource(res.data);
+        this.checkFirstOnChanged();
       });
+  }
+
+  private checkFirstOnChanged() {
+    if (this.dataSourceInternal && this.dataSourceInternal.length) {
+      if ((!this.control.multiple && this.selectedValue)
+        || (this.control.multiple && this.selectedValue && this.selectedValue.length)
+      ) {
+        this.onFirstChanged.emit({
+          value: this.selectedValue,
+          dataSource: this.dataSourceInternal
+        });
+      }
+    }
   }
 }

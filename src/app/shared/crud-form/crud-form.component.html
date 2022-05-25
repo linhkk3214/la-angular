@@ -1,3 +1,4 @@
+{{data | json}}
 <div #container class="grid" style="padding: 0.5em">
   <div *ngFor="let schema of setting.schema" [class]="'control-container col-' + schema.width">
     <div class="label">
@@ -21,7 +22,9 @@
         (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
-      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"></dropdown>
+      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
+        (onChanged)="handleFirstChanged(null, schema)" (onFirstChanged)="handleFirstChanged($event, schema)">
+      </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
       <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"></datetime-picker>

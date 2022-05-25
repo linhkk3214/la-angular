@@ -10,6 +10,14 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () => import('../app/components/user/user.module').then(m => m.UserModule)
   },
+  {
+    path: 'dm-loainguoidung',
+    loadChildren: () => import('../app/components/dm-loainguoidung/dm-loainguoidung.module').then(m => m.DM_LoaiNguoiDungModule)
+  },
+  {
+    path: 'dm-chucvu',
+    loadChildren: () => import('../app/components/dm-chucvu/dm-chucvu.module').then(m => m.DM_ChucVuModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

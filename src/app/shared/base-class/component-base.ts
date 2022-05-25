@@ -57,6 +57,15 @@ export abstract class ComponentBase {
     });
   }
 
+  newBindingFilter(column: string, operator: Operator, sourceField: string, subField?: string) {
+    return new Filter({
+      field: column,
+      operator,
+      sourceField,
+      subField
+    });
+  }
+
   findTemplateFromList($list: QueryList<TemplateRef<any>>, templateName: string) {
     return $list
       ? $list.find((template: any) => {

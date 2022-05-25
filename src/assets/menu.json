@@ -12,6 +12,10 @@
         "label": "Loại người dùng"
       },
       {
+        "path": "/dm-chucvu",
+        "label": "Chức vụ"
+      },
+      {
         "path": "/user",
         "label": "Danh sách người dùng"
       }

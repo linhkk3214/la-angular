@@ -137,6 +137,9 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
       if (!dropdownControlSchema.bindingFilters) {
         dropdownControlSchema.loadOnInit = true;
       }
+      if (!dropdownControlSchema.placeholder) {
+        dropdownControlSchema.placeholder = `Chọn ${dropdownControlSchema.label}`;
+      }
     }
   }
 
@@ -199,11 +202,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
                 }
                 if (needGetData) {
                   const filters = getFilterFromTemplate(tmpFilters, event.parentModel, event.rootModel);
-                  if (childDropdown._component
-                    && (!(parentDropdown instanceof DropdownControlSchema)
-                      || parentDropdown._component && parentDropdown._component._hasLoadedDatasource
-                    )
-                  ) {
+                  if (childDropdown._component) {
                     childDropdown._component.getData(filters);
                   }
                 }
@@ -415,8 +414,6 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
   public handleFieldValueChange = async (control: ControlSchema, event?, eventType?) => {
     let parentNode = this._rootNode.getNodeByPath('');
     let currentNode = parentNode.getChildNode(control.field);
-    const a = currentNode.value;
-    // currentNode.value = this.data[control.field];
     // validate value
     await this.validate(currentNode);
 
@@ -439,41 +436,18 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
     this.onChange.emit(eventData);
   };
 
-  handleValueChange(schema: FormSchema) {
-
-  }
-
-  public async handleDataSourceLoaded(control: DropdownControlSchema, parentPath, dataFromDropdown: any) {
-    const parentNode = this._rootNode.getNodeByPath(parentPath);
-    const currentNode = parentNode.getChildNode(control.field);
+  handleFirstChanged(data, schema: ControlSchema) {
+    let parentNode = this._rootNode.getNodeByPath('');
+    let currentNode = parentNode.getChildNode(schema.field);
     const eventData = new EventData({
       currentNode,
-      eventType: 'dataSourceLoaded',
+      sourceEvent: null,
+      sourceNode: currentNode,
       crudForm: this,
-      data: dataFromDropdown.rawDataSource ? dataFromDropdown.rawDataSource : dataFromDropdown.dataSource
+      eventType: 'changed'
     });
-    eventData['elm'] = dataFromDropdown.elm;
-    if (this.formState == FormState.ADD
-      && control.autoDisplayFirst
-      && eventData.data.length > 0
-    ) {
-      if (control.multiple) {
-        if (!this.data[control.field] || !this.data[control.field].length) {
-          this.data[control.field] = [eventData.data[0][control.valueField]];
-        }
-      }
-      else {
-        if (!this.data[control.field]) {
-          this.data[control.field] = eventData.data[0][control.valueField];
-        }
-      }
-    }
-    if (control.callbackDataFinish) {
-      try {
-        await control.callbackDataFinish(eventData);
-      }
-      catch {
-      }
+    if (schema.onChanged) {
+      schema.onChanged(eventData);
     }
   }
 

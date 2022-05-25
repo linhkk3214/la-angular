@@ -106,8 +106,8 @@ export class DataSourceSchema extends ControlSchema {
   dataSource?: any[];
   service?: BaseService;
   initDataByService?: boolean = false;
-  valueField?: string = 'id';
-  displayField?: string = '';
+  valueField?: string = '_id';
+  displayField?: string = 'ten';
   funcGetLabel?: (item: any) => string;
   funcCompare?: (item: any, value) => boolean = (item, value) => item[this.valueField] == value;
 

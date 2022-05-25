@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_LoaiNguoiDungService } from '../services/dm-loainguoidung.service';
 
@@ -21,14 +21,19 @@ export class DM_LoaiNguoiDungFormComponent extends FormBase implements OnInit {
     this.setting.schema = [
       new TextControlSchema({
         field: 'ten',
-        label: 'Họ và tên',
+        label: 'Tên loại',
         required: true
       }),
       new TextControlSchema({
-        field: 'username',
-        label: 'Tên đăng nhập',
+        field: 'ma',
+        label: 'Mã loại',
         required: true
       }),
+      new TextAreaControlSchema({
+        field: 'moTa',
+        label: 'Mô tả',
+        width: 12
+      })
     ];
   }
 }
