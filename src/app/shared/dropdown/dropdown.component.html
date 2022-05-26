@@ -1,13 +1,22 @@
-{{selectedValue | json}}
 <div #el class="tn-dropdown">
   <p-dropdown *ngIf="!control.multiple" [options]="dataSourceInternal" [placeholder]="control.placeholder"
     [filter]="true" [appendTo]="'body'" [styleClass]="'tn-dropdown'" [emptyFilterMessage]="'Không tìm thấy kết quả'"
-    [disabled]="control.disabled" [autoZIndex]="true" [(ngModel)]="selectedValue" (onChange)="onChangeSelected($event)">
+    [disabled]="control.disabled" [autoZIndex]="true" [ngModel]="selectedValue"
+    (ngModelChange)="handleModelChange($event)">
   </p-dropdown>
   <p-multiSelect *ngIf="control.multiple" [options]="dataSourceInternal" [filter]="true"
     [defaultLabel]="control.placeholder" [placeholder]="control.placeholder" [appendTo]="'body'"
     [styleClass]="'tn-dropdown'" [emptyFilterMessage]="'Không tìm thấy kết quả'" [disabled]="control.disabled"
     [autoZIndex]="true" [selectedItemsLabel]="'Đã chọn {0} mục'" [maxSelectedLabels]="5" [(ngModel)]="selectedValue"
     (onPanelHide)="onHideHandler($event)">
+    <ng-template pTemplate="selectedItems" let-value>
+      <ng-container *ngIf="!value || value.length == 0">{{control.placeholder}}</ng-container>
+      <ng-container *ngIf="value && value.length > 0">
+        <span *ngFor="let selectedItem of lstObjectSelected" class="custom-select-item">
+          {{selectedItem.label}}<span class="remove-item" (click)="removeItem($event, selectedItem)"><i
+              class="pi pi-times"></i></span>
+        </span>
+      </ng-container>
+    </ng-template>
   </p-multiSelect>
 </div>

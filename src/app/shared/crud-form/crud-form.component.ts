@@ -157,12 +157,12 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
     if (Array.isArray(dropdownControlSchema.bindingFilters)) {
       tmpFilters = dropdownControlSchema.bindingFilters;
     }
-    else if (typeof (dropdownControlSchema.bindingFilters) == 'function') {
-      tmpFilters = dropdownControlSchema.bindingFilters();
-    }
-    else {
-      tmpFilters = await dropdownControlSchema.bindingFilters;
-    }
+    // else if (typeof (dropdownControlSchema.bindingFilters) == 'function') {
+    //   tmpFilters = dropdownControlSchema.bindingFilters();
+    // }
+    // else {
+    //   tmpFilters = await dropdownControlSchema.bindingFilters;
+    // }
     tmpFilters.forEach(filter => {
       const sourceField = filter.sourceField;
       const schema = this.setting.schema.find(q => q.field == sourceField);

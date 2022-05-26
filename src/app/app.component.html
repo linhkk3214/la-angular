@@ -12,9 +12,22 @@
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
 <div class="root-container">
-  <div class="header">Header</div>
+  <div class="header">
+    <div class="menu-in-header">
+      <button *ngIf="showMenu" type="button" pButton icon="pi pi-chevron-left" class="btn-collapse-expand"
+        (click)="showMenu = !showMenu">
+      </button>
+      <button *ngIf="!showMenu" type="button" pButton icon="pi pi-chevron-right" class="btn-collapse-expand"
+        (click)="showMenu = !showMenu">
+      </button>
+      <div class="content-menu-in-header">Trang chủ</div>
+    </div>
+    <div class="content-header">
+      Content header
+    </div>
+  </div>
   <div class="body">
-    <div class="menu">
+    <div class="menu" [class.hide]="!showMenu">
       <la-menu></la-menu>
     </div>
     <div class="content">

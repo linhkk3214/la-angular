@@ -32,14 +32,18 @@ export class DropdownComponent implements OnInit {
   @Output('onChanged') onChanged = new EventEmitter<any>();
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
 
-  dataSourceInternal: any[] = [];
+  dataSourceInternal: any[] = [
+    { value: '628e4e239b27bc252b715d96', label: 'Trưởng phòng' },
+    { value: '628e4e309b27bc252b715d9b', label: 'Manager' }
+  ];
   required = false;
   rootClass = '';
   class = '';
   selectedValueBefore: any;
   selectedValue: any;
-
+  lstObjectSelected: any[] = [];
   filterFromParents: Filter[];
+  firstFire = true;
 
   constructor() {
   }
@@ -67,13 +71,16 @@ export class DropdownComponent implements OnInit {
       }
     }
     this.dataSourceInternal = arr;
+    this.setDataSourceSelected();
   }
 
-  onChangeSelected(event: any) {
+  handleModelChange(evt) {
     if (this.control.multiple) {
       return;
     }
-    else {
+    this.selectedValue = evt;
+    if (this.selectedValue != this.selectedValueBefore) {
+      this.selectedValueBefore = this.selectedValue;
       this.fireChange();
     }
   }
@@ -112,7 +119,6 @@ export class DropdownComponent implements OnInit {
   }
 
   writeValue(obj: any): void {
-    console.log(this.control.field, obj);
     if (obj !== undefined && obj !== '' && obj !== null) {
       if (!this.control.multiple) {
         this.selectedValue = obj;
@@ -135,7 +141,19 @@ export class DropdownComponent implements OnInit {
       }
     }
     this.selectedValueBefore = this.selectedValue;
+    this.setDataSourceSelected();
     this.checkFirstOnChanged();
+  }
+
+  setDataSourceSelected() {
+    if (!this.control.multiple) return;
+    if (!this.selectedValue || !this.selectedValue.length) {
+      this.lstObjectSelected = [];
+      return;
+    }
+    if (this.dataSourceInternal && this.dataSourceInternal.length) {
+      this.lstObjectSelected = this.dataSourceInternal.filter(q => this.selectedValue.some(x => x == q.value));
+    }
   }
 
   registerOnChange(fn: any): void {
@@ -148,13 +166,6 @@ export class DropdownComponent implements OnInit {
 
   setDisabledState?(isDisabled: boolean): void {
     this.control.disabled = isDisabled;
-  }
-
-  onHideHandler(evt: any) {
-    if (this.selectedValueBefore != this.selectedValue) {
-      this.selectedValueBefore = this.selectedValue;
-      this.fireChange();
-    }
   }
 
   getData(filterParents?: Filter[]) {
@@ -181,15 +192,36 @@ export class DropdownComponent implements OnInit {
   }
 
   private checkFirstOnChanged() {
-    if (this.dataSourceInternal && this.dataSourceInternal.length) {
+    if (this.firstFire && this.dataSourceInternal && this.dataSourceInternal.length) {
       if ((!this.control.multiple && this.selectedValue)
         || (this.control.multiple && this.selectedValue && this.selectedValue.length)
       ) {
+        this.firstFire = false;
         this.onFirstChanged.emit({
           value: this.selectedValue,
           dataSource: this.dataSourceInternal
         });
       }
     }
+  }
+
+  onHideHandler(evt: any) {
+    if (this.selectedValueBefore != this.selectedValue) {
+      this.selectedValueBefore = this.selectedValue;
+      this.setDataSourceSelected();
+      this.fireChange();
+    }
+  }
+
+  removeItem(evt, selectedItem) {
+    if (this.control.disabled) {
+      return;
+    }
+    this.selectedValue = this.selectedValue.filter(item => item != selectedItem.value);
+    this.setDataSourceSelected();
+    this.selectedValueBefore = this.selectedValue;
+    this.fireChange();
+    evt.preventDefault();
+    evt.stopPropagation();
   }
 }

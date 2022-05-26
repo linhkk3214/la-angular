@@ -1,4 +1,6 @@
 $border-color: #d1d1d1;
+$width-menu: 250px;
+
 .root-container {
   width: 100vw;
   height: 100vh;
@@ -7,8 +9,39 @@ $border-color: #d1d1d1;
   flex-direction: column;
 
   .header {
+    background: #168eed;
+    color: white;
     flex: 0 0 auto;
     border-bottom: 1px solid $border-color;
+    display: flex;
+
+    .menu-in-header {
+      flex: 0 0 calc($width-menu - 1px);
+      width: calc($width-menu - 1px);
+      display: flex;
+      box-shadow: 0px 0px 5px 0px #00000060;
+
+      .btn-collapse-expand {
+        outline: none;
+        box-shadow: none;
+        border-radius: 0;
+        height: 100%;
+      }
+
+      .content-menu-in-header {
+        flex: 1 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+
+    .content-header {
+      flex: 1 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
   }
 
   .body {
@@ -16,8 +49,14 @@ $border-color: #d1d1d1;
     display: flex;
 
     .menu {
-      flex: 0 0 250px;
+      flex: 0 0 $width-menu;
+      margin-left: 0;
       border-right: 1px solid $border-color;
+      transition: margin-left .3s;
+
+      &.hide {
+        margin-left: -$width-menu;
+      }
     }
 
     .content {

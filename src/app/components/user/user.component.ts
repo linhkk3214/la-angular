@@ -17,7 +17,7 @@ export class UserComponent extends ListBase implements OnInit {
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'người dùng la hâm';
+    this.setting.objectName = 'người dùng';
     this.setting.service = this._userService;
     this.setting.cols = [
       new ColumnSchema({
