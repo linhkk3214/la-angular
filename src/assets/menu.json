@@ -5,7 +5,7 @@
   },
   {
     "path": "",
-    "label": "Danh mục",
+    "label": "Danh mục chung",
     "children": [
       {
         "path": "/dm-loainguoidung",
