@@ -330,7 +330,7 @@
   <div #filterBox style="width: 100%; border-radius: 4px;">
     <dropdown *ngIf="col && filterSchema.dropdown[col.field]" [control]="filterSchema.dropdown[col.field]"
       [dataSource]="filterSchema.dropdown[col.field].dataSource" [(ngModel)]="filterData[col.field]"
-      (onHideSmartEvent)="onSearch()" (onShow)="onShowFilterDropdownPanel($event)"
+      (onChanged)="onSearch()" (onShow)="onShowFilterDropdownPanel($event)"
       (onHide)="onHideFilterDropdownPanel($event)" (mousedown)="initFilterBoxFocus(filterBox)"></dropdown>
   </div>
 </ng-template>
