@@ -206,8 +206,8 @@ export class ListSetting {
   hiddenEdit?: boolean = false;
   hiddenOrderColumn?: boolean = false;
   hiddenFunctionColumn?: boolean = false;
-  widthOrderColumn?: string = '3.5rem';
-  widthFunctionColumn: string = '4.714rem';
+  widthOrderColumn?: string = '40px';
+  widthFunctionColumn: string = '5.2rem';
   showScrollBar?: boolean = true;
   pageSetting?: PageSetting = new PageSetting();
   advanceData?: any = {};

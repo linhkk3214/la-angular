@@ -642,6 +642,9 @@ $background-disable: #e9ecef;
 }
 
 .p-datatable {
+  table {
+    width: 100%;
+  }
   .p-datatable-loading-overlay {
     z-index: 69 !important;
     background-color: #00000061;

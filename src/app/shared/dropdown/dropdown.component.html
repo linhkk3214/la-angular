@@ -8,7 +8,7 @@
     [defaultLabel]="control.placeholder" [placeholder]="control.placeholder" [appendTo]="'body'"
     [styleClass]="'tn-dropdown'" [emptyFilterMessage]="'Không tìm thấy kết quả'" [disabled]="control.disabled"
     [autoZIndex]="true" [selectedItemsLabel]="'Đã chọn {0} mục'" [maxSelectedLabels]="5" [(ngModel)]="selectedValue"
-    (onPanelHide)="onHideHandler($event)">
+    (onPanelHide)="onHideHandler($event)" (onChange)="handleModelChange($event)">
     <ng-template pTemplate="selectedItems" let-value>
       <ng-container *ngIf="!value || value.length == 0">{{control.placeholder}}</ng-container>
       <ng-container *ngIf="value && value.length > 0">

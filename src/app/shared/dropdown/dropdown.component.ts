@@ -73,6 +73,7 @@ export class DropdownComponent implements OnInit {
 
   handleModelChange(evt) {
     if (this.control.multiple) {
+      this.setDataSourceSelected();
       return;
     }
     this.selectedValue = evt;
