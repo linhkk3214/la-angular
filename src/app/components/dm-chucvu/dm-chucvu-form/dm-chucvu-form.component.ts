@@ -24,17 +24,27 @@ export class DM_ChucVuFormComponent extends FormBase implements OnInit {
       new TextControlSchema({
         field: 'ten',
         label: 'Tên',
-        required: true
+        required: true,
+        width: 3
       }),
       new TextControlSchema({
         field: 'ma',
         label: 'Mã',
-        required: true
+        required: true,
+        width: 3
       }),
       new DropdownControlSchema({
         field: 'idLoaiNguoiDung',
         label: 'Loại người dùng',
         service: this._dm_LoaiNguoiDungService
+      }),
+      new DropdownControlSchema({
+        field: 'gioiTinh',
+        label: 'Giới tính',
+        dataSource: [
+          { id: 1, ten: 'Nam' },
+          { id: 2, ten: 'Nữ' }
+        ]
       }),
     ];
   }

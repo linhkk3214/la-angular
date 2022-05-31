@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
 import { DM_ChucVuService } from './services/dm-chucvu.service';
+import { DM_LoaiNguoiDungService } from '../dm-loainguoidung/services/dm-loainguoidung.service';
 
 @Component({
   selector: 'dm-chucvu',
@@ -11,7 +12,8 @@ import { DM_ChucVuService } from './services/dm-chucvu.service';
 export class DM_ChucVuComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
-    private _dm_ChucVuService: DM_ChucVuService
+    private _dm_ChucVuService: DM_ChucVuService,
+    private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService
   ) {
     super(injector);
   }
@@ -22,7 +24,8 @@ export class DM_ChucVuComponent extends ListBase implements OnInit {
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
-        label: 'Mã',
+        label: 'CV',
+        title: 'Chức vụ',
         width: '140px',
         fullTextSearch: true
       }),
@@ -30,6 +33,11 @@ export class DM_ChucVuComponent extends ListBase implements OnInit {
         field: 'ten',
         label: 'Tên',
         fullTextSearch: true
+      }),
+      new ColumnSchema({
+        field: 'idLoaiNguoiDung',
+        label: 'Loại người dùng',
+        service: this._dm_LoaiNguoiDungService
       }),
     ];
     super.ngOnInit();
