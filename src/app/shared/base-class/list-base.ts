@@ -174,7 +174,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
                   [this.newFilter(schema.valueField, Operator.in, arrValue)]
                 );
                 if (schema.order != null) {
-                  const result = await promise;
+                  const result = (await promise).data;
                   if (schema.callbackDataFinish) {
                     schema.callbackDataFinish({
                       data: result
@@ -204,10 +204,10 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
           arrSchemaDontNeedWait.forEach((schema, index) => {
             if (schema.callbackDataFinish) {
               schema.callbackDataFinish({
-                data: arrRes[index]
+                data: arrRes[index].data
               });
             }
-            this.mergeRefDataToDatasource(dataSource, schema, arrRes[index]);
+            this.mergeRefDataToDatasource(dataSource, schema, arrRes[index].data);
           });
         }
         this.afterGetRefDataDropdown(null);
