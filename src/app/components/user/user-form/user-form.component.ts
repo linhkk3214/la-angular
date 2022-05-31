@@ -32,7 +32,15 @@ export class UserFormComponent extends FormBase implements OnInit {
       new TextControlSchema({
         field: 'username',
         label: 'Tên đăng nhập',
-        required: true
+        required: true,
+        width: 3
+      }),
+      new TextControlSchema({
+        field: 'password',
+        label: 'Mật khẩu',
+        dataFormat: 'password',
+        required: true,
+        width: 3
       }),
       new DropdownControlSchema({
         field: 'idLoai',

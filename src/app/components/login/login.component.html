@@ -1,0 +1,13 @@
+<div class="login-container">
+  <div class="login-content">
+    <div>
+      <input type="text" pInputText placeholder="Tên đăng nhập" [(ngModel)]="data.userName" />
+    </div>
+    <div>
+      <input type="password" pInputText placeholder="Mật khẩu" [(ngModel)]="data.password" />
+    </div>
+    <div>
+      <button type="button" pButton label="Đăng nhập" (click)="login()"></button>
+    </div>
+  </div>
+</div>

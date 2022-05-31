@@ -13,7 +13,7 @@
 <ng-template #control let-schema let-data="data">
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TextControlSchema'">
-      <input type="text" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
+      <input [type]="schema.dataFormat" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
         (change)="handleFieldValueChange(schema, $event, 'change')" />
     </ng-container>
     <ng-container *ngSwitchCase="'TextAreaControlSchema'">

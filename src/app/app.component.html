@@ -11,7 +11,7 @@
 
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
-<div class="root-container">
+<div *ngIf="userVerified" class="root-container">
   <div class="header">
     <div class="menu-in-header">
       <button *ngIf="showMenu" type="button" pButton icon="pi pi-chevron-left" class="btn-collapse-expand"
@@ -20,10 +20,22 @@
       <button *ngIf="!showMenu" type="button" pButton icon="pi pi-chevron-right" class="btn-collapse-expand"
         (click)="showMenu = !showMenu">
       </button>
-      <div class="content-menu-in-header">Trang chủ</div>
+      <div class="content-menu-in-header">Hệ thống đại học thông minh</div>
     </div>
     <div class="content-header">
-      Content header
+      <div class="fit"></div>
+      <div class="button-container">
+        <div class="button-notify" pTooltip="Thông báo">
+          <button type="button" pButton icon="pi pi-bell" class="p-button-text p-button-rounded"></button>
+          <span>16</span>
+        </div>
+        <button type="button" pButton icon="pi pi-question-circle" class="p-button-text p-button-rounded"
+          pTooltip="Trợ giúp" (click)="showHelp = !showHelp"></button>
+      </div>
+      <div class="user-info">
+        <span>Quản trị viên</span>
+        <img src="http://localhost:5000/file/download/avatar.jpg" />
+      </div>
     </div>
   </div>
   <div class="body">
@@ -31,7 +43,34 @@
       <la-menu></la-menu>
     </div>
     <div class="content">
-      <router-outlet></router-outlet>
+      <ng-container *ngTemplateOutlet="contentRoute"></ng-container>
     </div>
   </div>
 </div>
+<div *ngIf="!userVerified" class="root-container">
+  <ng-container *ngTemplateOutlet="contentRoute"></ng-container>
+</div>
+<div class="help-container" [class.active]="showHelp">
+  <div class="mask" (click)="showHelp = false"></div>
+  <div class="help">
+    <div class="help-title">
+      <span>Trung tâm trợ giúp</span>
+      <button type="button" pButton icon="pi pi-times" class="p-button-text p-button-rounded"
+        (click)="showHelp = false"></button>
+    </div>
+    <div class="help-content">
+      <div class="supporter-info">
+        <div class="name">Đinh Hải Linh</div>
+        <div class="detail">
+          <span class="icon pi pi-phone"></span>0978562811
+        </div>
+        <div class="detail">
+          <span class="icon pi pi-envelope"></span>linh.dino.ptit@gmail.com
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #contentRoute>
+  <router-outlet></router-outlet>
+</ng-template>

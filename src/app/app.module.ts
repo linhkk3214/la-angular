@@ -10,8 +10,9 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { DashBoardComponent } from './components/dashboard.component';
+import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { LAMenuComponent } from './components/layout/la-menu/la-menu.component';
+import { LoginComponent } from './components/login/login.component';
 import { UserModule } from './components/user/user.module';
 import { SharedModule } from './shared/shared.module';
 
@@ -19,7 +20,8 @@ import { SharedModule } from './shared/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
-    DashBoardComponent,
+    DashboardComponent,
+    LoginComponent,
     LAMenuComponent
   ],
   imports: [
