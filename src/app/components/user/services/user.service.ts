@@ -9,4 +9,5 @@ export class UserService extends BaseService {
   constructor(httpClient: HttpClient) {
     super(httpClient, 'Users');
   }
+
 }

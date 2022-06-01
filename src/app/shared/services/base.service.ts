@@ -100,6 +100,12 @@ export abstract class BaseService {
   getAllByFilter(filters: Filter[]) {
     return this.defaultPost(`${this.serviceUri}/getAllByFilter`, filters);
   }
+
+  getDetailByFilter(filters: Filter[]) {
+    return this.defaultPost(`${this.serviceUri}/getDetailByFilter`, {
+      filters
+    });
+  }
 }
 
 export class HttpOptions {
