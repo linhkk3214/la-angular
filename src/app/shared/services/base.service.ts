@@ -18,7 +18,7 @@ export abstract class BaseService {
     @Inject(String) _tableName: string,
   ) {
     this.tableName = _tableName;
-    this.serviceUri = `http://localhost:3000/${this.tableName}`;
+    this.serviceUri = `http://localhost:5000/${this.tableName}`;
   }
 
   defaultGet(apiUrl: string, options?: HttpOptions): Promise<ResponseResult> {
@@ -99,6 +99,12 @@ export abstract class BaseService {
 
   getAllByFilter(filters: Filter[]) {
     return this.defaultPost(`${this.serviceUri}/getAllByFilter`, filters);
+  }
+
+  getDetailByFilter(filters: Filter[]) {
+    return this.defaultPost(`${this.serviceUri}/getDetailByFilter`, {
+      filters
+    });
   }
 }
 

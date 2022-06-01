@@ -571,37 +571,10 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
   public onSearch = (node?) => {
     if (this.model.loading) return;
     this.handleFilterBoxFocus(node);
-    this.filter_column = getFilterFromTemplate(this.templateFilter, this.getMinimizeData(this.filterData));
+    this.filter_column = getFilterFromTemplate(this.templateFilter, this.filterData);
     this.setting.pageSetting.page = 1;
     this.getData();
   };
-
-  private getMinimizeData(model) {
-    if (isLiteralObject(model)) {
-      if (model._dropdownvalue != null && model._dropdownvalue !== '') {
-        return model[model._dropdownvalue];
-      }
-
-      const data = {};
-      for (const key in model) {
-        if (key != '_status' && key != '_errors' && key != '_source') {
-          const value = this.getMinimizeData(model[key]);
-          if (value != null) data[key] = value;
-        }
-      }
-      return data;
-    }
-    else if (isArray(model)) {
-      const arr = [];
-      for (const item of model) {
-        arr.push(this.getMinimizeData(item));
-      }
-      return arr;
-    }
-    else if (model != null) {
-      return model;
-    }
-  }
 
   public onClearSearch(node, field) {
     if (this.model.loading) return;

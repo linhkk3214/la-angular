@@ -100,6 +100,10 @@
     <ng-template *ngIf="hasTemplate('colgroup')" pTemplate="colgroup" let-columns>
       <ng-container *ngTemplateOutlet="getTemplate('colgroup'); context: {$implicit: columns}"></ng-container>
     </ng-template>
+    <ng-template *ngIf="!hasTemplate('colgroup')" pTemplate="colgroup" let-columns>
+      <ng-container *ngTemplateOutlet="colGroup; context: {$implicit: columns}">
+      </ng-container>
+    </ng-template>
     <ng-template *ngIf="hasTemplate('header')" pTemplate="header" let-columns>
       <ng-container
         *ngTemplateOutlet="getTemplate('header'), context: {$implicit: columns, crudList: this, rowHeaderFilter: rowHeaderFilter, contentTh: contentTh, containerSticky: containerSticky}">
@@ -119,16 +123,25 @@
     </ng-template>
   </p-table>
 </ng-template>
-<ng-template #trHeader let-columns let-funcCheckAll="funcCheckAll">
+<ng-template #colGroup let-columns>
+  <colgroup>
+    <col *ngIf="!setting.hiddenOrderColumn" span="1" [style.width]="setting.widthOrderColumn" />
+    <ng-container *ngFor="let col of columns; let i = index">
+      <col *ngIf="col && col.visible && col.field!='function'" span="1" [style.width]="col.width" />
+    </ng-container>
+    <col *ngIf="!setting.hiddenFunctionColumn" span="1" [style.width]="setting.widthFunctionColumn" />
+  </colgroup>
+</ng-template>
+<ng-template #trHeader let-columns>
   <tr class="title-row">
-    <th *ngIf="!setting.hiddenOrderColumn" [style.width]="setting.widthOrderColumn" class="stt nopad center">
+    <th *ngIf="!setting.hiddenOrderColumn" class="stt nopad center">
       TT
       <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
     </th>
     <ng-container *ngFor="let col of columns; let i = index">
-      <th *ngIf="col && col.visible && col.field!='function'" [style.width]="col.width" [pTooltip]="col.title"
-        tooltipStyleClass="unset-width" [class.first-th]="i==0" [escape]="false" tooltipPosition="top"
-        [tnSortableColumn]="col.field" [tnSortableColumnDisabled]="!col.sort">
+      <th *ngIf="col && col.visible && col.field!='function'" [pTooltip]="col.title" tooltipStyleClass="unset-width"
+        [class.first-th]="i==0" [escape]="false" tooltipPosition="top" [tnSortableColumn]="col.field"
+        [tnSortableColumnDisabled]="!col.sort">
         <ng-container *ngTemplateOutlet="contentTh; context: {$implicit: col}"></ng-container>
         <ng-container *ngIf="col.sort || col.sortClient">
           <ng-container *ngTemplateOutlet="sortIcon; context: {field: col.field}"></ng-container>
@@ -137,10 +150,10 @@
     </ng-container>
     <ng-container *ngTemplateOutlet="colFunctionHeader"></ng-container>
   </tr>
-  <ng-container *ngTemplateOutlet="rowHeaderFilter; context: {columns: columns, funcCheckAll: funcCheckAll}">
+  <ng-container *ngTemplateOutlet="rowHeaderFilter; context: {columns: columns}">
   </ng-container>
 </ng-template>
-<ng-template #rowHeaderFilter let-columns="columns" let-funcCheckAll="funcCheckAll">
+<ng-template #rowHeaderFilter let-columns="columns">
   <tr class="filter-row" *ngIf="!setting.hiddenFilterRow">
     <th *ngIf="!setting.hiddenOrderColumn" class="stt center v-top">
       <button type="button" pButton pRipple icon="pi pi-refresh" class="p-button-rounded p-button-text btnReload"
@@ -211,14 +224,12 @@
   </tr>
 </ng-template>
 <ng-template #colFunctionHeader>
-  <ng-container *ngIf="!setting.hiddenFunctionColumn">
-    <th class="column-function" [style.width]="setting.widthFunctionColumn">
-      <div class="cell-header-function">
-        <span>Chức năng</span>
-      </div>
-      <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
-    </th>
-  </ng-container>
+  <th *ngIf="!setting.hiddenFunctionColumn" class="column-function">
+    <div class="cell-header-function">
+      <span>Chức năng</span>
+    </div>
+    <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+  </th>
 </ng-template>
 <ng-template #contentTh let-col>
   {{col.label}}
@@ -330,8 +341,8 @@
   <div #filterBox style="width: 100%; border-radius: 4px;">
     <dropdown *ngIf="col && filterSchema.dropdown[col.field]" [control]="filterSchema.dropdown[col.field]"
       [dataSource]="filterSchema.dropdown[col.field].dataSource" [(ngModel)]="filterData[col.field]"
-      (onHideSmartEvent)="onSearch()" (onShow)="onShowFilterDropdownPanel($event)"
-      (onHide)="onHideFilterDropdownPanel($event)" (mousedown)="initFilterBoxFocus(filterBox)"></dropdown>
+      (onChanged)="onSearch()" (onShow)="onShowFilterDropdownPanel($event)" (onHide)="onHideFilterDropdownPanel($event)"
+      (mousedown)="initFilterBoxFocus(filterBox)"></dropdown>
   </div>
 </ng-template>
 <ng-template #filterText let-col="col">

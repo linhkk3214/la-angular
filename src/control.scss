@@ -642,6 +642,10 @@ $background-disable: #e9ecef;
 }
 
 .p-datatable {
+  table {
+    width: 100%;
+  }
+
   .p-datatable-loading-overlay {
     z-index: 69 !important;
     background-color: #00000061;
@@ -1034,6 +1038,44 @@ p-table.sticky-columns-active {
           border-top-color: #397ac3;
         }
       }
+    }
+  }
+}
+
+.p-tooltip {
+  .p-tooltip-text {
+    background-color: #faf6ac;
+    color: #454545;
+    border: 0;
+    white-space: nowrap;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 18%);
+
+    .p-tooltip-arrow {
+      border-top-color: #faf6ac;
+    }
+  }
+
+  &.p-tooltip-top {
+    .p-tooltip-arrow {
+      border-top-color: #faf6ac;
+    }
+  }
+
+  &.p-tooltip-right {
+    .p-tooltip-arrow {
+      border-right-color: #faf6ac;
+    }
+  }
+
+  &.p-tooltip-bottom {
+    .p-tooltip-arrow {
+      border-bottom-color: #faf6ac;
+    }
+  }
+
+  &.p-tooltip-left {
+    .p-tooltip-arrow {
+      border-left-color: #faf6ac;
     }
   }
 }

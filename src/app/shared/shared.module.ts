@@ -92,7 +92,9 @@ const declarations: any = [
   ],
   exports: [
     ...declarations,
-    ButtonModule
+    ButtonModule,
+    InputTextModule,
+    TooltipModule
   ],
   providers: [
     {

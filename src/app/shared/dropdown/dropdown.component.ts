@@ -32,10 +32,7 @@ export class DropdownComponent implements OnInit {
   @Output('onChanged') onChanged = new EventEmitter<any>();
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
 
-  dataSourceInternal: any[] = [
-    { value: '628e4e239b27bc252b715d96', label: 'Trưởng phòng' },
-    { value: '628e4e309b27bc252b715d9b', label: 'Manager' }
-  ];
+  dataSourceInternal: any[] = [];
   required = false;
   rootClass = '';
   class = '';
@@ -76,6 +73,7 @@ export class DropdownComponent implements OnInit {
 
   handleModelChange(evt) {
     if (this.control.multiple) {
+      this.setDataSourceSelected();
       return;
     }
     this.selectedValue = evt;
