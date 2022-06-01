@@ -33,6 +33,8 @@ $width-menu: 250px;
         display: flex;
         align-items: center;
         justify-content: center;
+        text-transform: uppercase;
+        font-weight: 500;
       }
     }
 
@@ -102,7 +104,7 @@ $width-menu: 250px;
       flex: 0 0 $width-menu;
       margin-left: 0;
       border-right: 1px solid $border-color;
-      transition: margin-left .3s;
+      transition: margin-left 0.3s;
 
       &.hide {
         margin-left: -$width-menu;
@@ -196,7 +198,6 @@ $width-menu: 250px;
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   50%,
