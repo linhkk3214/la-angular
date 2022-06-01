@@ -12,19 +12,19 @@ import { KeyStorageUserInfo } from './models/const';
 export class AppComponent implements OnInit {
   showMenu = true;
   showHelp = false;
-  userVerified = false;
+  userVerified = true;
   constructor(
     private _router: Router
   ) {
   }
 
   ngOnInit(): void {
-    const userCurrent = localStorage.getItem(KeyStorageUserInfo);
-    if (!userCurrent) {
-      this._router.navigate(['login']);
-    }
-    else {
-      this.userVerified = true;
-    }
+    // const userCurrent = localStorage.getItem(KeyStorageUserInfo);
+    // if (!userCurrent) {
+    //   this._router.navigate(['login']);
+    // }
+    // else {
+    //   this.userVerified = true;
+    // }
   }
 }
