@@ -127,9 +127,9 @@ export class DropdownControlSchema extends DataSourceSchema {
   sortField?= '';
   sortDir?: 1 | -1 = 1;
   fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
-  defaultFilters?: Filter[] | Function | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  filterWhileProcess?: Filter[] | Function | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  bindingFilters?: Filter[] | Function | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  defaultFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  filterWhileProcess?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  bindingFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
   modifyFilter?: Function;
   autoDisplayFirst?: boolean = false;
   callbackDataFinish?: (evt: EventData) => void;

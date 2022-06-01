@@ -1,9 +1,10 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { Operator } from 'src/app/shared/models/enums';
+import { Operator } from '../../../shared/models/enums';
 import { DropdownControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_ChucVuService } from '../../dm-chucvu/services/dm-chucvu.service';
 import { DM_LoaiNguoiDungService } from '../../dm-loainguoidung/services/dm-loainguoidung.service';
+import { AddressService } from '../services/address.service';
 import { UserService } from '../services/user.service';
 
 @Component({
@@ -16,7 +17,8 @@ export class UserFormComponent extends FormBase implements OnInit {
     injector: Injector,
     private _userService: UserService,
     private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService,
-    private _dm_ChucVuService: DM_ChucVuService
+    private _dm_ChucVuService: DM_ChucVuService,
+    private _addressService: AddressService
   ) {
     super(injector);
   }
@@ -56,12 +58,22 @@ export class UserFormComponent extends FormBase implements OnInit {
         ]
       }),
       new DropdownControlSchema({
-        field: 'idChucVuKiemNhiem',
-        label: 'Chức vụ kiêm nhiệm',
-        multiple: true,
-        service: this._dm_ChucVuService,
+        field: 'idTinh',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1)
+        ]
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyen',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
         bindingFilters: [
-          this.newBindingFilter('idLoaiNguoiDung', Operator.equal, 'idLoai')
+          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
         ]
       }),
     ];
