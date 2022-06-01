@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { KeyStorageUserInfo, KeySubscribeLogon } from './models/const';
@@ -10,7 +10,7 @@ import { ContextService } from './shared/services/context.service';
   styleUrls: ['./app.component.scss'],
   providers: [MessageService, ConfirmationService]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   showMenu = true;
   showHelp = false;
   userVerified = false;
@@ -25,6 +25,10 @@ export class AppComponent implements OnInit {
       this.checkUserLogon();
     });
     this.checkUserLogon();
+  }
+
+  ngOnDestroy(): void {
+    this._contextService.destroyContext();
   }
 
   checkUserLogon() {
