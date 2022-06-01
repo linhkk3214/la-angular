@@ -32,7 +32,7 @@
         <button type="button" pButton icon="pi pi-question-circle" class="p-button-text p-button-rounded"
           pTooltip="Trợ giúp" (click)="showHelp = !showHelp"></button>
       </div>
-      <div class="user-info">
+      <div class="user-info" (click)="logout()">
         <span>Quản trị viên</span>
         <img src="http://localhost:5000/file/download/avatar.jpg" />
       </div>

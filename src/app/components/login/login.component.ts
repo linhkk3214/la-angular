@@ -3,7 +3,8 @@ import { Router } from "@angular/router";
 import { Operator } from "../../shared/models/enums";
 import { ComponentBase } from "../../shared/base-class/component-base";
 import { UserService } from "../user/services/user.service";
-import { KeyStorageUserInfo } from "../../models/const";
+import { KeyStorageUserInfo, KeySubscribeLogon } from "../../models/const";
+import { ContextService } from "../../shared/services/context.service";
 
 @Component({
   selector: 'login',
@@ -18,6 +19,7 @@ export class LoginComponent extends ComponentBase {
     private _injector: Injector,
     private _router: Router,
     private _userService: UserService,
+    private _contextService: ContextService
   ) {
     super(_injector);
   }
@@ -45,6 +47,9 @@ export class LoginComponent extends ComponentBase {
     }
 
     localStorage.setItem(KeyStorageUserInfo, JSON.stringify(itemUser));
-    this._router.navigate(['dashboard']);
+    this._contextService.fireEvent(KeySubscribeLogon, true);
+    setTimeout(() => {
+      this._router.navigate(['dashboard']);
+    }, 1000);
   }
 }

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { KeyStorageUserInfo } from './models/const';
+import { KeyStorageUserInfo, KeySubscribeLogon } from './models/const';
+import { ContextService } from './shared/services/context.service';
 
 @Component({
   selector: 'app-root',
@@ -12,19 +13,33 @@ import { KeyStorageUserInfo } from './models/const';
 export class AppComponent implements OnInit {
   showMenu = true;
   showHelp = false;
-  userVerified = true;
+  userVerified = false;
   constructor(
-    private _router: Router
+    private _router: Router,
+    private _contextService: ContextService
   ) {
   }
 
   ngOnInit(): void {
-    // const userCurrent = localStorage.getItem(KeyStorageUserInfo);
-    // if (!userCurrent) {
-    //   this._router.navigate(['login']);
-    // }
-    // else {
-    //   this.userVerified = true;
-    // }
+    this._contextService.subscribe(KeySubscribeLogon, p => {
+      this.checkUserLogon();
+    });
+    this.checkUserLogon();
+  }
+
+  checkUserLogon() {
+    const userCurrent = localStorage.getItem(KeyStorageUserInfo);
+    if (!userCurrent) {
+      this._router.navigate(['login']);
+    }
+    else {
+      this.userVerified = true;
+    }
+  }
+
+  logout() {
+    localStorage.removeItem(KeyStorageUserInfo);
+    this.userVerified = false;
+    this._router.navigate(['login']);
   }
 }
