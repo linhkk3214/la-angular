@@ -9,4 +9,8 @@ export class AddressService extends BaseService {
   constructor(httpClient: HttpClient) {
     super(httpClient, 'Address');
   }
+
+  sync() {
+    return this.defaultPost(`${this.serviceUri}/Sync`, {});
+  }
 }

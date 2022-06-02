@@ -5,6 +5,7 @@ import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
 import { DM_LoaiGiayToService } from '../../dm-loaigiayto/services/dm-loaigiayto.service';
 import { UserService } from '../services/user.service';
+import { AddressService } from '../services/address.service';
 
 @Component({
   selector: 'user-form',
@@ -16,7 +17,8 @@ export class UserFormComponent extends FormBase implements OnInit {
     injector: Injector,
     private _userService: UserService,
     private _dm_LoaiGiayToService: DM_LoaiGiayToService,
-    private _dm_TpHoSoService: DM_TpHoSoService
+    private _dm_TpHoSoService: DM_TpHoSoService,
+    private _addressService: AddressService
   ) {
     super(injector);
   }
@@ -43,25 +45,22 @@ export class UserFormComponent extends FormBase implements OnInit {
         width: 3
       }),
       new DropdownControlSchema({
-        field: 'idLoai',
-        label: 'Loại người dùng',
-        service: this._dm_LoaiGiayToService
-      }),
-      new DropdownControlSchema({
-        field: 'idtphoso',
-        label: 'Chức vụ',
-        service: this._dm_TpHoSoService,
-        bindingFilters: [
-          this.newBindingFilter('idLoaigiayto', Operator.equal, 'idLoai')
+        field: 'idTinh',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1)
         ]
       }),
       new DropdownControlSchema({
-        field: 'idtphosoKiemNhiem',
-        label: 'Chức vụ kiêm nhiệm',
-        multiple: true,
-        service: this._dm_TpHoSoService,
+        field: 'idHuyen',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
         bindingFilters: [
-          this.newBindingFilter('idLoaigiayto', Operator.equal, 'idLoai')
+          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
         ]
       }),
     ];
