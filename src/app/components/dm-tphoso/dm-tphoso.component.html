@@ -7,7 +7,7 @@
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
   [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
-  <dm-loainguoidung-form #formBase [parentSetting]="setting" [model]="formModel"
+  <dm-tphoso-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
-  </dm-loainguoidung-form>
+  </dm-tphoso-form>
 </tn-dialog>

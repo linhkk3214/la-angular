@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
 import { UserService } from './services/user.service';
-import { DM_LoaiNguoiDungService } from '../dm-loainguoidung/services/dm-loainguoidung.service';
+import { DM_LoaiGiayToService } from '../dm-loaigiayto/services/dm-loaigiayto.service';
 
 @Component({
   selector: 'user',
@@ -13,7 +13,7 @@ export class UserComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
     private _userService: UserService,
-    private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService
+    private _dm_LoaiGiayToService: DM_LoaiGiayToService
   ) {
     super(injector);
   }
@@ -37,7 +37,7 @@ export class UserComponent extends ListBase implements OnInit {
         field: 'idLoai',
         label: 'Loại người dùng',
         width: '140px',
-        service: this._dm_LoaiNguoiDungService
+        service: this._dm_LoaiGiayToService
       }),
     ];
     super.ngOnInit();

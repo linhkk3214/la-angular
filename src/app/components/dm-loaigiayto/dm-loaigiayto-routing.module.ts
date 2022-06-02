@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DM_LoaiNguoiDungComponent } from './dm-loainguoidung.component';
+import { DM_LoaiGiayToComponent } from './dm-loaigiayto.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: DM_LoaiNguoiDungComponent
+    component: DM_LoaiGiayToComponent
   }
 ];
 
@@ -13,4 +13,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class DM_LoaiNguoiDungRoutingModule { }
+export class DM_LoaiGiayToRoutingModule { }

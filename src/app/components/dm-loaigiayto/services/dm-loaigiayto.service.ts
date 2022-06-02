@@ -5,8 +5,8 @@ import { BaseService } from "../../../shared/services/base.service";
 @Injectable({
   providedIn: 'root'
 })
-export class DM_ChucVuService extends BaseService {
+export class DM_LoaiGiayToService extends BaseService {
   constructor(httpClient: HttpClient) {
-    super(httpClient, 'DM_ChucVu');
+    super(httpClient, 'DM_LoaiGiayTo');
   }
 }

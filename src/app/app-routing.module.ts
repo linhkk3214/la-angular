@@ -13,12 +13,16 @@ const routes: Routes = [
     loadChildren: () => import('../app/components/user/user.module').then(m => m.UserModule)
   },
   {
-    path: 'dm-loainguoidung',
-    loadChildren: () => import('../app/components/dm-loainguoidung/dm-loainguoidung.module').then(m => m.DM_LoaiNguoiDungModule)
+    path: 'dm-loaigiayto',
+    loadChildren: () => import('../app/components/dm-loaigiayto/dm-loaigiayto.module').then(m => m.DM_LoaiGiayToModule)
   },
   {
-    path: 'dm-chucvu',
-    loadChildren: () => import('../app/components/dm-chucvu/dm-chucvu.module').then(m => m.DM_ChucVuModule)
+    path: 'dm-tphoso',
+    loadChildren: () => import('../app/components/dm-tphoso/dm-tphoso.module').then(m => m.DM_TpHoSoModule)
+  },
+  {
+    path: 'dm-httuyensinh',
+    loadChildren: () => import('../app/components/dm-httuyensinh/dm-httuyensinh.module').then(m => m.DM_HtTuyenSinhModule)
   },
   { path: '**', component: NotFoundComponent }
 ];

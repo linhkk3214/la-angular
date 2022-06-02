@@ -8,16 +8,16 @@
     "label": "Danh mục chung",
     "children": [
       {
-        "path": "/dm-loainguoidung",
-        "label": "Loại người dùng"
+        "path": "/dm-loaigiayto",
+        "label": "Loại giấy tờ"
       },
       {
-        "path": "/dm-chucvu",
-        "label": "Chức vụ"
+        "path": "/dm-tphoso",
+        "label": "Thành phần hồ sơ"
       },
       {
-        "path": "/user",
-        "label": "Danh sách người dùng"
+        "path": "/dm-httuyensinh",
+        "label": "Hình thức tuyển sinh"
       }
     ]
   }

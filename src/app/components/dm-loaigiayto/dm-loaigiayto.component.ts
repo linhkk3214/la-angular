@@ -1,29 +1,29 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
-import { DM_LoaiNguoiDungService } from './services/dm-loainguoidung.service';
+import { DM_LoaiGiayToService } from './services/dm-loaigiayto.service';
 
 @Component({
-  selector: 'dm-loainguoidung',
-  templateUrl: './dm-loainguoidung.component.html',
-  styleUrls: ['./dm-loainguoidung.component.scss']
+  selector: 'dm-loaigiayto',
+  templateUrl: './dm-loaigiayto.component.html',
+  styleUrls: ['./dm-loaigiayto.component.scss']
 })
-export class DM_LoaiNguoiDungComponent extends ListBase implements OnInit {
+export class DM_LoaiGiayToComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
-    private _dm_LoaiNguoiDungService: DM_LoaiNguoiDungService
+    private _dm_LoaiGiayToService: DM_LoaiGiayToService
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'loại người dùng';
-    this.setting.service = this._dm_LoaiNguoiDungService;
+    this.setting.objectName = 'loại giấy tờ';
+    this.setting.service = this._dm_LoaiGiayToService;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
         label: 'Mã loại',
-        width: '140px',
+        width: '300px',
         fullTextSearch: true
       }),
       new ColumnSchema({
