@@ -13,7 +13,6 @@ import { ContextService } from "../../shared/services/context.service";
 })
 export class LoginComponent extends ComponentBase {
   data: any = {};
-  error: any = {};
 
   constructor(
     private _injector: Injector,
@@ -25,18 +24,17 @@ export class LoginComponent extends ComponentBase {
   }
 
   async login() {
-    this.error = {};
-    let error = false;
+    const missings = [];
     if (!this.data.username) {
-      this.error.username = 'Hãy nhập tài khoản';
-      error = true;
+      missings.push('tài khoản');
     }
     if (!this.data.password) {
-      this.error.password = 'Hãy nhập mật khẩu';
-      error = true;
+      missings.push('mật khẩu');
     }
 
-    if (error) return;
+    if (missings.length) {
+      return this.toastWarning(`Hãy nhập ${missings.join(', ')}`);
+    }
     const itemUser = (await this._userService.getDetailByFilter([
       this.newFilter('username', Operator.equal, this.data.username),
       this.newFilter('password', Operator.equal, this.data.password)

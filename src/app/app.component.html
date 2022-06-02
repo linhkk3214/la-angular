@@ -11,7 +11,7 @@
 
 <p-toast></p-toast>
 <p-confirmDialog [style]="{width: '25vw'}"></p-confirmDialog>
-<div *ngIf="userVerified" class="root-container">
+<div *ngIf="user" class="root-container">
   <div class="header">
     <div class="menu-in-header">
       <button *ngIf="showMenu" type="button" pButton icon="pi pi-chevron-left" class="btn-collapse-expand"
@@ -32,9 +32,13 @@
         <button type="button" pButton icon="pi pi-question-circle" class="p-button-text p-button-rounded"
           pTooltip="Trợ giúp" (click)="showHelp = !showHelp"></button>
       </div>
-      <div class="user-info" (click)="logout()">
-        <span>Quản trị viên</span>
+      <div class="user-info" [class.show-context]="showContext" (click)="showContextMenuUser()">
+        <span>{{user.ten}}</span>
         <img src="http://localhost:3000/file/download/background-login.jpg" />
+        <div class="context-menu-user">
+          <div><i class="pi pi pi-user-edit"></i>Thông tin</div>
+          <div (click)="logout()"><i class="pi pi pi-sign-out"></i>Đăng xuất</div>
+        </div>
       </div>
     </div>
   </div>
@@ -47,7 +51,7 @@
     </div>
   </div>
 </div>
-<div *ngIf="!userVerified" class="root-container">
+<div *ngIf="!user" class="root-container">
   <ng-container *ngTemplateOutlet="contentRoute"></ng-container>
 </div>
 <div class="help-container" [class.active]="showHelp">

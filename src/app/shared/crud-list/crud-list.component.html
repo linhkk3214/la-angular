@@ -310,7 +310,7 @@
         {{rowData[field]}}
       </span>
       <span *ngSwitchCase="'boolean'">
-        <p-checkbox class="boolean-data-type" [(ngModel)]="rowData[field]" binary="true"
+        <p-checkbox class="boolean-data-type" [(ngModel)]="rowData[field]" [binary]="true"
           [disabled]="col.disableCheckBox">
         </p-checkbox>
       </span>

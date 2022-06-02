@@ -13,7 +13,8 @@ import { ContextService } from './shared/services/context.service';
 export class AppComponent implements OnInit, OnDestroy {
   showMenu = true;
   showHelp = false;
-  userVerified = false;
+  user: any;
+  showContext = false;
   constructor(
     private _router: Router,
     private _contextService: ContextService
@@ -25,11 +26,20 @@ export class AppComponent implements OnInit, OnDestroy {
       this.checkUserLogon();
     });
     this.checkUserLogon();
+    document.addEventListener('click', this.checkClickOut);
   }
 
   ngOnDestroy(): void {
     this._contextService.destroyContext();
+    document.removeEventListener('click', this.checkClickOut);
   }
+
+  checkClickOut = evt => {
+    if (!this.showContext) return;
+    if (!evt.target || !(evt.target as HTMLElement).closest('.user-info')) {
+      this.showContext = false;
+    }
+  };
 
   checkUserLogon() {
     const userCurrent = localStorage.getItem(KeyStorageUserInfo);
@@ -37,13 +47,18 @@ export class AppComponent implements OnInit, OnDestroy {
       this._router.navigate(['login']);
     }
     else {
-      this.userVerified = true;
+      this.user = JSON.parse(userCurrent);
     }
+  }
+
+  showContextMenuUser() {
+    this.showContext = true;
   }
 
   logout() {
     localStorage.removeItem(KeyStorageUserInfo);
-    this.userVerified = false;
+    this.user = null;
+    this.showContext = false;
     this._router.navigate(['login']);
   }
 }
