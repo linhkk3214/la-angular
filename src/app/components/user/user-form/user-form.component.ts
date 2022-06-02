@@ -63,6 +63,18 @@ export class UserFormComponent extends FormBase implements OnInit {
           this.newBindingFilter('parentId', Operator.equal, 'idTinh')
         ]
       }),
+      new DropdownControlSchema({
+        field: 'idXa',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+        ]
+      }),
     ];
   }
 }

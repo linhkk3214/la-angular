@@ -3,7 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { ResponseResult } from "../models/response-result";
 import { catchError, retry, shareReplay } from 'rxjs/operators';
 import { firstValueFrom } from "rxjs";
-import { Filter, GridInfo } from "../models/grid-info";
+import { Filter, GridInfo, Sort } from "../models/grid-info";
 
 @Injectable({
   providedIn: 'root'
@@ -97,8 +97,18 @@ export abstract class BaseService {
     return this.defaultPost(`${this.serviceUri}/getData`, gridInfo);
   }
 
-  getAllByFilter(filters: Filter[]) {
-    return this.defaultPost(`${this.serviceUri}/getAllByFilter`, filters);
+  getAllByFilter(filters: Filter[], pageSize: number = 0, sorts: Sort[] = []) {
+    const body: GridInfo = {
+      filters,
+      sorts
+    };
+    if (pageSize) {
+      body.pageInfo = {
+        page: 1,
+        pageSize
+      };
+    }
+    return this.defaultPost(`${this.serviceUri}/getAllByFilter`, body);
   }
 
   getDetailByFilter(filters: Filter[]) {

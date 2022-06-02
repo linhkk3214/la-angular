@@ -1,7 +1,7 @@
 <div #el class="tn-dropdown">
   <p-dropdown *ngIf="!control.multiple" [options]="dataSourceInternal" [placeholder]="control.placeholder"
     [filter]="true" [appendTo]="'body'" [styleClass]="'tn-dropdown'" [emptyFilterMessage]="'Không tìm thấy kết quả'"
-    [disabled]="control.disabled" [autoZIndex]="true" [ngModel]="selectedValue"
+    [disabled]="control.disabled" [autoZIndex]="true" [ngModel]="selectedValue" (onShow)="onShowHandler($event)"
     (ngModelChange)="handleModelChange($event)">
   </p-dropdown>
   <p-multiSelect *ngIf="control.multiple" [options]="dataSourceInternal" [filter]="true"
@@ -19,4 +19,6 @@
       </ng-container>
     </ng-template>
   </p-multiSelect>
+  <input #inputMask pInputText class="input-mask hide p-inputtext" type="text" [disabled]="loading"
+    [(ngModel)]="valueSearchServer" (keyup)="keyUp.next($event)" />
 </div>

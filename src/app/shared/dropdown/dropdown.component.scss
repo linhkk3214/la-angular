@@ -13,3 +13,22 @@
     margin-left: 5px;
   }
 }
+
+.input-mask {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  padding-left: 12px;
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  outline: none;
+  background: transparent;
+  border-radius: 3px;
+  &.hide {
+    display: none;
+  }
+  &:focus {
+    box-shadow: 0 0 0 0.2rem #a6d5fa;
+    border-color: #2196f3;
+  }
+}
