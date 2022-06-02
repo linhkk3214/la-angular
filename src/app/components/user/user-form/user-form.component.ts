@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { Operator } from 'src/app/shared/models/enums';
+import { Operator } from '../../../shared/models/enums';
 import { DropdownControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';

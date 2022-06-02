@@ -33,11 +33,13 @@ export class DropdownComponent implements OnInit {
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
 
   dataSourceInternal: any[] = [];
+  changedDataSource = false;
   required = false;
   rootClass = '';
   class = '';
   selectedValueBefore: any;
   selectedValue: any;
+  rawValue: any;
   lstObjectSelected: any[] = [];
   filterFromParents: Filter[];
   firstFire = true;
@@ -67,6 +69,12 @@ export class DropdownComponent implements OnInit {
         arr.push(this.reStructureItemObject(dataSource[i]));
       }
     }
+    if (!this.control.multiple && this.selectedValue) {
+      if (arr.some(x => x.value == this.selectedValue)) {
+        this.rawValue = this.selectedValue;
+      }
+    }
+    this.changedDataSource = true;
     this.dataSourceInternal = arr;
     this.setDataSourceSelected();
   }
@@ -76,7 +84,19 @@ export class DropdownComponent implements OnInit {
       this.setDataSourceSelected();
       return;
     }
-    this.selectedValue = evt;
+    if (!this.changedDataSource && evt == null && this.selectedValue) {
+      this.rawValue = this.selectedValue;
+      this.selectedValue = null;
+    }
+    else {
+      if (this.rawValue) {
+        this.selectedValue = this.rawValue;
+        this.rawValue = null;
+      }
+      else {
+        this.selectedValue = evt;
+      }
+    }
     if (this.selectedValue != this.selectedValueBefore) {
       this.selectedValueBefore = this.selectedValue;
       this.fireChange();
@@ -175,8 +195,17 @@ export class DropdownComponent implements OnInit {
   private async getDataByBaseService(): Promise<void> {
     const filters: Filter[] = [];
     const defaultFilters = [];
+    if (this.control.defaultFilters) {
+      if (Array.isArray(this.control.defaultFilters)) {
+        defaultFilters.push(...this.control.defaultFilters);
+      }
+      else {
+        const lstFilter = await this.control.defaultFilters;
+        defaultFilters.push(...lstFilter);
+      }
+    }
 
-    if (defaultFilters && defaultFilters.length) {
+    if (defaultFilters.length) {
       filters.push(...defaultFilters);
     }
     if (this.filterFromParents) {
