@@ -12,7 +12,7 @@
         Không tìm thấy dữ liệu
       </div>
       <div class="paging-item text" [class.disabled]="model.loading" (click)="goPrev($event)" style="margin-right: 5px;"
-        pTooltip="'Trang trước'" tooltipPosition="top" [class.disabled]="isFirst()">
+        pTooltip="Trang trước" tooltipPosition="top" [class.disabled]="isFirst()">
         <a href="javascript:" tabindex="{{isFirst()?'-1':''}}"><i class="pi pi-chevron-left"></i></a>
       </div>
       <div class="block-page-size">
@@ -22,7 +22,7 @@
         </tn-mask>
       </div>
       <div class="paging-item text" [class.disabled]="model.loading" (click)="goNext($event)" style="margin-left: 5px;"
-        pTooltip="'Trang sau'" tooltipPosition="left" [class.disabled]="isLast()">
+        pTooltip="Trang sau" tooltipPosition="left" [class.disabled]="isLast()">
         <a href="javascript:" tabindex="{{isLast()?'-1':''}}"><i class="pi pi-chevron-right"></i></a>
       </div>
     </ng-container>

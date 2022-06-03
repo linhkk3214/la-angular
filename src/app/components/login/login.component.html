@@ -1,15 +1,37 @@
 <div class="login-container">
   <div class="login-content">
-    <div>
-      <input type="text" pInputText placeholder="Tên đăng nhập" [(ngModel)]="data.username" />
-      <div *ngIf="error.username" class="error">{{error.username}}</div>
+    <div class="university-info">
+      <div class="name">TRƯỜNG ĐẠI HỌC THÔNG MINH</div>
+      <div class="address">Địa chỉ: Số 1 phố Đại Cồ Việt, P.Bách Khoa, Q.Hai Bà Trưng, Hà Nội</div>
+      <div class="phone">Điện thoại: 0989 749 952 Fax: (84.24)35684568 Email: hust.edu.vn</div>
     </div>
-    <div>
-      <input type="password" pInputText placeholder="Mật khẩu" [(ngModel)]="data.password" />
-      <div *ngIf="error.password" class="error">{{error.password}}</div>
-    </div>
-    <div>
-      <button type="button" pButton label="Đăng nhập" (click)="login()"></button>
+    <div class="login-box">
+      <div class="university-logo">
+        <img class="tn-logo__image"
+          src="https://ts.hust.edu.vn/public/admin/uploads/files/dang-ky-ts-2020/logobk_bottom.png" alt=""
+          title="">TRƯỜNG ĐẠI HỌC THÔNG MINH
+      </div>
+      <div class="row-login">
+        <span class="icon pi pi-user"></span>
+        <input #username type="text" placeholder="Tên đăng nhập" name="username" autocomplete="off"
+          [(ngModel)]="data.username" />
+      </div>
+      <div class="row-login">
+        <span class="icon pi pi-key"></span>
+        <input #password type="password" placeholder="Mật khẩu" name="password" autocomplete="off"
+          [(ngModel)]="data.password" />
+      </div>
+      <div class="row-action">
+        <p-checkbox [binary]="true" [(ngModel)]="rememberMe" label="Ghi nhớ đăng nhập"></p-checkbox>
+        <span class="forget-password">Quên mật khẩu</span>
+      </div>
+      <div>
+        <button type="button" pButton label="Đăng nhập" class="btn-login" (click)="login()"></button>
+      </div>
+      <div class="alternative-login">
+        Đăng nhập bằng <span class="pi pi-google"></span><span class="pi pi-facebook"></span><span
+          class="pi pi-twitter"></span>
+      </div>
     </div>
   </div>
 </div>

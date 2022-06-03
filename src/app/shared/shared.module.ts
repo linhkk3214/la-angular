@@ -7,6 +7,7 @@ import { NgxMaskModule } from 'ngx-mask';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
+import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -75,6 +76,7 @@ const declarations: any = [
     NgxMaskModule,
     FileUploadModule,
     DropdownModule,
+    CheckboxModule,
     MultiSelectModule,
     InputTextModule,
     InputTextareaModule,
@@ -94,7 +96,8 @@ const declarations: any = [
     ...declarations,
     ButtonModule,
     InputTextModule,
-    TooltipModule
+    TooltipModule,
+    CheckboxModule
   ],
   providers: [
     {

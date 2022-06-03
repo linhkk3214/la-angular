@@ -17,12 +17,12 @@
         (change)="handleFieldValueChange(schema, $event, 'change')" />
     </ng-container>
     <ng-container *ngSwitchCase="'TextAreaControlSchema'">
-      <textarea pInputTextarea [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
-        (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
+      <textarea pInputTextarea [placeholder]="schema.placeholder" [style.height]="schema.height"
+        [(ngModel)]="data[schema.field]" (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
-      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
-        (onChanged)="handleFirstChanged(null, schema)" (onFirstChanged)="handleFirstChanged($event, schema)">
+      <dropdown [control]="schema" [(ngModel)]="data[schema.field]" (onChanged)="handleFirstChanged(null, schema)"
+        (onFirstChanged)="handleFirstChanged($event, schema)">
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">

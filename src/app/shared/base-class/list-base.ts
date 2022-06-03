@@ -62,7 +62,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
       return;
     }
     if (!gridInfo) {
-      // gridInfo = this.crudList.getGridInfo();
+      gridInfo = this.crudList.getGridInfo();
     }
     this.getData(gridInfo);
   }

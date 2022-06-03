@@ -1,4 +1,4 @@
-import { Component, Injector } from "@angular/core";
+import { Component, ElementRef, Injector, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Operator } from "../../shared/models/enums";
 import { ComponentBase } from "../../shared/base-class/component-base";
@@ -12,8 +12,12 @@ import { ContextService } from "../../shared/services/context.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends ComponentBase {
+  _userName: ElementRef;
+  @ViewChild('username', { static: false }) set username(value: ElementRef) {
+    this._userName = value;
+  }
   data: any = {};
-  error: any = {};
+  rememberMe = true;
 
   constructor(
     private _injector: Injector,
@@ -25,18 +29,17 @@ export class LoginComponent extends ComponentBase {
   }
 
   async login() {
-    this.error = {};
-    let error = false;
+    const missings = [];
     if (!this.data.username) {
-      this.error.username = 'Hãy nhập tài khoản';
-      error = true;
+      missings.push('tài khoản');
     }
     if (!this.data.password) {
-      this.error.password = 'Hãy nhập mật khẩu';
-      error = true;
+      missings.push('mật khẩu');
     }
 
-    if (error) return;
+    if (missings.length) {
+      return this.toastWarning(`Hãy nhập ${missings.join(', ')}`);
+    }
     const itemUser = (await this._userService.getDetailByFilter([
       this.newFilter('username', Operator.equal, this.data.username),
       this.newFilter('password', Operator.equal, this.data.password)

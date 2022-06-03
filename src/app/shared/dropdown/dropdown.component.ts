@@ -1,8 +1,11 @@
-import { Component, EventEmitter, forwardRef, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, forwardRef, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { SelectItem } from 'primeng/api/selectitem';
 import { Dropdown } from 'primeng/dropdown';
 import { MultiSelect } from 'primeng/multiselect';
+import { debounceTime, distinctUntilChanged, map, Subject, Subscription } from 'rxjs';
+import { ComponentBase } from '../base-class/component-base';
+import { Operator } from '../models/enums';
 import { Filter } from '../models/grid-info';
 import { DropdownControlSchema } from '../models/schema';
 
@@ -18,11 +21,12 @@ import { DropdownControlSchema } from '../models/schema';
     }
   ]
 })
-export class DropdownComponent implements OnInit {
+export class DropdownComponent extends ComponentBase implements OnInit {
   onChange?: Function;
   onTouched?: Function;
   @ViewChild(Dropdown) dropdown?: Dropdown;
   @ViewChild(MultiSelect) multiSelect?: MultiSelect;
+  @ViewChild('inputMask') input: ElementRef;
   @Input() control: DropdownControlSchema = new DropdownControlSchema();
 
   @Input() set dataSource(value: any[]) {
@@ -44,7 +48,16 @@ export class DropdownComponent implements OnInit {
   filterFromParents: Filter[];
   firstFire = true;
 
-  constructor() {
+  loading = false;
+  valueSearchServer = '';
+  getFilterOnServerSearch: Function;
+  keyUp = new Subject<KeyboardEvent>();
+  subscription: Subscription;
+
+  constructor(
+    injector: Injector
+  ) {
+    super(injector);
   }
 
   ngOnInit() {
@@ -53,12 +66,48 @@ export class DropdownComponent implements OnInit {
       this.control.placeholder = `Chọn ${this.control.label}`;
     }
     if (this.control.service) {
+      if (this.control.isServerLoad) {
+        this.createFilterFunction();
+        this.subscription = this.keyUp.pipe(
+          map(event => (event.target as HTMLInputElement).value),
+          debounceTime(500),
+          distinctUntilChanged()
+        ).subscribe(value => {
+          this.getDataByBaseService();
+        });
+      }
       if (this.control.loadOnInit) {
         this.getDataByBaseService();
       }
     }
     else if (this.control.dataSource) {
       this.setDataSource(this.control.dataSource);
+    }
+  }
+
+  private createFilterFunction() {
+    if (this.control.searchField == null) {
+      this.control.searchField = [];
+    }
+    if (!this.control.disableDisplayFieldServerSearch) {
+      if (!this.control.searchField.some(item => item == this.control.displayField)) {
+        this.control.searchField.push(this.control.displayField);
+      }
+    }
+    if (this.control.searchField.length == 1) {
+      this.getFilterOnServerSearch = value => this.newFilter(this.control.searchField[0], Operator.contain, value);
+    }
+    else {
+      this.getFilterOnServerSearch = value => {
+        const result = new Filter({
+          logic: 'or',
+          filters: []
+        });
+        for (const fieldSearch of this.control.searchField) {
+          result.filters.push(this.newFilter(fieldSearch, Operator.contain, value));
+        }
+        return result;
+      };
     }
   }
 
@@ -193,7 +242,8 @@ export class DropdownComponent implements OnInit {
   }
 
   private async getDataByBaseService(): Promise<void> {
-    const filters: Filter[] = [];
+    this.loading = true;
+    let filters: Filter[] = [];
     const defaultFilters = [];
     if (this.control.defaultFilters) {
       if (Array.isArray(this.control.defaultFilters)) {
@@ -205,14 +255,40 @@ export class DropdownComponent implements OnInit {
       }
     }
 
+    if (this.control.isServerLoad) {
+      if (this.valueSearchServer) {
+        filters.push(this.getFilterOnServerSearch(this.valueSearchServer));
+      }
+    }
+
     if (defaultFilters.length) {
       filters.push(...defaultFilters);
     }
     if (this.filterFromParents) {
       filters.push(...this.filterFromParents);
     }
-    this.control.service.getAllByFilter(filters)
+
+    // Bị trường hợp lỗi nếu như selected Value nằm ngoài value phân trang
+    // Cần tính lại phương pháp lấy dữ liệu 2 lần để gộp lại
+    // if (this.control.isServerLoad && (this.rawValue || this.selectedValue)) {
+    //   filters = [
+    //     new Filter({
+    //       logic: 'or',
+    //       filters: [
+    //         new Filter({
+    //           logic: 'and',
+    //           filters
+    //         }),
+    //         this.newFilter(this.control.valueField, Operator.equal, this.rawValue ? this.rawValue : this.selectedValue)
+    //       ]
+    //     })
+    //   ];
+    // }
+
+    // this.control.service.getAllByFilter(filters, this.control.isServerLoad ? 10 : 0, [{ field: this.control.displayField, dir: 1 }])
+    this.control.service.getAllByFilter(filters, 0, [{ field: this.control.displayField, dir: 1 }])
       .then(res => {
+        this.loading = false;
         this.setDataSource(res.data);
         this.checkFirstOnChanged();
       });
@@ -230,6 +306,29 @@ export class DropdownComponent implements OnInit {
         });
       }
     }
+  }
+
+  onShowHandler(evt) {
+    if (!this.control.isServerLoad) {
+      return;
+    }
+    const defaultInput = this.dropdown.filterViewChild.nativeElement;
+    this._insertTextboxAndFocus(defaultInput);
+  }
+
+  onPanelShowHandler(evt) {
+    if (!this.control.isServerLoad) {
+      return;
+    }
+    const defaultInput = this.multiSelect.filterInputChild.nativeElement;
+    this._insertTextboxAndFocus(defaultInput);
+  }
+
+  private _insertTextboxAndFocus(defaultInput) {
+    this.input.nativeElement.classList.remove('hide');
+    // defaultInput.disabled = true;
+    defaultInput.parentElement.insertBefore(this.input.nativeElement, defaultInput);
+    this.input.nativeElement.focus();
   }
 
   onHideHandler(evt: any) {

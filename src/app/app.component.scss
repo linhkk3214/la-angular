@@ -76,11 +76,12 @@ $width-menu: 250px;
       }
 
       .user-info {
-        margin: 0.5em;
+        margin: 0.5em 1em;
         display: flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
+        position: relative;
 
         span {
           display: inline-block;
@@ -91,6 +92,47 @@ $width-menu: 250px;
           width: 40px;
           height: 40px;
           border-radius: 100%;
+        }
+
+        .context-menu-user {
+          position: absolute;
+          z-index: 10;
+          top: calc(100% + 0.5em);
+          right: -0.5em;
+          background: white;
+          color: #6c6c6c;
+          line-height: 20px;
+          display: none;
+          box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%), 0 8px 17px 0 rgb(0 0 0 / 20%);
+
+          >div {
+            padding: 0.5em 1.5em 0.5em 1em;
+
+            >i {
+              margin-right: 8px;
+              font-size: 12px;
+            }
+
+            &:hover {
+              background: whitesmoke;
+            }
+          }
+
+          &:before {
+            position: absolute;
+            content: " ";
+            top: -6px;
+            right: 22px;
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-bottom: 6px solid white;
+          }
+        }
+
+        &.show-context {
+          .context-menu-user {
+            display: block;
+          }
         }
       }
     }
@@ -198,6 +240,7 @@ $width-menu: 250px;
 }
 
 @keyframes bounce {
+
   0%,
   20%,
   50%,
