@@ -13,6 +13,7 @@ import { ContextService } from "../../shared/services/context.service";
 })
 export class LoginComponent extends ComponentBase {
   data: any = {};
+  rememberMe = true;
 
   constructor(
     private _injector: Injector,

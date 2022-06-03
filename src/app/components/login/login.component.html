@@ -19,7 +19,7 @@
         <input type="password" placeholder="Mật khẩu" [(ngModel)]="data.password" />
       </div>
       <div class="row-action">
-        <p-checkbox [binary]="true" label="Ghi nhớ đăng nhập"></p-checkbox>
+        <p-checkbox [binary]="true" [(ngModel)]="rememberMe" label="Ghi nhớ đăng nhập"></p-checkbox>
         <span class="forget-password">Quên mật khẩu</span>
       </div>
       <div>
