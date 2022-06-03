@@ -5,8 +5,7 @@ $border-color: #ced4da;
   border: 1px solid $border-color;
   border-radius: 3px;
 
-  .top-bar-button {
-  }
+  .top-bar-button {}
 
   .file-list {
     box-sizing: border-box;
@@ -30,14 +29,19 @@ $border-color: #ced4da;
         font-weight: 500;
         font-size: 0.9em;
         cursor: pointer;
-      }
+        display: flex;
 
-      .extension {
-        flex: 0 0 auto;
-        color: #1976d2;
-        font-weight: 500;
-        font-size: 0.9em;
-        cursor: pointer;
+        >span {
+          &:first-child {
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+
+          &:last-child {
+            flex: 0 0 auto;
+          }
+        }
       }
 
       .action {

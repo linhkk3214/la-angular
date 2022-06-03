@@ -9,4 +9,8 @@ export class FileService extends BaseService {
   constructor(httpClient: HttpClient) {
     super(httpClient, 'File');
   }
+
+  saveFile(lstFile: any[]) {
+    return this.defaultPost(`${this.serviceUri}/SaveFiles`, lstFile);
+  }
 }

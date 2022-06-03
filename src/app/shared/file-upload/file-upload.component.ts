@@ -65,13 +65,28 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
 
       this.getFileFromServer();
     }
+
+    this.checkDisabled();
+  }
+
+  checkDisabled() {
+    this.disabled = false;
+    if (!this.control.multiple) {
+      if ((this.value && this.value.length)
+        || (this.rawValue && this.rawValue.length)
+      ) {
+        this.disabled = true;
+      }
+    }
   }
 
   async getFileFromServer() {
     if (!this.rawValue) return;
-    const lstFile = (await this._fileService.getDetailByFilter([
-      this.newFilter('id', Operator.in, this.rawValue)
+    const lstFile = (await this._fileService.getAllByFilter([
+      this.newFilter('_id', Operator.in, this.rawValue)
     ])).data;
+    this.rawValue = null;
+    lstFile.forEach(file => file.saved = true);
     this.value = lstFile;
   }
 
@@ -81,25 +96,42 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
 
   handleFileUploaded(evt) {
     if (evt.originalEvent.status == 200) {
-      this.value.push({ ...evt.originalEvent.body });
+      const itemFile = evt.originalEvent.body;
+      const lstInfo = [];
+      const indexDot = itemFile.originalname.lastIndexOf('.');
+      if (indexDot == -1) {
+        lstInfo.push(itemFile.originalname, null);
+      }
+      else {
+        lstInfo.push(
+          itemFile.originalname.substring(0, indexDot),
+          itemFile.originalname.substring(indexDot + 1).toLowerCase()
+        )
+      }
+      this.value.push({
+        ...itemFile,
+        _id: this.guid(),
+        saved: false,
+        name: lstInfo[0],
+        extension: lstInfo[1]
+      });
       this.fireEvent();
     }
-    if (!this.control.multiple) {
-      if (this.value && this.value.length) {
-        this.disabled = true;
-      }
-    }
+    this.checkDisabled();
   }
 
   fireEvent() {
-    let value = this.value;
+    let value = null;
     if (!this.control.multiple) {
       if (this.value && this.value.length) {
-        value = this.value[0];
+        value = this.value[0]._id;
       }
       else {
         value = null;
       }
+    }
+    else {
+      value = this.value.map(q => q._id);
     }
 
     this.onChange(value);
@@ -108,6 +140,35 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
 
   removeRow(index: number) {
     this.value.splice(index, 1);
+    this.checkDisabled();
+  }
+
+  saveFile(): Promise<boolean> {
+    return new Promise(async (resolve, reject) => {
+      try {
+        const lstFileSave = [];
+        this.value.forEach(file => {
+          if (file.saved) return;
+          lstFileSave.push({ ...file, _id: null, tempId: file._id });
+        });
+        if (lstFileSave) {
+          const resultSaveFile = (await this._fileService.saveFile(lstFileSave)).data;
+          if (!resultSaveFile) resolve(false);
+          this.value.forEach(file => {
+            if (file.saved) return;
+            const itemFileSaved = resultSaveFile.find(q => q.tempId == file._id);
+            if (!itemFileSaved) return;
+            file.saved = true;
+            file._id = itemFileSaved._id;
+          });
+        }
+        this.fireEvent();
+        resolve(true);
+      }
+      catch (err) {
+        resolve(false);
+      }
+    });
   }
 
   registerOnChange(fn: any): void {

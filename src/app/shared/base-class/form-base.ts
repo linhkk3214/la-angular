@@ -169,8 +169,6 @@ export abstract class FormBase extends ComponentBase implements OnInit {
     }
   }
 
-
-
   private fixDateValue(control, parentModel, parentPath?) {
     let _parentPath = control.field;
     if (parentPath != null) _parentPath = parentPath + '.' + _parentPath;
@@ -284,6 +282,11 @@ export abstract class FormBase extends ComponentBase implements OnInit {
 
   private async onInsert() {
     this.setDefaultValue(this.model.data);
+    const resultSaveFile = await this.crudForm.saveFile();
+    if (!resultSaveFile) {
+      this.model.submitting = false;
+      return this.toastWarning('Có lỗi khi lưu file');
+    }
     await this.getPromiseActionInsert()
       .then(async response => {
         this.model.submitting = false;
@@ -316,6 +319,11 @@ export abstract class FormBase extends ComponentBase implements OnInit {
 
   private async onUpdate() {
     this.setDefaultValue(this.model.data);
+    const resultSaveFile = await this.crudForm.saveFile();
+    if (!resultSaveFile) {
+      this.model.submitting = false;
+      return this.toastWarning('Có lỗi khi lưu file');
+    }
     this.getPromiseActionUpdate()
       .then(async response => {
         this.model.submitting = false;

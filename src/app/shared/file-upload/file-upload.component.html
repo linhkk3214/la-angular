@@ -6,8 +6,11 @@
   <div class="file-list">
     <div *ngFor="let file of value; index as i" class="file-row">
       <div class="stt">{{i + 1}}.</div>
-      <div class="name">{{file.filename}}</div>
-      <div class="extension">.xxx</div>
+      <div class="name">
+        <span>{{file.name}}</span>
+        <span>.{{file.extension}}</span>
+      </div>
+      <!-- <div class="extension">.{{file.extension}}</div> -->
       <div class="action">
         <button type="button" pButton icon="pi pi-times" class="p-button-text p-button-rounded p-button-danger"
           (click)="removeRow(i)"></button>
@@ -16,7 +19,7 @@
   </div>
 </div>
 <div style="display: none">
-  <p-fileUpload name="file" url="http://localhost:3000/file/upload" [auto]="true"
+  <p-fileUpload name="file" url="http://localhost:3000/file/upload" [auto]="true" [accept]="'image/*'"
     (onUpload)="handleFileUploaded($event)">
   </p-fileUpload>
 </div>

@@ -4,7 +4,7 @@ import { CompareValidator, DateCompareValidator, EmailValidator, NumberCompareVa
 import { KeyFunctionReload } from '../models/const';
 import { FormState, Operator } from '../models/enums';
 import { Filter } from '../models/grid-info';
-import { ControlSchema, ControlTreeNode, CrudFormSetting, DateTimeControlSchema, DropdownControlSchema, EventData, FormSchema, LabelSchema, MaskControlSchema, TextControlSchema, TitleSchema } from '../models/schema';
+import { ControlSchema, ControlTreeNode, CrudFormSetting, DateTimeControlSchema, DropdownControlSchema, EventData, FileControlSchema, FormSchema, LabelSchema, MaskControlSchema, TextControlSchema, TitleSchema } from '../models/schema';
 import { isSameArray } from '../utils/common';
 import { getFilterFromTemplate } from '../utils/crud';
 
@@ -20,7 +20,7 @@ const operatorContrast = {
   templateUrl: './crud-form.component.html',
   styleUrls: ['./crud-form.component.scss']
 })
-export class CrudFormComponent extends ComponentBase implements OnInit, OnDestroy {
+export class CrudFormComponent extends ComponentBase implements OnInit {
   @ViewChild('container') container: ElementRef;
 
   @Input() setting: CrudFormSetting = new CrudFormSetting();
@@ -528,10 +528,6 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
     };
   }
 
-  ngOnDestroy(): void {
-
-  }
-
   getControlDataSource(control: DropdownControlSchema, data: any) {
     if (data._source[control.field] instanceof Array) return data._source[control.field];
     if (control.dataSource instanceof Array) return control.dataSource;
@@ -557,5 +553,19 @@ export class CrudFormComponent extends ComponentBase implements OnInit, OnDestro
         }
       }
     }
+  }
+
+  async saveFile() {
+    const promises = [];
+    this.setting.schema.forEach(schema => {
+      if (!(schema instanceof FileControlSchema)) return;
+      if (!schema._component) return;
+      promises.push(schema._component.saveFile());
+    });
+    if (promises.length) {
+      const arrResult = await Promise.all(promises);
+      if (arrResult.some(q => !q)) return false;
+    }
+    return true;
   }
 }

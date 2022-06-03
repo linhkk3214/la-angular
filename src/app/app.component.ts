@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { KeyStorageUserInfo, KeySubscribeLogon } from './models/const';
 import { ContextService } from './shared/services/context.service';
+import { FileService } from './shared/services/file.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,8 @@ export class AppComponent implements OnInit, OnDestroy {
   showContext = false;
   constructor(
     private _router: Router,
-    private _contextService: ContextService
+    private _contextService: ContextService,
+    private _fileService: FileService
   ) {
   }
 
@@ -41,13 +43,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   };
 
-  checkUserLogon() {
+  async checkUserLogon() {
     const userCurrent = localStorage.getItem(KeyStorageUserInfo);
     if (!userCurrent) {
       this._router.navigate(['login']);
     }
     else {
-      this.user = JSON.parse(userCurrent);
+      const user = JSON.parse(userCurrent);
+      if (user.avatar) {
+        const itemAvatar = (await this._fileService.getDetail(user.avatar)).data;
+        if (itemAvatar) {
+          user.srcAvatar = `http://localhost:3000/file/download/${itemAvatar.url}`;
+        }
+      }
+      this.user = user;
     }
   }
 
