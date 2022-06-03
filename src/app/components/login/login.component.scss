@@ -77,9 +77,13 @@
       outline: none;
       padding: 0 2.5em;
       font-size: 15px;
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active,
       &:-internal-autofill-selected {
-        background-color: transparent;
-        color: white;
+        color-scheme: dark;
+        -webkit-box-shadow: 0 0 0px 1000px #0057a7 inset;
       }
 
       &::placeholder {
