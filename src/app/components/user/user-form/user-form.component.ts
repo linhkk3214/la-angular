@@ -1,6 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator } from '../../../shared/models/enums';
-import { DropdownControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DropdownControlSchema, FileControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
 import { DM_LoaiGiayToService } from '../../dm-loaigiayto/services/dm-loaigiayto.service';
@@ -26,6 +26,12 @@ export class UserFormComponent extends FormBase implements OnInit {
   override ngOnInit(): void {
     this.setting.service = this._userService;
     this.setting.schema = [
+      new FileControlSchema({
+        field: 'avatar',
+        label: 'Ảnh đại diện',
+        multiple: false,
+        isAvatar: true
+      }),
       new TextControlSchema({
         field: 'ten',
         label: 'Họ và tên',

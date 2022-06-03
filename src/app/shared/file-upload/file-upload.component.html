@@ -1,6 +1,6 @@
 <div class="file-container">
   <div class="top-bar-button">
-    <button type="button" pButton icon="pi pi-upload" class="p-button-text" label="Tải lên"
+    <button [disabled]="disabled" type="button" pButton icon="pi pi-upload" class="p-button-text" label="Tải lên"
       (click)="triggerUpload()"></button>
   </div>
   <div class="file-list">

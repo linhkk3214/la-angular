@@ -168,6 +168,8 @@ export class DateTimeRangeControlSchema extends DateTimeControlSchema {
 
 
 export class FileControlSchema extends ControlSchema {
+  multiple = true;
+  isAvatar = false;
   constructor(init?: FileControlSchema) {
     super();
     for (const key in init) {

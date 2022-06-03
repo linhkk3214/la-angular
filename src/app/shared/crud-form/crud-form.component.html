@@ -21,8 +21,8 @@
         (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
-      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
-        (onChanged)="handleFirstChanged(null, schema)" (onFirstChanged)="handleFirstChanged($event, schema)">
+      <dropdown [control]="schema" [(ngModel)]="data[schema.field]" (onChanged)="handleFirstChanged(null, schema)"
+        (onFirstChanged)="handleFirstChanged($event, schema)">
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
@@ -35,7 +35,7 @@
       </tn-mask>
     </ng-container>
     <ng-container *ngSwitchCase="'FileControlSchema'">
-      <file-upload></file-upload>
+      <file-upload [control]="schema" [(ngModel)]="data[schema.field]"></file-upload>
     </ng-container>
     <ng-container *ngSwitchDefault>
     </ng-container>
