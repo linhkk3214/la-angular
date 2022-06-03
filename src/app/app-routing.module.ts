@@ -56,6 +56,14 @@ const routes: Routes = [
     path: 'dm-hanhkiem',
     loadChildren: () => import('../app/components/dm-hanhkiem/dm-hanhkiem.module').then(m => m.DM_HanhKiemModule)
   },
+  {
+    path: 'dm-hedaotao',
+    loadChildren: () => import('../app/components/dm-hedaotao/dm-hedaotao.module').then(m => m.DM_HeDaoTaoModule)
+  },
+  {
+    path: 'dm-doituongdaotao',
+    loadChildren: () => import('../app/components/dm-doituongdaotao/dm-doituongdaotao.module').then(m => m.DM_DoiTuongDaoTaoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

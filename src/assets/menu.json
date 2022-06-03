@@ -50,6 +50,10 @@
       {
         "path": "/dm-hanhkiem",
         "label": "Hạnh kiểm"
+      },
+      {
+        "path": "/dm-doituongdaotao",
+        "label": "Đối tượng đào tạo"
       }
     ]
   }

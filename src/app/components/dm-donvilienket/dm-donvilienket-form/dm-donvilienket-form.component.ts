@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { FileControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_DonViLienKetService } from '../services/dm-donvilienket.service';
 
@@ -51,9 +51,10 @@ export class DM_DonViLienKetFormComponent extends FormBase implements OnInit {
         field: 'soHopDong',
         label: 'Số hợp đồng'
       }),
-      new TextControlSchema({
+      new TextAreaControlSchema({
         field: 'ghiChu',
-        label: 'Ghi chú '
+        label: 'Ghi chú ',
+        width: 12
       }),
       new FileControlSchema({
         field: 'dsTaiLieu',

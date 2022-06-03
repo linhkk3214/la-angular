@@ -94,7 +94,7 @@ export class MaskControlSchema extends TextControlSchema {
 export class TextAreaControlSchema extends ControlSchema {
   placeholder?: string = '';
   height?: string = '100px';
-  constructor(init?: TextControlSchema) {
+  constructor(init?: TextAreaControlSchema) {
     super();
     for (const key in init) {
       this[key] = init[key];

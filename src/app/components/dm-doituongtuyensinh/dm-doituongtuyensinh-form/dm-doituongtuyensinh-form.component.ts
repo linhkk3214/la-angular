@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema } from '../../../shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_DoiTuongTuyenSinhService } from '../services/dm-doituongtuyensinh.service';
 @Component({

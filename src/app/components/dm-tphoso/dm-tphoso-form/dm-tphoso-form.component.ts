@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { DropdownControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DropdownControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_LoaiGiayToService } from '../../dm-loaigiayto/services/dm-loaigiayto.service';
 import { DM_TpHoSoService } from '../services/dm-tphoso.service';
@@ -53,6 +53,11 @@ export class DM_TpHoSoFormComponent extends FormBase implements OnInit {
       new TextControlSchema({
         field: 'soLuongBanCC',
         label: 'Số lượng bản công chứng'
+      }),
+      new TextAreaControlSchema({
+        field: 'ghiChu',
+        label: 'Ghi chú',
+        width: 12
       }),
     ];
   }

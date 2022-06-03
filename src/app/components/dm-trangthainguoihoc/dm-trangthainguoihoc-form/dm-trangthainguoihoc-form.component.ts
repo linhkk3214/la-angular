@@ -31,7 +31,7 @@ export class DM_TrangThaiNguoiHocFormComponent extends FormBase implements OnIni
         required: true,
         width: 6
       }),
-      new TextControlSchema({
+      new TextAreaControlSchema({
         field: 'ghiChu',
         label: 'Ghi chú',
         width: 12
