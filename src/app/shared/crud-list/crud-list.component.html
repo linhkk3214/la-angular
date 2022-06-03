@@ -61,7 +61,8 @@
           <div *ngIf="!setting.hiddenAdvanceSearch" class="col-12 advance-search-container"
             [ngClass]="setting.hiddenButtons ? 'md:col-12 lg:col-12' : 'md:col-5 lg:col-4'">
             <input type="text" pInputText placeholder="Tìm kiếm" [disabled]="!fieldSearchText"
-              [pTooltip]="tooltipSearchText" [(ngModel)]="keyword" (keyup.enter)="handleChangedSearchBox()" />
+              [pTooltip]="tooltipSearchText" tooltipPosition="top" tooltipStyleClass="wrap max-width-300"
+              class="textbox-search" [(ngModel)]="keyword" (keyup.enter)="handleChangedSearchBox()" />
           </div>
         </div>
         <div *ngIf="hasTemplate('topGrid')" class="extend-content-top-grid">
