@@ -1,4 +1,4 @@
-import { Component, Injector } from "@angular/core";
+import { Component, ElementRef, Injector, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Operator } from "../../shared/models/enums";
 import { ComponentBase } from "../../shared/base-class/component-base";
@@ -12,7 +12,12 @@ import { ContextService } from "../../shared/services/context.service";
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent extends ComponentBase {
+  _userName: ElementRef;
+  @ViewChild('username', { static: false }) set username(value: ElementRef) {
+    this._userName = value;
+  }
   data: any = {};
+  rememberMe = true;
 
   constructor(
     private _injector: Injector,

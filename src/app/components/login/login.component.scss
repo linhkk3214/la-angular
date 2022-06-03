@@ -18,7 +18,13 @@
   display: flex;
 
   .university-info {
-    background: linear-gradient(135deg, rgba(141, 211, 236, 0.9) 0%, rgba(111, 192, 221, 0.98) 22%, rgba(111, 192, 221, 0.96) 33%, rgba(38, 129, 212, 0.9) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(141, 211, 236, 0.9) 0%,
+      rgba(111, 192, 221, 0.98) 22%,
+      rgba(111, 192, 221, 0.96) 33%,
+      rgba(38, 129, 212, 0.9) 100%
+    );
     flex: 1;
     margin: 5em 0;
     padding: 4em;
@@ -39,7 +45,7 @@
     padding: 74px 44px 90px;
     flex: 1;
 
-    >div {
+    > div {
       margin-bottom: 2em;
       text-align: center;
 
@@ -71,6 +77,14 @@
       outline: none;
       padding: 0 2.5em;
       font-size: 15px;
+      &:-webkit-autofill,
+      &:-webkit-autofill:hover,
+      &:-webkit-autofill:focus,
+      &:-webkit-autofill:active,
+      &:-internal-autofill-selected {
+        color-scheme: dark;
+        -webkit-box-shadow: 0 0 0px 1000px #0057a7 inset;
+      }
 
       &::placeholder {
         color: #dbdbdb;

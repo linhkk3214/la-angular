@@ -13,14 +13,16 @@
       </div>
       <div class="row-login">
         <span class="icon pi pi-user"></span>
-        <input type="text" placeholder="Tên đăng nhập" [(ngModel)]="data.username" />
+        <input #username type="text" placeholder="Tên đăng nhập" name="username" autocomplete="off"
+          [(ngModel)]="data.username" />
       </div>
       <div class="row-login">
         <span class="icon pi pi-key"></span>
-        <input type="password" placeholder="Mật khẩu" [(ngModel)]="data.password" />
+        <input #password type="password" placeholder="Mật khẩu" name="password" autocomplete="off"
+          [(ngModel)]="data.password" />
       </div>
       <div class="row-action">
-        <p-checkbox [binary]="true" label="Ghi nhớ đăng nhập"></p-checkbox>
+        <p-checkbox [binary]="true" [(ngModel)]="rememberMe" label="Ghi nhớ đăng nhập"></p-checkbox>
         <span class="forget-password">Quên mật khẩu</span>
       </div>
       <div>
