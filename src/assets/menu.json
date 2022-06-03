@@ -18,6 +18,42 @@
       {
         "path": "/dm-httuyensinh",
         "label": "Hình thức tuyển sinh"
+      },
+      {
+        "path": "/dm-doituonguutien",
+        "label": "Đối tượng ưu tiên"
+      },
+      {
+        "path": "/dm-doituongtuyensinh",
+        "label": "Đối tượng tuyển sinh"
+      },
+      {
+        "path": "/dm-donvilienket",
+        "label": "Đơn vị liên kết"
+      },
+      {
+        "path": "/dm-trangthainguoihoc",
+        "label": "Trạng thái người học"
+      },
+      {
+        "path": "/dm-cosodaotao",
+        "label": "Cơ sở đào tạo"
+      },
+      {
+        "path": "/dm-khuvuc",
+        "label": "Khu vực"
+      },
+      {
+        "path": "/dm-hocluc",
+        "label": "Học lực"
+      },
+      {
+        "path": "/dm-hanhkiem",
+        "label": "Hạnh kiểm"
+      },
+      {
+        "path": "/dm-doituongdaotao",
+        "label": "Đối tượng đào tạo"
       }
     ]
   }
