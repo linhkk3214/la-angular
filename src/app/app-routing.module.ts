@@ -24,6 +24,10 @@ const routes: Routes = [
     path: 'dm-httuyensinh',
     loadChildren: () => import('../app/components/dm-httuyensinh/dm-httuyensinh.module').then(m => m.DM_HtTuyenSinhModule)
   },
+  {
+    path: 'dm-doituonguutien',
+    loadChildren: () => import('../app/components/dm-doituonguutien/dm-doituonguutien.module').then(m => m.DM_DoiTuongUuTienModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

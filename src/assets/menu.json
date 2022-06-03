@@ -18,6 +18,10 @@
       {
         "path": "/dm-httuyensinh",
         "label": "Hình thức tuyển sinh"
+      },
+      {
+        "path": "/dm-doituonguutien",
+        "label": "Đối tượng ưu tiên"
       }
     ]
   }
