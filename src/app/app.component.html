@@ -34,7 +34,7 @@
       </div>
       <div class="user-info" [class.show-context]="showContext" (click)="showContextMenuUser()">
         <span>{{user.ten}}</span>
-        <img src="http://localhost:3000/file/download/background-login.jpg" />
+        <img [src]="user.srcAvatar" />
         <div class="context-menu-user">
           <div><i class="pi pi pi-user-edit"></i>Thông tin</div>
           <div (click)="logout()"><i class="pi pi pi-sign-out"></i>Đăng xuất</div>
