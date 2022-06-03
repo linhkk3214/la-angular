@@ -1,24 +1,24 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
-import { DM_DoiTuongUuTienService } from './services/dm-doituonguutien.service';
+import { DM_KhuVucService } from './services/dm-khuvuc.service';
 
 @Component({
-  selector: 'dm-doituonguutien',
-  templateUrl: './dm-doituonguutien.component.html',
-  styleUrls: ['./dm-doituonguutien.component.scss']
+  selector: 'dm-khuvuc',
+  templateUrl: './dm-khuvuc.component.html',
+  styleUrls: ['./dm-khuvuc.component.scss']
 })
-export class DM_DoiTuongUuTienComponent extends ListBase implements OnInit {
+export class DM_KhuVucComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
-    private _dm_DoiTuongUuTienService: DM_DoiTuongUuTienService
+    private _dm_KhuVucService: DM_KhuVucService
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'đối tượng ưu tiên';
-    this.setting.service = this._dm_DoiTuongUuTienService;
+    this.setting.objectName = 'khu vực';
+    this.setting.service = this._dm_KhuVucService;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
@@ -28,7 +28,7 @@ export class DM_DoiTuongUuTienComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'ten',
-        label: 'Tên đối tượng',
+        label: 'Tên khu vực',
         fullTextSearch: true
       }),
     ];

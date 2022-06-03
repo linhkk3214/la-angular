@@ -93,6 +93,7 @@ export class MaskControlSchema extends TextControlSchema {
 
 export class TextAreaControlSchema extends ControlSchema {
   placeholder?: string = '';
+  height?: string = '100px';
   constructor(init?: TextControlSchema) {
     super();
     for (const key in init) {
@@ -124,7 +125,7 @@ export class DropdownControlSchema extends DataSourceSchema {
   loadOnInit?= false;
   isServerLoad?= false;
   searchField?: string[] = []; // Danh sách các trường sẽ tìm kiếm khi dùng isServerLoad
-  disableDisplayFieldServerSearch?: boolean = false; // Option không tìm kiếm đối với trường displayField 
+  disableDisplayFieldServerSearch?: boolean = false; // Option không tìm kiếm đối với trường displayField
   allowLoadDataWhenParentNull?= false;
   sorts?: Sort[] = [];
   sortField?= '';

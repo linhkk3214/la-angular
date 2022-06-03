@@ -28,6 +28,34 @@ const routes: Routes = [
     path: 'dm-doituonguutien',
     loadChildren: () => import('../app/components/dm-doituonguutien/dm-doituonguutien.module').then(m => m.DM_DoiTuongUuTienModule)
   },
+  {
+    path: 'dm-doituongtuyensinh',
+    loadChildren: () => import('../app/components/dm-doituongtuyensinh/dm-doituongtuyensinh.module').then(m => m.DM_DoiTuongTuyenSinhModule)
+  },
+  {
+    path: 'dm-donvilienket',
+    loadChildren: () => import('../app/components/dm-donvilienket/dm-donvilienket.module').then(m => m.DM_DonViLienKetModule)
+  },
+  {
+    path: 'dm-trangthainguoihoc',
+    loadChildren: () => import('../app/components/dm-trangthainguoihoc/dm-trangthainguoihoc.module').then(m => m.DM_TrangThaiNguoiHocModule)
+  },
+  {
+    path: 'dm-cosodaotao',
+    loadChildren: () => import('../app/components/dm-cosodaotao/dm-cosodaotao.module').then(m => m.DM_CoSoDaoTaoModule)
+  },
+  {
+    path: 'dm-khuvuc',
+    loadChildren: () => import('../app/components/dm-khuvuc/dm-khuvuc.module').then(m => m.DM_KhuVucModule)
+  },
+  {
+    path: 'dm-hocluc',
+    loadChildren: () => import('../app/components/dm-hocluc/dm-hocluc.module').then(m => m.DM_HocLucModule)
+  },
+  {
+    path: 'dm-hanhkiem',
+    loadChildren: () => import('../app/components/dm-hanhkiem/dm-hanhkiem.module').then(m => m.DM_HanhKiemModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
