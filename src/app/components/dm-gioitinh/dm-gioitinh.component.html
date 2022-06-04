@@ -1,0 +1,13 @@
+<div style="width: 100%">
+  <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
+    (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
+    (onReloaded)="_unmarkLoading()">
+  </crud-list>
+</div>
+
+<tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
+  [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
+  <dm-gioitinh-form #formBase [parentSetting]="setting" [model]="formModel"
+    (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
+  </dm-gioitinh-form>
+</tn-dialog>

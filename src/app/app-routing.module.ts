@@ -64,6 +64,22 @@ const routes: Routes = [
     path: 'dm-doituongdaotao',
     loadChildren: () => import('../app/components/dm-doituongdaotao/dm-doituongdaotao.module').then(m => m.DM_DoiTuongDaoTaoModule)
   },
+  {
+    path: 'dm-gioitinh',
+    loadChildren: () => import('../app/components/dm-gioitinh/dm-gioitinh.module').then(m => m.DM_GioiTinhModule)
+  },
+  {
+    path: 'dm-namhoc',
+    loadChildren: () => import('../app/components/dm-namhoc/dm-namhoc.module').then(m => m.DM_NamHocModule)
+  },
+  {
+    path: 'dm-hocky',
+    loadChildren: () => import('../app/components/dm-hocky/dm-hocky.module').then(m => m.DM_HocKyModule)
+  },
+  {
+    path: 'dm-khoahoc',
+    loadChildren: () => import('../app/components/dm-khoahoc/dm-khoahoc.module').then(m => m.DM_KhoaHocModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
