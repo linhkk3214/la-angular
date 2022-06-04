@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { KeyStorageUserInfo, KeySubscribeLogon } from './models/const';
+import { KeyStorageDefaultSetting, KeyStorageUserInfo, KeySubscribeLogon, PrefixFieldObjectDropdown } from './models/const';
+import { CrudFormData, DialogModel, PopupSize } from './shared/models/schema';
 import { ContextService } from './shared/services/context.service';
 import { FileService } from './shared/services/file.service';
 
@@ -16,6 +17,15 @@ export class AppComponent implements OnInit, OnDestroy {
   showHelp = false;
   user: any;
   showContext = false;
+  textSetting = '';
+  settingDialogModel = new DialogModel({
+    header: 'Cấu hình mặc định',
+    popupSize: new PopupSize({
+      width: 600,
+      height: 350
+    }),
+    data: new CrudFormData()
+  });
   constructor(
     private _router: Router,
     private _contextService: ContextService,
@@ -28,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.checkUserLogon();
     });
     this.checkUserLogon();
+    this.loadTextDefaultSetting();
     document.addEventListener('click', this.checkClickOut);
   }
 
@@ -35,13 +46,6 @@ export class AppComponent implements OnInit, OnDestroy {
     this._contextService.destroyContext();
     document.removeEventListener('click', this.checkClickOut);
   }
-
-  checkClickOut = evt => {
-    if (!this.showContext) return;
-    if (!evt.target || !(evt.target as HTMLElement).closest('.user-info')) {
-      this.showContext = false;
-    }
-  };
 
   async checkUserLogon() {
     const userCurrent = localStorage.getItem(KeyStorageUserInfo);
@@ -60,6 +64,20 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadTextDefaultSetting() {
+    const jsonDefaultSetting = localStorage.getItem(KeyStorageDefaultSetting);
+    if (!jsonDefaultSetting) return;
+    const defaultSetting = JSON.parse(jsonDefaultSetting);
+    this.textSetting = `${defaultSetting[`${PrefixFieldObjectDropdown}namHoc`].label}/${defaultSetting[`${PrefixFieldObjectDropdown}idHocKy`].label}`;
+  }
+
+  checkClickOut = evt => {
+    if (!this.showContext) return;
+    if (!evt.target || !(evt.target as HTMLElement).closest('.user-info')) {
+      this.showContext = false;
+    }
+  };
+
   showContextMenuUser() {
     this.showContext = true;
   }
@@ -69,5 +87,9 @@ export class AppComponent implements OnInit, OnDestroy {
     this.user = null;
     this.showContext = false;
     this._router.navigate(['login']);
+  }
+
+  showDefaultSetting() {
+    this.settingDialogModel.showEditForm = true;
   }
 }

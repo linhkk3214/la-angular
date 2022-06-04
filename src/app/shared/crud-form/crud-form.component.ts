@@ -1,9 +1,10 @@
-import { Component, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { PrefixFieldObjectDropdown } from 'src/app/models/const';
 import { ComponentBase } from '../base-class/component-base';
 import { CompareValidator, DateCompareValidator, EmailValidator, NumberCompareValidator, PhoneNumberValidator, RequiredFieldsValidator, RequiredValidator } from '../base-class/validators';
 import { KeyFunctionReload } from '../models/const';
 import { FormState, Operator } from '../models/enums';
-import { Filter } from '../models/grid-info';
+import { Filter, FilterWithBinding } from '../models/grid-info';
 import { ControlSchema, ControlTreeNode, CrudFormSetting, DateTimeControlSchema, DropdownControlSchema, EventData, FileControlSchema, FormSchema, LabelSchema, MaskControlSchema, TextControlSchema, TitleSchema } from '../models/schema';
 import { isSameArray } from '../utils/common';
 import { getFilterFromTemplate } from '../utils/crud';
@@ -20,12 +21,13 @@ const operatorContrast = {
   templateUrl: './crud-form.component.html',
   styleUrls: ['./crud-form.component.scss']
 })
-export class CrudFormComponent extends ComponentBase implements OnInit {
+export class CrudFormComponent extends ComponentBase implements OnInit, AfterViewInit {
   @ViewChild('container') container: ElementRef;
 
   @Input() setting: CrudFormSetting = new CrudFormSetting();
   @Input() data: any;
   @Input() formState: FormState = FormState.EDIT;
+  @Input() autoFocus = true;
 
   @Output() onFormReady = new EventEmitter<any>();
   @Output() onControlReady = new EventEmitter<any>();
@@ -40,6 +42,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
   _inValidForm = false;
 
   formControls: any = [];
+  focused = false;
   _prefixCustomHeader = 'customHeader_';
 
   fieldParentField = 'parentField';
@@ -55,6 +58,15 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
       schema.nameType = schema.constructor.name;
     });
     this.initLoad();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      if (this.autoFocus && !this.focused) {
+        this.focused = true;
+        this.focusFirstControl();
+      }
+    });
   }
 
   reload() {
@@ -149,29 +161,30 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
   }
 
   private async bindOnChangeToDropdown(dropdownControlSchema: DropdownControlSchema) {
-    let tmpFilters: Filter[] = [];
+    let tmpFilters: FilterWithBinding[] = [];
     if (Array.isArray(dropdownControlSchema.bindingFilters)) {
       tmpFilters = dropdownControlSchema.bindingFilters;
     }
-    // else if (typeof (dropdownControlSchema.bindingFilters) == 'function') {
-    //   tmpFilters = dropdownControlSchema.bindingFilters();
-    // }
-    // else {
-    //   tmpFilters = await dropdownControlSchema.bindingFilters;
-    // }
     tmpFilters.forEach(filter => {
       const sourceField = filter.sourceField;
+      filter.sourceValueField = filter.sourceField;
       const schema = this.setting.schema.find(q => q.field == sourceField);
-      if (!filter.subField
-        && (schema instanceof DropdownControlSchema)) {
-        filter.subField = schema.valueField;
+      if (schema instanceof DropdownControlSchema) {
+        filter.sourceValueField = this.getFieldObjectDropdown(schema.field);
+        if (!filter.subField) {
+          filter.subField = 'value';
+        }
       }
     });
     const markedControl = {};
     this.bindOnChangeToDropdownRecursive(dropdownControlSchema, tmpFilters, markedControl);
   }
 
-  private bindOnChangeToDropdownRecursive(childDropdown: DropdownControlSchema, tmpFilters: Filter[], markedControl) {
+  getFieldObjectDropdown(field) {
+    return `${PrefixFieldObjectDropdown}${field}`;
+  }
+
+  private bindOnChangeToDropdownRecursive(childDropdown: DropdownControlSchema, tmpFilters: FilterWithBinding[], markedControl) {
     if (tmpFilters instanceof Array) {
       for (const filter of tmpFilters) {
         const sourceField = filter.sourceField;
@@ -432,7 +445,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
     this.onChange.emit(eventData);
   };
 
-  handleFirstChanged(data, schema: ControlSchema) {
+  handleFirstChanged(data, schema: DropdownControlSchema) {
     let parentNode = this._rootNode.getNodeByPath('');
     let currentNode = parentNode.getChildNode(schema.field);
     const eventData = new EventData({
@@ -442,6 +455,11 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
       crudForm: this,
       eventType: 'changed'
     });
+    let selectedValueObject = null
+    if (this.data[schema.field]) {
+      selectedValueObject = schema._component.dataSourceInternal.find(q => q.value == this.data[schema.field]);
+    }
+    this.data[this.getFieldObjectDropdown(schema.field)] = selectedValueObject;
     if (schema.onChanged) {
       schema.onChanged(eventData);
     }
@@ -486,6 +504,29 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
       }
     }
     return true;
+  }
+
+  private focusFirstControl() {
+    const formElement = this.container.nativeElement;
+    const divs = formElement.querySelectorAll('div.control');
+    if (divs) {
+      for (const div of divs) {
+        let firstControl = div.querySelector('input:not([type=file]):not([type=hidden])');
+        if (firstControl) {
+          firstControl.focus();
+        }
+        else {
+          firstControl = div.querySelector('textarea');
+          if (firstControl) {
+            firstControl.focus();
+          }
+        }
+
+        if (firstControl) {
+          break;
+        }
+      }
+    }
   }
 
   checkDisabled(data: any, control: ControlSchema) {

@@ -3,7 +3,7 @@ import { CrudFormComponent } from "../crud-form/crud-form.component";
 import { BaseService } from "../services/base.service";
 import { isArray, isLiteralObject } from "../utils/common";
 import { ControlType, DataType, FormState, HeightType } from "./enums";
-import { Filter, Sort } from "./grid-info";
+import { Filter, FilterWithBinding, Sort } from "./grid-info";
 
 export class FormSchema {
   nameType?: string;
@@ -134,7 +134,7 @@ export class DropdownControlSchema extends DataSourceSchema {
   fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
   defaultFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
   filterWhileProcess?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  bindingFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  bindingFilters?: FilterWithBinding[]; // tungts thêm kiểu dữ liệu defaultFilters là promise
   modifyFilter?: Function;
   autoDisplayFirst?: boolean = false;
   callbackDataFinish?: (evt: EventData) => void;
@@ -308,6 +308,19 @@ export class PopupSize {
   maximize?= false;
 
   constructor(init?: PopupSize) {
+    for (const key in init) {
+      this[key] = init[key];
+    }
+  }
+}
+
+export class DialogModel {
+  showEditForm?: boolean = false;
+  header?: string = '';
+  popupSize?: PopupSize = new PopupSize({ maximize: true });
+  data?: any = {};
+
+  constructor(init?: DialogModel) {
     for (const key in init) {
       this[key] = init[key];
     }
