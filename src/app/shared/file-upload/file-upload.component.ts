@@ -166,8 +166,8 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
             file.saved = true;
             file._id = itemFileSaved._id;
           });
+          this.fireEvent();
         }
-        this.fireEvent();
         resolve(true);
       }
       catch (err) {
