@@ -26,19 +26,15 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
         field: 'idNamHoc',
         label: 'Năm học',
         required: true,
-        width: 6,
+        width: 4,
         service: this._dm_NamHocService,
-        // MẶc định nó sẽ lấy trường 'ten' để hiển thị
-        // Nếu k có trường ten trong model thì e phải khai báo trường e muốn sử dụng để hiển thị
-        // NẾu k nó sẽ bị lỗi như e thấy
-        displayField: 'namHoc'
+        displayField: 'namHoc',
       }),
       new TextControlSchema({
         field: 'hocKy',
         label: 'Học kỳ',
         required: true,
-        width: 6,
-
+        width: 2,
       }),
       new TextControlSchema({
         field: 'tenHocKy',
@@ -52,12 +48,14 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
       new DateTimeControlSchema({
         field: 'tuNgay',
         label: 'Từ ngày',
-        required: true
+        required: true,
+        width: 3
       }),
       new DateTimeControlSchema({
         field: 'denNgay',
         label: 'Đến ngày',
-        required: true
+        required: true,
+        width: 3
       }),
       new DropdownControlSchema({
         field: 'loaiHocKy',
