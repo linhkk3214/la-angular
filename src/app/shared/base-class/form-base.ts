@@ -282,6 +282,7 @@ export abstract class FormBase extends ComponentBase implements OnInit {
 
   private async onInsert() {
     this.setDefaultValue(this.model.data);
+    // Gọi hàm lưu file trước khi thêm mới đối tượng
     const resultSaveFile = await this.crudForm.saveFile();
     if (!resultSaveFile) {
       this.model.submitting = false;
@@ -319,6 +320,7 @@ export abstract class FormBase extends ComponentBase implements OnInit {
 
   private async onUpdate() {
     this.setDefaultValue(this.model.data);
+    // Gọi hàm lưu file trước khi cập nhật đối tượng
     const resultSaveFile = await this.crudForm.saveFile();
     if (!resultSaveFile) {
       this.model.submitting = false;

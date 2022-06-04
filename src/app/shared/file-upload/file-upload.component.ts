@@ -43,6 +43,8 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
     }
   }
 
+  // Hàm write value này là 1 hàm mặc định của angular
+  // Sẽ chạy bất cứ khi nào có dữ liệu mới truyền vào cho file-upload
   writeValue(obj: any): void {
     if (!obj) this.value = [];
     else {
@@ -80,6 +82,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
     }
   }
 
+  // Hàm load file dựa trên các id được truyền vào
   async getFileFromServer() {
     if (!this.rawValue) return;
     const lstFile = (await this._fileService.getAllByFilter([
@@ -108,6 +111,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
           itemFile.originalname.substring(indexDot + 1).toLowerCase()
         )
       }
+      // Chỗ này là xử lí khi file upload xong, sẽ đánh dấu là saved: false để lúc lưu đối tượng sẽ lưu file trước
       this.value.push({
         ...itemFile,
         _id: this.guid(),
@@ -143,6 +147,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
     this.checkDisabled();
   }
 
+  // Hàm lưu file trước khi lưu đối tượng chính
   saveFile(): Promise<boolean> {
     return new Promise(async (resolve, reject) => {
       try {

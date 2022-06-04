@@ -148,6 +148,7 @@ export class DropdownControlSchema extends DataSourceSchema {
 export class DateTimeControlSchema extends ControlSchema {
   appendTo?: string = 'body';
   panelClass?: string = '';
+  showTime?: boolean = false;
   constructor(init?: DateTimeControlSchema) {
     super();
     for (const key in init) {
@@ -169,8 +170,8 @@ export class DateTimeRangeControlSchema extends DateTimeControlSchema {
 
 
 export class FileControlSchema extends ControlSchema {
-  multiple? = true;
-  isAvatar? = false;
+  multiple?= true;
+  isAvatar?= false;
   constructor(init?: FileControlSchema) {
     super();
     for (const key in init) {

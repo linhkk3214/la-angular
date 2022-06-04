@@ -26,7 +26,8 @@
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
-      <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"></datetime-picker>
+      <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"
+        (onChanged)="handleFieldValueChange(schema, $event, 'change')"></datetime-picker>
     </ng-container>
     <ng-container *ngSwitchCase="'MaskControlSchema'">
       <tn-mask [prefix]="schema.prefix" [decimalPlaces]="schema.decimalPlaces" [suffix]="schema.suffix"
