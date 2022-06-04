@@ -77,6 +77,7 @@ export class TextControlSchema extends ControlSchema {
 
 export class MaskControlSchema extends TextControlSchema {
   maskType?: 'decimal' | 'int' = 'int';
+  autoFormat?= true; // Nếu tắt autoformat thì sẽ dùng control input number mặc định của trình duyệt
   min?= 0;
   max?= 9999999999;
   prefix?= '';

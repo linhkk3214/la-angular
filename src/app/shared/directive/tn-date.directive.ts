@@ -16,12 +16,12 @@ export class TnDatePipe implements PipeTransform {
     }
     return value.toString();
   }
-  transform(value: any, dataType: string, format: 'normal' | 'fromNow' = 'fromNow', args?: any): any {
+  transform(value: any, dataType: string, format: 'normal' | 'fromNow' = 'normal', args?: any): any {
     if (dataType == 'date') return this.renderDate(value, format);
     return this.renderDateTime(value, format);
   }
 
-  private renderDateTime(datetime, format: 'normal' | 'fromNow' = 'fromNow') {
+  private renderDateTime(datetime, format: 'normal' | 'fromNow' = 'normal') {
     if (!datetime) {
       return '';
     }
