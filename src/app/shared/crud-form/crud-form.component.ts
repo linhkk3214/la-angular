@@ -57,10 +57,6 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
     this.initLoad();
   }
 
-  handleFileUploaded(evt) {
-    console.log(evt);
-  }
-
   reload() {
     this.initLoad();
   }
@@ -102,7 +98,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit {
       this.initBindingControlSchema(control);
     }
 
-    this._rootNode = new ControlTreeNode(this.data, this.formControls);
+    this._rootNode = new ControlTreeNode(this.data, this.formControls, this);
     this._rootNode.setCrudForm(this);
   }
 

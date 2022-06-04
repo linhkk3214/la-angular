@@ -387,9 +387,10 @@ export class ControlTreeNode {
   private data: any;
   private hasSchema = true;
 
-  constructor(model: any, schemas: [], field?, parentNode?: ControlTreeNode) {
+  constructor(model: any, schemas: [], crudForm: CrudFormComponent, field?, parentNode?: ControlTreeNode) {
     this.data = model;
     this.formControls = schemas;
+    this._crudForm = crudForm;
     if (parentNode) {
       if (parentNode.modelPath != null) {
         if (typeof field === 'string') {
@@ -449,7 +450,7 @@ export class ControlTreeNode {
       const allKey = new Set([...keysPlus, ...Object.keys(model)]);
       for (const key of allKey) {
         if (key != '_status' && key != '_errors' && key != '_source') {
-          const childNode = new ControlTreeNode(model[key], schemas, key, this);
+          const childNode = new ControlTreeNode(model[key], schemas, this._crudForm, key, this);
           this.childNodes.push(childNode);
           this.childNodeDic[childNode.field] = childNode;
         }
@@ -459,7 +460,7 @@ export class ControlTreeNode {
       let i = 0;
       if (model.length > 0) {
         for (const item of model) {
-          const childNode = new ControlTreeNode(item, schemas, i, this);
+          const childNode = new ControlTreeNode(item, schemas, this._crudForm, i, this);
           childNode.parentNode = this;
           this.childNodes.push(childNode);
           this.childNodeDic[childNode.field] = childNode;
@@ -475,6 +476,10 @@ export class ControlTreeNode {
 
   setCrudForm(crudForm: CrudFormComponent) {
     this._crudForm = crudForm;
+  }
+
+  get crudForm() {
+    return this._crudForm;
   }
 
   get parentModel() {

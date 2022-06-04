@@ -58,11 +58,11 @@ export class RequiredFieldsValidator implements IValidator {
   validate(event: EventData) {
     const allRequiredFields = [...this._requiredFields, event.control.field];
     let hasError = true;
-    const parentModel = event.currentNode.parentNode.model;
+    const errors = event.currentNode.crudForm._errors;
     for (const field of allRequiredFields) {
-      const index = parentModel._errors[field].indexOf(this._message);
+      const index = errors[field].indexOf(this._message);
       if (index > -1) {
-        parentModel._errors[field].splice(index, 1);
+        errors[field].splice(index, 1);
       }
 
       const currentNode = event.currentNode.getNodeByPath(field);
@@ -73,7 +73,7 @@ export class RequiredFieldsValidator implements IValidator {
 
     if (hasError) {
       this._requiredFields.forEach(field => {
-        parentModel._errors[field].push(this._message);
+        errors[field].push(this._message);
       });
     }
 
@@ -245,12 +245,13 @@ export class CompareValidator implements IValidator, ICompareValidator {
     const value = event.value;
     let errorMes;
 
+    const errors = event.currentNode.crudForm._errors;
     for (const validator of this._compareControl.validators) {
       if (validator instanceof CompareValidator && validator.compareUniqueField == event.currentNode.control.uniqueField) {
         errorMes = validator.getError(event.currentNode);
-        const index = compareParentModel._errors[compareField].indexOf(errorMes);
+        const index = errors[compareField].indexOf(errorMes);
         if (index > -1) {
-          compareParentModel._errors[compareField].splice(index, 1);
+          errors[compareField].splice(index, 1);
         }
         break;
       }
@@ -268,7 +269,7 @@ export class CompareValidator implements IValidator, ICompareValidator {
 
 
     if (!re && errorMes) {
-      compareParentModel._errors[compareField].push(errorMes);
+      errors[compareField].push(errorMes);
     }
 
     return re;
