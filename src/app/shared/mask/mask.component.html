@@ -4,7 +4,7 @@
     [attr.disabled]="control.disabled ? true : null" [mask]="'separator'" [thousandSeparator]="''"
     [class]="inputStyleClass" [(ngModel)]="model" (focus)="handleFocus()" (blur)="handleBlur()"
     (change)="handleChangedValue()" />
-  <input type="number" pInputText [placeholder]="control.placeholder" [disabled]="control.disabled"
-    [class]="inputStyleClass" [(ngModel)]="model" (change)="handleChangedValue()" />
+  <input *ngIf="!control.autoFormat" type="number" pInputText [placeholder]="control.placeholder"
+    [disabled]="control.disabled" [class]="inputStyleClass" [(ngModel)]="model" (change)="handleChangedValue()" />
   <span *ngIf="control.suffix" class="p-inputgroup-addon">({{control.suffix}})</span>
 </div>
