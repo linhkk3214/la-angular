@@ -144,6 +144,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
 
   removeRow(index: number) {
     this.value.splice(index, 1);
+    this.fireEvent();
     this.checkDisabled();
   }
 
@@ -156,7 +157,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
           if (file.saved) return;
           lstFileSave.push({ ...file, _id: null, tempId: file._id });
         });
-        if (lstFileSave) {
+        if (lstFileSave.length) {
           const resultSaveFile = (await this._fileService.saveFile(lstFileSave)).data;
           if (!resultSaveFile) resolve(false);
           this.value.forEach(file => {
