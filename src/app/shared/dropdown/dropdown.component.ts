@@ -37,6 +37,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
 
   dataSourceInternal: any[] = [];
+  extraFields: string[];
   changedDataSource = false;
   required = false;
   rootClass = '';
@@ -64,6 +65,9 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     this.control._component = this;
     if (!this.control.placeholder) {
       this.control.placeholder = `Chọn ${this.control.label}`;
+    }
+    if (this.control.fieldPlus) {
+      this.extraFields = this.control.fieldPlus.split(',').filter(q => !!q).map(q => q.trim());
     }
     if (this.control.service) {
       if (this.control.isServerLoad) {
@@ -161,7 +165,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     });
   }
 
-  reStructureItemObject(item: { [key: string]: any }, extraFields?: string[]): SelectItem {
+  reStructureItemObject(item: { [key: string]: any }): SelectItem {
     const op: any = {};
     if (item[this.control.displayField as string]) {
       op['label'] = item[this.control.displayField as string];
@@ -176,8 +180,8 @@ export class DropdownComponent extends ComponentBase implements OnInit {
       op['value'] = item['value'];
     }
 
-    if (extraFields) {
-      extraFields.forEach(f => {
+    if (this.extraFields) {
+      this.extraFields.forEach(f => {
         op[f] = item[f];
       });
     }

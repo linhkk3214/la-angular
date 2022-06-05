@@ -11,6 +11,7 @@ import { ToastModule } from 'primeng/toast';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DefaultSettingComponent } from './components/default-setting/default-setting.component';
 import { LAMenuComponent } from './components/layout/la-menu/la-menu.component';
 import { LoginComponent } from './components/login/login.component';
 import { UserModule } from './components/user/user.module';
@@ -22,7 +23,8 @@ import { SharedModule } from './shared/shared.module';
     AppComponent,
     DashboardComponent,
     LoginComponent,
-    LAMenuComponent
+    LAMenuComponent,
+    DefaultSettingComponent
   ],
   imports: [
     BrowserModule,

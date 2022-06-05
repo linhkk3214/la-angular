@@ -16,7 +16,7 @@
         <a href="javascript:" tabindex="{{isFirst()?'-1':''}}"><i class="pi pi-chevron-left"></i></a>
       </div>
       <div class="block-page-size">
-        <tn-mask [maskType]="'int'" [min]="1" [max]="1000" [disabled]="model.loading ? true : null"
+        <tn-mask [control]="pageSizeControl" [disabled]="model.loading ? true : null"
           [(ngModel)]="setting.pageSetting.pageSize" (onChanged)="saveChangeHandle()"
           (keyup.enter)="saveChangeHandle()">
         </tn-mask>

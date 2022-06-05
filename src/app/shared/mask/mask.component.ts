@@ -1,6 +1,7 @@
 import { DecimalPipe } from '@angular/common';
 import { Component, EventEmitter, forwardRef, Input, LOCALE_ID, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { MaskControlSchema } from '../models/schema';
 
 @Component({
   selector: 'tn-mask',
@@ -20,20 +21,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   onChange: Function;
   onTouched: Function;
 
-  @Input() maskType: 'decimal' | 'int' = 'decimal';
-  _placeholder: string = '';
-  @Input() set placeholder(value: string) {
-    if (value == null)
-      value = '';
-    this._placeholder = value;
-  }
-  @Input() disabled: boolean = null;
-  @Input() suffix = '';
-  @Input() prefix = '';
-  @Input() min: number;
-  @Input() max: number;
-  @Input() decimalPlaces = 2;
-  @Input() viewMode = false;
+  @Input() control: MaskControlSchema;
   @Input() inputStyleClass = '';
 
   @Output() onFocus = new EventEmitter<any>();
@@ -42,17 +30,25 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
 
   model: any;
   value: Number;
+  maskFormat: string;
+  thousandSeperator = '.';
 
   constructor(
     private _numberPipe: DecimalPipe
   ) { }
 
   ngOnInit() {
+    this.maskFormat = this.getMaskByType();
   }
 
   writeValue(obj: any): void {
     if (obj) {
-      this.model = this._numberPipe.transform(obj, '', 'vi-VN');
+      if (this.control.autoFormat) {
+        this.model = this._numberPipe.transform(obj, '', 'vi-VN');
+      }
+      else {
+        this.model = obj.toString();
+      }
       this.value = Number(this.model);
     }
     else if (obj === 0) {
@@ -64,14 +60,10 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  getMaskByType(maskType) {
-    if (maskType === 'decimal')
-      return `separator.${this.decimalPlaces}`;
+  getMaskByType() {
+    if (this.control.maskType === 'decimal')
+      return `separator.${this.control.decimalPlaces}`;
     return 'separator.0';
-  }
-
-  getThousandSeperator() {
-    return '.';
   }
 
   handleFocus() {
@@ -92,13 +84,13 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
     if (this.model) {
       this.value = Number(this.model);
 
-      if (this.min && this.value < this.min) {
-        this.value = this.min;
+      if (this.control.min && this.value < this.control.min) {
+        this.value = this.control.min;
         this.model = this.numberToStringVN(this.value);
         this.onChange(this.value);
       }
-      else if (this.max && this.value > this.max) {
-        this.value = this.max;
+      else if (this.control.max && this.value > this.control.max) {
+        this.value = this.control.max;
         this.model = this.numberToStringVN(this.value);
         this.onChange(this.value);
       }
@@ -120,8 +112,8 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   }
   setDisabledState?(isDisabled: boolean): void {
     if (!isDisabled)
-      this.disabled = null;
+      this.control.disabled = null;
     else
-      this.disabled = true;
+      this.control.disabled = true;
   }
 }

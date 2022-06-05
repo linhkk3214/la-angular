@@ -1,4 +1,5 @@
 import { Operator } from "./enums";
+import { ControlSchema } from "./schema";
 
 export class GridInfo {
   fields?: string;
@@ -60,6 +61,16 @@ export class Filter {
   filters?: Filter[] = [];
 
   constructor(init?: Filter) {
+    for (const key in init) {
+      this[key] = init[key];
+    }
+  }
+}
+
+export class FilterWithBinding extends Filter {
+  sourceValueField?: string;
+  constructor(init?: FilterWithBinding) {
+    super();
     for (const key in init) {
       this[key] = init[key];
     }

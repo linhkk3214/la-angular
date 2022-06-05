@@ -1,8 +1,9 @@
 import { Directive, Injector, QueryList, TemplateRef } from "@angular/core";
 import { ConfirmationService, MessageService } from "primeng/api";
-import { Filter } from "../models/grid-info";
+import { KeyStorageDefaultSetting, PrefixFieldObjectDropdown } from "src/app/models/const";
 import { v4 as uuidv4 } from 'uuid';
 import { Operator } from "../models/enums";
+import { Filter, FilterWithBinding } from "../models/grid-info";
 
 @Directive({
   providers: [MessageService, ConfirmationService]
@@ -58,7 +59,7 @@ export abstract class ComponentBase {
   }
 
   newBindingFilter(column: string, operator: Operator, sourceField: string, subField?: string) {
-    return new Filter({
+    return new FilterWithBinding({
       field: column,
       operator,
       sourceField,
@@ -82,8 +83,18 @@ export abstract class ComponentBase {
       : null;
   }
 
-
   guid() {
     return uuidv4();
+  }
+
+  getDefaultSetting() {
+    const jsonDefaultSetting = localStorage.getItem(KeyStorageDefaultSetting);
+    if (!jsonDefaultSetting) return {};
+    const defaultSetting = JSON.parse(jsonDefaultSetting);
+    return {
+      namHoc: defaultSetting.namHoc,
+      idNamHoc: defaultSetting[`${PrefixFieldObjectDropdown}namHoc`]._id,
+      idHocKy: defaultSetting.idHocKy
+    }
   }
 }

@@ -4,7 +4,8 @@ import { ListBase } from '../../shared/base-class/list-base';
 import { DM_HocKyService } from './services/dm-hocky.service';
 import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 import { DataSourceLoaiHocKy } from './models/const';
-import { DataType } from 'src/app/shared/models/enums';
+import { DataType, Operator } from 'src/app/shared/models/enums';
+import { GridInfo } from 'src/app/shared/models/grid-info';
 
 @Component({
   selector: 'dm-hocky',
@@ -62,5 +63,11 @@ export class DM_HocKyComponent extends ListBase implements OnInit {
       }),
     ];
     super.ngOnInit();
+  }
+
+  override async modifyGridInfo(gridInfo: GridInfo) {
+    if (this.defaultSetting.idNamHoc) {
+      gridInfo.filters.push(this.newFilter('idNamHoc', Operator.equal, this.defaultSetting.idNamHoc));
+    }
   }
 }

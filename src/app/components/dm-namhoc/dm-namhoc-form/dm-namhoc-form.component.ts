@@ -24,6 +24,7 @@ export class DM_NamHocFormComponent extends FormBase implements OnInit {
       new MaskControlSchema({
         field: 'nam',
         label: 'Năm học',
+        autoFormat: false,
         required: true,
         width: 6
       }),
@@ -48,5 +49,10 @@ export class DM_NamHocFormComponent extends FormBase implements OnInit {
         width: 12
       })
     ];
+  }
+
+  override onBeforeSave() {
+    const nam = Number(this.model.data.nam);
+    this.model.data.namHoc = `${nam} - ${nam + 1}`;
   }
 }

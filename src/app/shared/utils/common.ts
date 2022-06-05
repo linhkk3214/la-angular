@@ -66,24 +66,19 @@ export function isSameArray(array1: any[], array2: any[]) {
   return true;
 }
 
-export function mergeJSON(target, sourceRaw) {
-  const source = clone(sourceRaw);
+export function mergeJSON(target, source) {
   if (isObjectOld(source)) {
     for (const key in source) {
-      if (isObjectOld(source[key])) {
-        if (!isObjectOld(target[key])) {
-          target[key] = source[key];
-        }
-        else {
-          mergeJSON(target[key], source[key]);
-        }
+      if (!target[key] || !isObjectOld(target[key])) {
+        target[key] = {};
       }
-      else {
-        target[key] = source[key];
-      }
+      target[key] = mergeJSON(target[key], source[key]);
     }
+    return target;
   }
-  return target;
+  else {
+    return source;
+  }
 };
 
 function isObjectOld(obj) {
@@ -91,9 +86,4 @@ function isObjectOld(obj) {
   const s = JSON.stringify(obj);
   if (s && s.startsWith('{')) return true;
   return false;
-};
-
-function clone(obj) {
-  if (obj) return JSON.parse(JSON.stringify(obj));
-  return null;
 };

@@ -28,6 +28,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
   setting: ListSetting = new ListSetting();
   model: ListData = new ListData();
   countReady: number = 0;
+  defaultSetting: any = {};
 
   formModel: CrudFormData = new CrudFormData();
   showDetailForm: boolean = false;
@@ -42,7 +43,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
       this.toastWarning('Bạn chưa cấu hình base service cho danh sách');
       return;
     }
-
+    this.defaultSetting = this.getDefaultSetting();
   }
 
   ngAfterViewInit(): void {

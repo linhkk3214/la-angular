@@ -23,7 +23,12 @@
       <div class="content-menu-in-header"><i class="pi pi-building" style="margin-right: 5px;"></i>Hệ thống usmart</div>
     </div>
     <div class="content-header">
-      <div class="fit"></div>
+      <div class="fit">
+        <div class="default-setting" (click)="showDefaultSetting()">
+          <ng-container *ngIf="!textSetting">Cấu hình mặc định</ng-container>
+          <ng-container *ngIf="textSetting">{{textSetting}}</ng-container>
+        </div>
+      </div>
       <div class="button-container">
         <div class="button-notify" pTooltip="Thông báo">
           <button type="button" pButton icon="pi pi-bell" class="p-button-text p-button-rounded"></button>
@@ -34,7 +39,8 @@
       </div>
       <div class="user-info" [class.show-context]="showContext" (click)="showContextMenuUser()">
         <span>{{user.ten}}</span>
-        <img onerror="this.src='https://icons-for-free.com/download-icon-avatar+human+people+profile+user+icon-1320168139431219590_512.png'"
+        <img
+          onerror="this.src='https://icons-for-free.com/download-icon-avatar+human+people+profile+user+icon-1320168139431219590_512.png'"
           [src]="user.srcAvatar" />
         <div class="context-menu-user">
           <div><i class="pi pi pi-user-edit"></i>Thông tin</div>
@@ -79,3 +85,9 @@
 <ng-template #contentRoute>
   <router-outlet></router-outlet>
 </ng-template>
+<tn-dialog *ngIf="settingDialogModel.showEditForm" #dialog [header]="settingDialogModel.header"
+  [popupSize]="settingDialogModel.popupSize" (onHide)="settingDialogModel.showEditForm = false">
+  <default-setting #formBase [model]="settingDialogModel.data" (onSaved)="settingDialogModel.showEditForm = false;"
+    (onCancel)="settingDialogModel.showEditForm = false">
+  </default-setting>
+</tn-dialog>

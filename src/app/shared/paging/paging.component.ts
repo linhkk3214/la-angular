@@ -1,6 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { OverlayPanel } from 'primeng/overlaypanel';
-import { ListData, ListSetting } from '../models/schema';
+import { ListData, ListSetting, MaskControlSchema } from '../models/schema';
 
 @Component({
   selector: 'paging',
@@ -22,6 +22,10 @@ export class PagingComponent implements OnInit {
 
   targetOverlay: ElementRef;
   pageSizeOld: number;
+  pageSizeControl = new MaskControlSchema({
+    min: 1,
+    max: 1000
+  });
 
   constructor() {
   }
