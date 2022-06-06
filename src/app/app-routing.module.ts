@@ -84,6 +84,18 @@ const routes: Routes = [
     path: 'dm-trinhdodaotao',
     loadChildren: () => import('../app/components/dm-trinhdodaotao/dm-trinhdodaotao.module').then(m => m.DM_TrinhDoDaoTaoModule)
   },
+  {
+    path: 'dm-nganh',
+    loadChildren: () => import('../app/components/dm-nganh/dm-nganh.module').then(m => m.DM_NganhModule)
+  },
+  {
+    path: 'dm-khoavien',
+    loadChildren: () => import('../app/components/dm-khoavien/dm-khoavien.module').then(m => m.DM_KhoaVienModule)
+  },
+  {
+    path: 'dm-chuongtrinhdaotao',
+    loadChildren: () => import('../app/components/dm-chuongtrinhdaotao/dm-chuongtrinhdaotao.module').then(m => m.DM_ChuongTrinhDaoTaoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
