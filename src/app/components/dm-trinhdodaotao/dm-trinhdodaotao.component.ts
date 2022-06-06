@@ -13,7 +13,8 @@ export class DM_TrinhDoDaoTaoComponent extends ListBase implements OnInit {
     new TabViewData({
       code: 'thongTinChung',
       icon: 'pi pi-sliders-h',
-      label: 'Thông tin chung'
+      label: 'Thông tin chung',
+      useScrollbar: true
     }),
     new TabViewData({
       code: 'danhSach',

@@ -334,11 +334,12 @@ export class TabViewData {
   label?: string;
   headerStyleClass?: string;
   active?: boolean;
+  useScrollbar?= false;
 
   constructor(init?: TabViewData) {
-      for (const key in init) {
-          this[key] = init[key];
-      }
+    for (const key in init) {
+      this[key] = init[key];
+    }
   }
 }
 

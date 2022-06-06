@@ -20,7 +20,6 @@ export class TnTabViewComponent extends ComponentBase implements OnInit, AfterCo
         this.currentTabIndex = value;
     };
     @Input() isDynamicHeight: boolean = false;
-    @Input() useScrollbar: boolean = false;
     @Output() onTabChange = new EventEmitter<any>();
     @Output() activeIndexChange = new EventEmitter<any>();
     template: { [key: string]: TemplateRef<any> } = {};
