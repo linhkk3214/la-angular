@@ -104,6 +104,10 @@ const routes: Routes = [
     path: 'dotnhaphoc',
     loadChildren: () => import('../app/components/dotnhaphoc/dotnhaphoc.module').then(m => m.DotNhapHocModule)
   },
+  {
+    path: 'dotnhaphoc-hoso',
+    loadChildren: () => import('../app/components/dotnhaphoc-hoso/dotnhaphoc-hoso.module').then(m => m.DotNhapHoc_HoSoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

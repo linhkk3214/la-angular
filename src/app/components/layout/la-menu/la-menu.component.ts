@@ -20,7 +20,14 @@ export class LAMenuComponent implements OnInit {
         this.lstMenu = [
           {
             path: '',
-            label: 'Quản lý nhập học'
+            label: 'Quản lý nhập học',
+            children: [
+              {
+                "path": "/dotnhaphoc",
+                "label": "Đợt nhập học"
+              }
+
+            ]
           },
           ...lstMenu
         ];

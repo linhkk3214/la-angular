@@ -22,8 +22,8 @@ export class DotNhapHocComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'đợt nhập học';
     this.setting.service = this._dotnhaphocService;
-    this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 650;
+    /* this.setting.popupSize.width = 1100;
+    this.setting.popupSize.height = 650; */
     this.setting.cols = [
       new ColumnSchema({
         field: 'idKhoaHoc',

@@ -5,7 +5,8 @@
   },
   {
     "path": "/nguoi-hoc",
-    "label": "Hồ sơ người học"
+    "label": "Hồ sơ người học",
+    "children": []
   },
   {
     "path": "",
