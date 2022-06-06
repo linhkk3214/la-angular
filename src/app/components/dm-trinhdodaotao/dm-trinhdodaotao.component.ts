@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { ColumnSchema, DropdownControlSchema } from '../../shared/models/schema';
+import { ColumnSchema, DropdownControlSchema, TabViewData } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
 import { DM_TrinhDoDaoTaoService } from './services/dm-trinhdodaotao.service';
 
@@ -9,6 +9,19 @@ import { DM_TrinhDoDaoTaoService } from './services/dm-trinhdodaotao.service';
   styleUrls: ['./dm-trinhdodaotao.component.scss']
 })
 export class DM_TrinhDoDaoTaoComponent extends ListBase implements OnInit {
+  mainTabData: any[] = [
+    new TabViewData({
+      code: 'thongTinChung',
+      icon: 'pi pi-sliders-h',
+      label: 'Thông tin chung',
+      useScrollbar: true
+    }),
+    new TabViewData({
+      code: 'danhSach',
+      icon: 'pi pi-sliders-h',
+      label: 'Danh sách'
+    })
+  ];
   constructor(
     injector: Injector,
     private _dm_TrinhDoDaoTaoService: DM_TrinhDoDaoTaoService

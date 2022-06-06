@@ -21,6 +21,7 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
+import { TabViewModule } from 'primeng/tabview';
 import { AfterViewCheckedComponent } from './after-view-checked/after-view-checked.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudListComponent } from './crud-list/crud-list.component';
@@ -32,6 +33,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MaskComponent } from './mask/mask.component';
 import { NumberPickerRangeComponent } from './number-picker-range/number-picker-range.component';
 import { PagingComponent } from './paging/paging.component';
+import { TnTabViewComponent } from './tabview/tabview.component';
 import { DatetimePickerRangeComponent } from './tn-datetime-picker-range/tn-datetime-picker-range.component';
 import { TnDialogComponent } from './tn-dialog/tn-dialog.component';
 import { TnScrollBarComponent } from './tn-scrollbar/tn-scrollbar.component';
@@ -56,6 +58,7 @@ const declarations: any = [
   DatetimePickerRangeComponent,
   PagingComponent,
   TnDialogComponent,
+  TnTabViewComponent,
 
   TnDatePipe,
 
@@ -90,7 +93,8 @@ const declarations: any = [
     ButtonModule,
     OverlayPanelModule,
     ConfirmDialogModule,
-    DialogModule
+    DialogModule,
+    TabViewModule
   ],
   exports: [
     ...declarations,
