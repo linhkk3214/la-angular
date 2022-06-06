@@ -81,7 +81,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   }
 
   checkValueInRange() {
-    if (this.model) {
+    if (this.model !== null && this.model !== undefined && this.model !== '') {
       this.value = Number(this.model);
 
       if (this.control.min && this.value < this.control.min) {

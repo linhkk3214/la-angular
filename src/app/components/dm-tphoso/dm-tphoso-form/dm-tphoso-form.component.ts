@@ -30,7 +30,8 @@ export class DM_TpHoSoFormComponent extends FormBase implements OnInit {
       new DropdownControlSchema({
         field: 'idLoaiGiayTo',
         label: 'Loại giấy tờ',
-        service: this._dm_LoaiGiayToService
+        service: this._dm_LoaiGiayToService,
+        required: true
       }),
       new TextControlSchema({
         field: 'ten',
@@ -40,19 +41,9 @@ export class DM_TpHoSoFormComponent extends FormBase implements OnInit {
       }),
       new TextControlSchema({
         field: 'tenKhiNopOnline',
-        label: 'Tên khi nộp online'
-      }),
-      new TextControlSchema({
-        field: 'soLuongBanChinh',
-        label: 'Số lượng bản chính'
-      }),
-      new TextControlSchema({
-        field: 'soLuongBanSao',
-        label: 'Số lượng bản sao'
-      }),
-      new TextControlSchema({
-        field: 'soLuongBanCC',
-        label: 'Số lượng bản công chứng'
+        label: 'Tên khi nộp online',
+        width: 12,
+        required: true,
       }),
       new TextAreaControlSchema({
         field: 'ghiChu',

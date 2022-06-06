@@ -29,6 +29,9 @@
       <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"
         (onChanged)="handleFieldValueChange(schema, $event, 'change')"></datetime-picker>
     </ng-container>
+    <ng-container *ngSwitchCase="'CheckBoxControlSchema'">
+      <p-checkbox [binary]="true" [(ngModel)]="data[schema.field]" [label]="schema.label"></p-checkbox>
+    </ng-container>
     <ng-container *ngSwitchCase="'MaskControlSchema'">
       <tn-mask [control]="schema" [(ngModel)]="data[schema.field]">
       </tn-mask>

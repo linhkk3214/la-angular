@@ -1,5 +1,9 @@
 [
   {
+    "path": "/dotnhaphoc",
+    "label": "Đợt nhập học"
+  },
+  {
     "path": "/nguoi-hoc",
     "label": "Hồ sơ người học"
   },

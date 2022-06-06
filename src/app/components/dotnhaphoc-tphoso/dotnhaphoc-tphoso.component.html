@@ -6,8 +6,8 @@
 </div>
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
-  [popupSize]="setting.popupSize" [useDefaultScrollBar]="true" (onHide)="showDetailForm = false">
-  <dm-trinhdodaotao-form #formBase [parentSetting]="setting" [model]="formModel"
+  [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
+  <dotnhaphoc-tphoso-form #formBase [parentSetting]="setting" [model]="formModel" [idDotNhapHoc]="idDotNhapHoc"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
-  </dm-trinhdodaotao-form>
+  </dotnhaphoc-tphoso-form>
 </tn-dialog>

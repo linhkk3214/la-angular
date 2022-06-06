@@ -1,6 +1,7 @@
 import { Directive, ElementRef, EventEmitter, Injector, Input, OnDestroy, OnInit, Output, TemplateRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FileUpload } from 'primeng/fileupload';
+import { PrefixFieldObjectDropdown } from 'src/app/models/const';
 import { CrudFormComponent } from '../crud-form/crud-form.component';
 import { FormState } from '../models/enums';
 import { ResponseResult } from '../models/response-result';
@@ -309,8 +310,18 @@ export abstract class FormBase extends ComponentBase implements OnInit {
       });
   }
 
+  getMinimizedModel() {
+    const model = { ...this.model.data };
+    Object.keys(model).forEach(key => {
+      if (key.startsWith(PrefixFieldObjectDropdown)) {
+        delete model[key];
+      }
+    });
+    return model;
+  }
+
   getPromiseActionInsert(): Promise<ResponseResult> {
-    return this.setting.service.insert(this.model.data);
+    return this.setting.service.insert(this.getMinimizedModel());
   }
 
   handleInsertError() {
@@ -351,7 +362,7 @@ export abstract class FormBase extends ComponentBase implements OnInit {
   }
 
   getPromiseActionUpdate(): Promise<ResponseResult> {
-    return this.setting.service.update(this.model.data._id, this.model.data);
+    return this.setting.service.update(this.model.data._id, this.getMinimizedModel());
   }
 
   private setDefaultValue(model) {

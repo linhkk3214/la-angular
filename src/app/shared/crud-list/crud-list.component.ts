@@ -4,11 +4,10 @@ import { Table } from "primeng/table";
 import { Subject } from "rxjs";
 import { ComponentBase } from "../base-class/component-base";
 import { FieldOrderCrudList, KeyFieldGetRefType } from "../models/const";
-import { ControlType, DataType, EnumGetRefType, Operator } from "../models/enums";
+import { ControlType, DataType, EnumGetRefType, Operator, TextAlign } from "../models/enums";
 import { Filter, GridInfo, Sort } from "../models/grid-info";
 import { ColumnSchema, DateTimeRangeControlSchema, DropdownControlSchema, ListData, ListSetting } from "../models/schema";
 import { TnScrollBarComponent } from "../tn-scrollbar/tn-scrollbar.component";
-import { isArray, isLiteralObject } from "../utils/common";
 import { getFilterFromTemplate } from "../utils/crud";
 
 @Component({
@@ -97,6 +96,8 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
   _sortDir: -1 | 0 | 1 | 2 = -1;
   fieldOrder = FieldOrderCrudList;
 
+  textAlign = TextAlign;
+
   constructor(
     public _injector: Injector,
     public _datePipe: DatePipe
@@ -166,6 +167,9 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
     for (const column of cols) {
       if (column.rawColumn) {
         continue;
+      }
+      if (column.dataType == DataType.boolean) {
+        column.textAlign = TextAlign.Center;
       }
       temp.push(column);
       if (column.dataType == null || column.dataType == undefined || column.dataType == '') {

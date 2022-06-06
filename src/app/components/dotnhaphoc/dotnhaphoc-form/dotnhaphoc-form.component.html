@@ -1,5 +1,16 @@
-<crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
-</crud-form>
+<div style="height: 100%">
+  <tn-tabview [data]="mainTabData">
+    <ng-template #thongTinChung>
+      <crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
+      </crud-form>
+    </ng-template>
+    <ng-template #danhSach>
+      <dotnhaphoc-tphoso [idDotNhapHoc]="model.data._id">
+      </dotnhaphoc-tphoso>
+    </ng-template>
+  </tn-tabview>
+</div>
+
 <ng-template #buttonTemplate>
   <button *ngIf="!model.data.__disableEdit && !__isFormView" type="button" pButton icon="pi pi-save"
     class="p-button-text" [label]="'Lưu'" (click)="_handleSave($event)"></button>

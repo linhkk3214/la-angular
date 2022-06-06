@@ -74,3 +74,9 @@ export enum FormState {
   VIEW = 1,
   EDIT = 2
 }
+
+export enum TextAlign {
+  Left = 1,
+  Center = 2,
+  Right = 3
+}

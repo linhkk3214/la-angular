@@ -2,7 +2,7 @@ import { IValidator } from "../base-class/validators";
 import { CrudFormComponent } from "../crud-form/crud-form.component";
 import { BaseService } from "../services/base.service";
 import { isArray, isLiteralObject } from "../utils/common";
-import { ControlType, DataType, FormState, HeightType } from "./enums";
+import { ControlType, DataType, FormState, HeightType, TextAlign } from "./enums";
 import { Filter, FilterWithBinding, Sort } from "./grid-info";
 
 export class FormSchema {
@@ -68,6 +68,15 @@ export class TextControlSchema extends ControlSchema {
   placeholder?: string = '';
   dataFormat?: 'text' | 'password' | 'email' | 'phone' | 'fax' = 'text';
   constructor(init?: TextControlSchema) {
+    super();
+    for (const key in init) {
+      this[key] = init[key];
+    }
+  }
+}
+
+export class CheckBoxControlSchema extends ControlSchema {
+  constructor(init?: TextAreaControlSchema) {
     super();
     for (const key in init) {
       this[key] = init[key];
@@ -191,9 +200,11 @@ export class ColumnSchema extends DataSourceSchema {
   rawColumn?: ColumnSchema;
   dataType?: DataType | string;
   dataTypeRefField?: DataType | string;
+  disableCheckBox? = true;
   controlType?: ControlType = ControlType.textbox;
   displayFieldInGrid?: string;
   separator?= ', ';
+  textAlign?: TextAlign = TextAlign.Left;
   funcGetRefDataRow?: (refItems) => {};
   funcSetValueRow?: (rowItem, data) => void;
   constructor(init?: ColumnSchema) {
@@ -233,7 +244,7 @@ export class ListSetting {
   hiddenFilterRow?: boolean = false;
 
   popupHeader?: string;
-  popupSize?: PopupSize;
+  popupSize?: PopupSize = new PopupSize();
 
   constructor(init?: ListSetting) {
     for (const key in init) {

@@ -1,11 +1,11 @@
-import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, MaskControlSchema, DateTimeControlSchema } from 'src/app/shared/models/schema';
+import { Component, Injector, OnInit } from '@angular/core';
+import { Operator } from 'src/app/shared/models/enums';
+import { DateTimeControlSchema, DropdownControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
 import { DM_DonViLienKetService } from '../../dm-donvilienket/services/dm-donvilienket.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
-import { DM_TrinhDoDaoTaoService } from '../../dm-trinhdodaotao/services/dm-trinhdodaotao.service';
 import { DotNhapHocService } from '../services/dotnhaphoc.service';
 
 @Component({
@@ -14,6 +14,19 @@ import { DotNhapHocService } from '../services/dotnhaphoc.service';
   styleUrls: ['./dotnhaphoc-form.component.scss']
 })
 export class DotNhapHocFormComponent extends FormBase implements OnInit {
+  mainTabData: any[] = [
+    new TabViewData({
+      code: 'thongTinChung',
+      icon: 'pi pi-sliders-h',
+      label: 'Thông tin chung',
+      useScrollbar: true
+    }),
+    new TabViewData({
+      code: 'danhSach',
+      icon: 'pi pi-sliders-h',
+      label: 'Danh sách'
+    })
+  ];
   constructor(
     injector: Injector,
     private _dotnhaphocService: DotNhapHocService,
@@ -39,10 +52,13 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         label: 'Khóa học',
         service: this._dm_KhoaHocService,
         required: true,
+        bindingFilters: [
+          this.newBindingFilter('idHeDaoTao', Operator.equal, 'idHeDaoTao')
+        ],
       }),
       new TextControlSchema({
         field: 'ma',
-        label: 'Mã',
+        label: 'Mã đợt',
         required: true,
         width: 6
       }),
@@ -70,7 +86,12 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         field: 'idDonViLienKet',
         label: 'Đơn vị liên kết',
         service: this._dm_DonViLienKetService
-      })
+      }),
+      new TextAreaControlSchema({
+        field: 'ghiChu',
+        label: 'Ghi chú',
+        width: 12
+      }),
     ];
   }
 }

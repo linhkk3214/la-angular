@@ -44,21 +44,6 @@ export class DM_TpHoSoComponent extends ListBase implements OnInit {
         label: 'Tên khi nộp online',
         fullTextSearch: true
       }),
-      new ColumnSchema({
-        field: 'soLuongBanChinh',
-        label: 'Số lượng bản chính',
-        fullTextSearch: true
-      }),
-      new ColumnSchema({
-        field: 'soLuongBanSao',
-        label: 'Số lượng bản sao',
-        fullTextSearch: true
-      }),
-      new ColumnSchema({
-        field: 'soLuongBanCC',
-        label: 'Số lượng bản công chứng',
-        fullTextSearch: true
-      }),
     ];
     super.ngOnInit();
   }

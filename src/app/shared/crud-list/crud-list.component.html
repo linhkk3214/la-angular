@@ -141,6 +141,7 @@
     </th>
     <ng-container *ngFor="let col of columns; let i = index">
       <th *ngIf="col && col.visible && col.field!='function'" [pTooltip]="col.title" tooltipStyleClass="unset-width"
+        [class.center]="col.textAlign == textAlign.Center" [class.right]="col.textAlign == textAlign.Right"
         [class.first-th]="i==0" [escape]="false" tooltipPosition="top" [tnSortableColumn]="col.field"
         [tnSortableColumnDisabled]="!col.sort">
         <ng-container *ngTemplateOutlet="contentTh; context: {$implicit: col}"></ng-container>
@@ -285,7 +286,9 @@
 <ng-template #contentTd let-rowData let-col="col" let-index="index" let-expanded="expanded" let-i="i">
   <td *ngIf="col && col.visible && col.field != 'function' && (!rowData.hidden || !rowData.hidden[col.field])"
     [attr.colSpan]="rowData.colSpan && rowData.colSpan[col.field]"
-    [attr.rowSpan]="rowData.rowSpan && rowData.rowSpan[col.field]" [class]="col.cellClass" [class.first-td]="i == 0">
+    [attr.rowSpan]="rowData.rowSpan && rowData.rowSpan[col.field]" [class]="col.cellClass"
+    [class.center]="col.textAlign == textAlign.Center" [class.right]="col.textAlign == textAlign.Right"
+    [class.first-td]="i == 0">
     <ng-container [ngTemplateOutlet]="contentCell"
       [ngTemplateOutletContext]="getContextCell(rowData, index, col, expanded, this)">
     </ng-container>

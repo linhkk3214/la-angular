@@ -7,7 +7,7 @@ export interface IValidator {
 }
 
 function isNotEmpty(value: any, control: ControlSchema): boolean {
-  if (value == null) return false;
+  if (value === null || value === undefined) return false;
   else {
     if (Array.isArray(value)) {
       if (value.length == 0) {

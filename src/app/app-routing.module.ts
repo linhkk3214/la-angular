@@ -9,6 +9,10 @@ const routes: Routes = [
   { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   {
+    path: 'dotnhaphoc',
+    loadChildren: () => import('../app/components/dotnhaphoc/dotnhaphoc.module').then(m => m.DotNhapHocModule)
+  },
+  {
     path: 'user',
     loadChildren: () => import('../app/components/user/user.module').then(m => m.UserModule)
   },

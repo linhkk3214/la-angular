@@ -101,7 +101,8 @@ const declarations: any = [
     ButtonModule,
     InputTextModule,
     TooltipModule,
-    CheckboxModule
+    CheckboxModule,
+    TabViewModule
   ],
   providers: [
     {
