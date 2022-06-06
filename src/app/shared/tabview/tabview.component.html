@@ -1,0 +1,20 @@
+<div [style.height]="height">
+    <p-tabView #tab orientation="top" [styleClass]="styleClass" [activeIndex]="currentTabIndex"
+        (onChange)="handleTabChange($event)">
+        <ng-container *ngFor="let item of data; let i = index">
+            <p-tabPanel *ngIf="!item.hidden" [leftIcon]="item.icon" [header]="item.label"
+                [headerStyleClass]="item.headerStyleClass">
+                <ng-container *ngIf="allowViewAll || currentTabIndex == i">
+                    <tn-scrollbar *ngIf="useScrollbar">
+                        <ng-container *ngTemplateOutlet="template[item.code]; context: {$implicit: item}">
+                        </ng-container>
+                    </tn-scrollbar>
+                    <ng-container *ngIf="!useScrollbar">
+                        <ng-container *ngTemplateOutlet="template[item.code]; context: {$implicit: item}">
+                        </ng-container>
+                    </ng-container>
+                </ng-container>
+            </p-tabPanel>
+        </ng-container>
+    </p-tabView>
+</div>

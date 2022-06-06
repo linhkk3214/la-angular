@@ -327,6 +327,21 @@ export class DialogModel {
   }
 }
 
+export class TabViewData {
+  code?: string;
+  hidden?: boolean = false;
+  icon?: string;
+  label?: string;
+  headerStyleClass?: string;
+  active?: boolean;
+
+  constructor(init?: TabViewData) {
+      for (const key in init) {
+          this[key] = init[key];
+      }
+  }
+}
+
 export class EventData {
   currentNode: ControlTreeNode;
   sourceNode?: ControlTreeNode;

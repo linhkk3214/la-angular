@@ -6,8 +6,17 @@
 </div>
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
-  [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
-  <dm-trinhdodaotao-form #formBase [parentSetting]="setting" [model]="formModel"
-    (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
-  </dm-trinhdodaotao-form>
+  [popupSize]="setting.popupSize" [useDefaultScrollBar]="true" (onHide)="showDetailForm = false">
+  <div style="height: 100%">
+    <tn-tabview [data]="mainTabData">
+      <ng-template #thongTinChung>
+        <dm-trinhdodaotao-form #formBase [parentSetting]="setting" [model]="formModel"
+          (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
+        </dm-trinhdodaotao-form>
+      </ng-template>
+      <ng-template #danhSach>
+        <div>123</div>
+      </ng-template>
+    </tn-tabview>
+  </div>
 </tn-dialog>
