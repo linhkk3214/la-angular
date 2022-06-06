@@ -80,6 +80,10 @@ const routes: Routes = [
     path: 'dm-khoahoc',
     loadChildren: () => import('../app/components/dm-khoahoc/dm-khoahoc.module').then(m => m.DM_KhoaHocModule)
   },
+  {
+    path: 'dm-trinhdodaotao',
+    loadChildren: () => import('../app/components/dm-trinhdodaotao/dm-trinhdodaotao.module').then(m => m.DM_TrinhDoDaoTaoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
