@@ -3,6 +3,7 @@ import { KeyStorageDefaultSetting } from 'src/app/models/const';
 import { Operator } from 'src/app/shared/models/enums';
 import { DropdownControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../shared/base-class/form-base';
+import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_HocKyService } from '../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 
@@ -14,6 +15,7 @@ import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 export class DefaultSettingComponent extends FormBase implements OnInit {
   constructor(
     injector: Injector,
+    private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_NamHocService: DM_NamHocService,
     private _dm_HocKyService: DM_HocKyService,
   ) {
@@ -25,17 +27,25 @@ export class DefaultSettingComponent extends FormBase implements OnInit {
     this.setting.service = this._dm_HocKyService;
     const defaultSetting = this.getDefaultSetting();
     if (defaultSetting) {
+      this.model.data.idHeDaoTao = defaultSetting.idHeDaoTao;
       this.model.data.namHoc = defaultSetting.namHoc;
       this.model.data.idHocKy = defaultSetting.idHocKy;
     }
     this.setting.schema = [
+      new DropdownControlSchema({
+        field: 'idHeDaoTao',
+        label: 'Hệ đào tạo',
+        required: true,
+        width: 12,
+        service: this._dm_HeDaoTaoService,
+        fieldPlus: 'ma'
+      }),
       new DropdownControlSchema({
         field: 'namHoc',
         label: 'Năm học',
         required: true,
         width: 12,
         service: this._dm_NamHocService,
-        displayField: 'namHoc',
         valueField: 'nam',
         fieldPlus: '_id'
       }),
@@ -45,9 +55,11 @@ export class DefaultSettingComponent extends FormBase implements OnInit {
         required: true,
         width: 12,
         service: this._dm_HocKyService,
-        displayField: 'tenHocKy',
         bindingFilters: [
-          this.newBindingFilter('idNamHoc', Operator.equal, 'namHoc', '_id')
+          // Cái này nghĩa là idHoc kỳ sẽ load lại mỗi khi control ['namHoc'] thay đổi
+          // Với filter như sau ['idNamHoc' - là 1 trường của bảng học kỳ] sẽ = (Operator.equal) giá trị [_id] của trường [namHoc]
+          this.newBindingFilter('idNamHoc', Operator.equal, 'namHoc', '_id'),
+          this.newBindingFilter('idHeDaoTao', Operator.equal, 'idHeDaoTao', '_id')
         ]
       })
     ];

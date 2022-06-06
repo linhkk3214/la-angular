@@ -53,6 +53,6 @@ export class DM_NamHocFormComponent extends FormBase implements OnInit {
 
   override onBeforeSave() {
     const nam = Number(this.model.data.nam);
-    this.model.data.namHoc = `${nam} - ${nam + 1}`;
+    this.model.data.ten = `${nam} - ${nam + 1}`;
   }
 }

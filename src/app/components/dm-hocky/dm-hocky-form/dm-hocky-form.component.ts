@@ -1,6 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
+import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
 import { DataSourceLoaiHocKy } from '../models/const';
 import { DM_HocKyService } from '../services/dm-hocky.service';
@@ -15,6 +16,7 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
     injector: Injector,
     private _dm_HocKyService: DM_HocKyService,
     private _dm_NamHocService: DM_NamHocService,
+    private _dm_HeDaoTaoService: DM_HeDaoTaoService,
   ) {
     super(injector);
   }
@@ -23,10 +25,17 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
     this.setting.service = this._dm_HocKyService;
     this.setting.schema = [
       new DropdownControlSchema({
+        field: 'idHeDaoTao',
+        label: 'Hệ đào tạo',
+        required: true,
+        width: 6,
+        service: this._dm_HeDaoTaoService
+      }),
+      new DropdownControlSchema({
         field: 'idNamHoc',
         label: 'Năm học',
         required: true,
-        width: 4,
+        width: 6,
         service: this._dm_NamHocService,
         displayField: 'namHoc',
       }),
@@ -34,10 +43,10 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
         field: 'hocKy',
         label: 'Học kỳ',
         required: true,
-        width: 2,
+        width: 6,
       }),
       new TextControlSchema({
-        field: 'tenHocKy',
+        field: 'ten',
         label: 'Tên học kỳ',
         required: true
       }),

@@ -6,6 +6,7 @@ import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 import { DataSourceLoaiHocKy } from './models/const';
 import { DataType, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
+import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
 
 @Component({
   selector: 'dm-hocky',
@@ -16,6 +17,7 @@ export class DM_HocKyComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
     private _dm_HocKyService: DM_HocKyService,
+    private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_NamHocService: DM_NamHocService
   ) {
     super(injector);
@@ -26,11 +28,16 @@ export class DM_HocKyComponent extends ListBase implements OnInit {
     this.setting.service = this._dm_HocKyService;
     this.setting.cols = [
       new ColumnSchema({
+        field: 'idHeDaoTao',
+        label: 'Hệ đào tạo',
+        width: '300px',
+        service: this._dm_HeDaoTaoService,
+      }),
+      new ColumnSchema({
         field: 'idNamHoc',
         label: 'Năm học',
         width: '300px',
-        service: this._dm_NamHocService,
-        displayField: 'namHoc'
+        service: this._dm_NamHocService
       }),
       new ColumnSchema({
         field: 'hocKy',

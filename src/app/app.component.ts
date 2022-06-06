@@ -64,11 +64,16 @@ export class AppComponent implements OnInit, OnDestroy {
     }
   }
 
+  // Tính toán text hiển thị cấu hình mặc định ở header
   loadTextDefaultSetting() {
     const jsonDefaultSetting = localStorage.getItem(KeyStorageDefaultSetting);
     if (!jsonDefaultSetting) return;
     const defaultSetting = JSON.parse(jsonDefaultSetting);
-    this.textSetting = `${defaultSetting[`${PrefixFieldObjectDropdown}namHoc`].label}/${defaultSetting[`${PrefixFieldObjectDropdown}idHocKy`].label}`;
+    const heDaoTao = defaultSetting[`${PrefixFieldObjectDropdown}idHeDaoTao`].ma;
+    const namHoc = defaultSetting[`${PrefixFieldObjectDropdown}namHoc`].label;
+    const hocKy = defaultSetting[`${PrefixFieldObjectDropdown}idHocKy`].label;
+
+    this.textSetting = `${heDaoTao}/${namHoc}/${hocKy}`;
   }
 
   checkClickOut = evt => {

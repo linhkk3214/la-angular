@@ -40,7 +40,6 @@ export class DM_KhoaHocComponent extends ListBase implements OnInit {
         label: 'Năm học bắt đầu',
         service: this._dm_NamHocService,
         valueField: 'nam',
-        displayField: 'namHoc'
       }),
       new ColumnSchema({
         field: 'idHeDaoTao',

@@ -92,6 +92,7 @@ export abstract class ComponentBase {
     if (!jsonDefaultSetting) return {};
     const defaultSetting = JSON.parse(jsonDefaultSetting);
     return {
+      idHeDaoTao: defaultSetting.idHeDaoTao,
       namHoc: defaultSetting.namHoc,
       idNamHoc: defaultSetting[`${PrefixFieldObjectDropdown}namHoc`]._id,
       idHocKy: defaultSetting.idHocKy

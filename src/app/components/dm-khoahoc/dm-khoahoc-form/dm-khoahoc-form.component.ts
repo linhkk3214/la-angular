@@ -39,7 +39,6 @@ export class DM_KhoaHocFormComponent extends FormBase implements OnInit {
         required: true,
         service: this._dm_NamHocService,
         valueField: 'nam',
-        displayField: 'namHoc'
       }),
       new DropdownControlSchema({
         field: 'idHeDaoTao',
