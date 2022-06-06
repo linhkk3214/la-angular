@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema, MaskControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
@@ -37,9 +37,8 @@ export class DM_HocKyFormComponent extends FormBase implements OnInit {
         required: true,
         width: 6,
         service: this._dm_NamHocService,
-        displayField: 'namHoc',
       }),
-      new TextControlSchema({
+      new MaskControlSchema({
         field: 'hocKy',
         label: 'Học kỳ',
         required: true,

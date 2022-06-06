@@ -44,7 +44,7 @@ export class DM_HocKyComponent extends ListBase implements OnInit {
         label: 'Học kỳ',
       }),
       new ColumnSchema({
-        field: 'tenHocKy',
+        field: 'ten',
         label: 'Tên học kỳ',
         fullTextSearch: true
       }),

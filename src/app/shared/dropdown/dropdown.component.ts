@@ -142,13 +142,14 @@ export class DropdownComponent extends ComponentBase implements OnInit {
       this.selectedValue = null;
     }
     else {
-      if (this.rawValue) {
+      if (evt == null && this.rawValue) {
         this.selectedValue = this.rawValue;
         this.rawValue = null;
       }
       else {
         this.selectedValue = evt;
       }
+      this.rawValue = null;
     }
     if (this.selectedValue != this.selectedValueBefore) {
       this.selectedValueBefore = this.selectedValue;

@@ -195,13 +195,13 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
             if (childDropdown instanceof DropdownControlSchema) {
               childDropdown[KeyFunctionReload] = (event: EventData) => {
                 let needGetData = false;
-                if (childDropdown.allowLoadDataWhenParentNull
-                  || event.eventType == 'adjustValue') {
+                if (childDropdown.allowLoadDataWhenParentNull) {
                   needGetData = true;
                 }
                 else if (event.value == null
                   || event.value == ''
-                  || (event.value instanceof Array && event.value.length == 0)) {
+                  || (event.value instanceof Array && event.value.length == 0)
+                ) {
                   if (childDropdown._component) {
                     childDropdown._component.resetControl();
                   }
@@ -211,7 +211,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
                 }
                 if (needGetData) {
                   const filters = getFilterFromTemplate(tmpFilters, event.parentModel, event.rootModel);
-                  if (childDropdown._component) {
+                  if (filters !== null && childDropdown._component) {
                     childDropdown._component.getData(filters);
                   }
                 }
@@ -438,8 +438,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       try {
         await control.onChanged(eventData);
       }
-      catch {
-      }
+      catch (err) { }
     }
 
     this.onChange.emit(eventData);
@@ -461,7 +460,10 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     }
     this.data[this.getFieldObjectDropdown(schema.field)] = selectedValueObject;
     if (schema.onChanged) {
-      schema.onChanged(eventData);
+      try {
+        schema.onChanged(eventData);
+      }
+      catch (err) { }
     }
   }
 

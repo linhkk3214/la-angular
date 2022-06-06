@@ -59,7 +59,7 @@ export class DefaultSettingComponent extends FormBase implements OnInit {
           // Cái này nghĩa là idHoc kỳ sẽ load lại mỗi khi control ['namHoc'] thay đổi
           // Với filter như sau ['idNamHoc' - là 1 trường của bảng học kỳ] sẽ = (Operator.equal) giá trị [_id] của trường [namHoc]
           this.newBindingFilter('idNamHoc', Operator.equal, 'namHoc', '_id'),
-          this.newBindingFilter('idHeDaoTao', Operator.equal, 'idHeDaoTao', '_id')
+          this.newBindingFilter('idHeDaoTao', Operator.equal, 'idHeDaoTao')
         ]
       })
     ];

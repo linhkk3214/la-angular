@@ -22,7 +22,7 @@ export class DM_NamHocComponent extends ListBase implements OnInit {
     this.setting.service = this._dm_NamHocService;
     this.setting.cols = [
       new ColumnSchema({
-        field: 'namHoc',
+        field: 'ten',
         label: 'Năm học',
         width: '300px',
         fullTextSearch: true

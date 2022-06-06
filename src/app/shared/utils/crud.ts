@@ -3,23 +3,40 @@ import { isArray, isLiteralObject } from "./common";
 
 export function getFilterFromTemplate(templateFilter: FilterWithBinding[], model: any, rootModel?: any) {
   const result = [];
+  let hasNull = false;
   if (Array.isArray(templateFilter)) {
     templateFilter.forEach(f => {
-      deQuyReplaceValue(result, f, model, rootModel);
+      const resultDeQuy = deQuyReplaceValue(result, f, model, rootModel);
+      if (resultDeQuy === null) {
+        hasNull = true;
+      }
     });
   }
   else {
-    deQuyReplaceValue(result, templateFilter, model, rootModel);
+    const resultDeQuy = deQuyReplaceValue(result, templateFilter, model, rootModel);
+    if (resultDeQuy === null) {
+      hasNull = true;
+    }
   }
+  if (hasNull) return null;
   return result;
 }
 
 function deQuyReplaceValue(filters: Filter[], filter: FilterWithBinding, model: any, rootModel?: any) {
-  let valueFilter = getValueFilterFromBindingFilter(filter, model, rootModel);
+  let valueFilter = getValueFilterFromBindingFilter(filter.sourceValueField, filter.subField, model, rootModel);
 
-  if (filter.logic == null && (valueFilter == null || valueFilter === '' || valueFilter.length == 0)) {
-    return;
+  if (filter.logic == null) {
+    if (valueFilter == null) {
+      if (filter.sourceValueField != filter.sourceField) {
+        let valueRaw = getValueFilterFromBindingFilter(filter.sourceField, filter.subField, model, rootModel);
+        // Nếu có value raw nghĩa là control chưa ready
+        if (valueRaw) return null;
+      }
+      return;
+    }
+    else if (valueFilter.length == 0) return;
   }
+
   const tmpFilter = new Filter({
     field: filter.field,
     operator: filter.operator,
@@ -44,10 +61,8 @@ function deQuyReplaceValue(filters: Filter[], filter: FilterWithBinding, model: 
   }
 }
 
-function getValueFilterFromBindingFilter(filter: FilterWithBinding, model: any, rootModel?: any) {
+function getValueFilterFromBindingFilter(sourceField: string, subField: string | number, model: any, rootModel?: any) {
   let valueFilter = null;
-  const sourceField = filter.sourceValueField;
-  const subField = filter.subField;
   const tryGetBySubField = (value) => {
     if (!subField) return value;
     if (isArray(value)) return value.map(q => q[subField]);
@@ -73,7 +88,9 @@ function getValueFilterFromBindingFilter(filter: FilterWithBinding, model: any, 
           break;
         }
       }
-      valueFilter = tryGetBySubField(temp[subField]);
+      if (temp) {
+        valueFilter = tryGetBySubField(temp[subField]);
+      }
     }
   }
   return valueFilter
