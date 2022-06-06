@@ -5,6 +5,7 @@ import { DotNhapHocService } from './services/dotnhaphoc.service';
 import { DataType, Operator } from 'src/app/shared/models/enums';
 import { DM_KhoaHocService } from '../dm-khoahoc/services/dm-khoahoc.service';
 import { GridInfo } from 'src/app/shared/models/grid-info';
+import { DataSourceTrangThai } from './models/const';
 @Component({
   selector: 'dotnhaphoc',
   templateUrl: './dotnhaphoc.component.html',
@@ -50,6 +51,11 @@ export class DotNhapHocComponent extends ListBase implements OnInit {
         label: 'Kết thúc',
         dataType: DataType.date
       }),
+      new ColumnSchema({
+        field: 'trangThai',
+        label: 'Trạng thái',
+        dataSource: DataSourceTrangThai
+      })
     ];
     super.ngOnInit();
   }

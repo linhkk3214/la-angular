@@ -6,6 +6,7 @@ import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao
 import { DM_DonViLienKetService } from '../../dm-donvilienket/services/dm-donvilienket.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
+import { DataSourceTrangThai } from '../models/const';
 import { DotNhapHocService } from '../services/dotnhaphoc.service';
 
 @Component({
@@ -86,6 +87,11 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         field: 'idDonViLienKet',
         label: 'Đơn vị liên kết',
         service: this._dm_DonViLienKetService
+      }),
+      new DropdownControlSchema({
+        field: 'trangThai',
+        label: 'Trạng thái',
+        dataSource: DataSourceTrangThai
       }),
       new TextAreaControlSchema({
         field: 'ghiChu',
