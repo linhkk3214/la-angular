@@ -1,6 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
+import { UserService } from '../../user/services/user.service';
 import { DM_DonViLienKetService } from '../services/dm-donvilienket.service';
 
 @Component({
@@ -11,7 +12,8 @@ import { DM_DonViLienKetService } from '../services/dm-donvilienket.service';
 export class DM_DonViLienKetFormComponent extends FormBase implements OnInit {
   constructor(
     injector: Injector,
-    private _dm_DonViLienKetService: DM_DonViLienKetService
+    private _dm_DonViLienKetService: DM_DonViLienKetService,
+    private _userService: UserService
   ) {
     super(injector);
   }
@@ -19,6 +21,15 @@ export class DM_DonViLienKetFormComponent extends FormBase implements OnInit {
   override ngOnInit(): void {
     this.setting.service = this._dm_DonViLienKetService;
     this.setting.schema = [
+      new DropdownControlSchema({
+        field: 'test',
+        multiple: true,
+        service: this._userService,
+        fieldPlus: 'ho',
+        funcGetLabel: item => {
+          return `${item.ho} ${item.ten}`;
+        }
+      }),
       new TextControlSchema({
         field: 'ma',
         label: 'Mã',

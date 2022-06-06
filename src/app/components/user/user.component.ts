@@ -4,6 +4,7 @@ import { ListBase } from '../../shared/base-class/list-base';
 import { UserService } from './services/user.service';
 import { DM_LoaiGiayToService } from '../dm-loaigiayto/services/dm-loaigiayto.service';
 import { AddressService } from './services/address.service';
+import { DanTocService } from './services/dantoc.service';
 
 @Component({
   selector: 'user',
@@ -14,7 +15,7 @@ export class UserComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
     private _userService: UserService,
-    private _dm_LoaiGiayToService: DM_LoaiGiayToService,
+    private _dantocService: DanTocService,
     private _addressService: AddressService
   ) {
     super(injector);
@@ -25,9 +26,9 @@ export class UserComponent extends ListBase implements OnInit {
     this.setting.service = this._userService;
     this.setting.cols = [
       new ColumnSchema({
-        field: 'ten',
+        field: 'hoVaTen',
         label: 'Họ và tên',
-        fullTextSearch: true
+        fullTextSearch: true,
       }),
       new ColumnSchema({
         field: 'username',
@@ -38,6 +39,12 @@ export class UserComponent extends ListBase implements OnInit {
     ];
     super.ngOnInit();
   }
+
+  // override async beforeRenderDataSource(dataSource: any[]) {
+  //   dataSource.forEach(item => {
+  //     item.hoVaTen = `${item.ho} ${item.ten}`;
+  //   })
+  // }
 
   syncAddress() {
     this._addressService.sync()

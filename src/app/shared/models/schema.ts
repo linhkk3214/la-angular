@@ -110,7 +110,7 @@ export class DataSourceSchema extends ControlSchema {
   initDataByService?: boolean = false;
   valueField?: string = '_id';
   displayField?: string = 'ten';
-  funcGetLabel?: (item: any) => string;
+  funcGetLabel?: (item: any) => string; // Hàm cho phép thay đổi label của các item trong dropdown
   funcCompare?: (item: any, value) => boolean = (item, value) => item[this.valueField] == value;
 
   constructor(init?: DataSourceSchema) {
@@ -207,6 +207,8 @@ export class ColumnSchema extends DataSourceSchema {
 export class ListSetting {
   service?: BaseService;
   cols?: ColumnSchema[] = [];
+  fieldSearchText?: string[] = [];
+  tooltipSearchText?: string = '';
   heightType?: HeightType = HeightType.default;
   hiddenAdd?: boolean = false;
   hiddenDelete?: boolean = false;

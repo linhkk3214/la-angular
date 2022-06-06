@@ -2,10 +2,11 @@ import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator } from '../../../shared/models/enums';
 import { DropdownControlSchema, FileControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
-import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
-import { DM_LoaiGiayToService } from '../../dm-loaigiayto/services/dm-loaigiayto.service';
 import { UserService } from '../services/user.service';
 import { AddressService } from '../services/address.service';
+import { DanTocService } from '../services/dantoc.service';
+import { ReligionService } from '../services/religion.service';
+import { QuocTichService } from '../services/quoctich.service';
 
 @Component({
   selector: 'user-form',
@@ -16,9 +17,10 @@ export class UserFormComponent extends FormBase implements OnInit {
   constructor(
     injector: Injector,
     private _userService: UserService,
-    private _dm_LoaiGiayToService: DM_LoaiGiayToService,
-    private _dm_TpHoSoService: DM_TpHoSoService,
-    private _addressService: AddressService
+    private _addressService: AddressService,
+    private _dantocService: DanTocService,
+    private _tongiaoService: ReligionService,
+    private _quoctichService: QuocTichService
   ) {
     super(injector);
   }
@@ -33,9 +35,16 @@ export class UserFormComponent extends FormBase implements OnInit {
         isAvatar: true
       }),
       new TextControlSchema({
+        field: 'ho',
+        label: 'Họ',
+        required: true,
+        width: 4
+      }),
+      new TextControlSchema({
         field: 'ten',
-        label: 'Họ và tên',
-        required: true
+        label: 'Tên',
+        required: true,
+        width: 2
       }),
       new TextControlSchema({
         field: 'username',
@@ -81,6 +90,22 @@ export class UserFormComponent extends FormBase implements OnInit {
           this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
         ]
       }),
+      new DropdownControlSchema({
+        field: 'idDanToc',
+        label: 'Dân tộc',
+        service: this._dantocService
+      }),
+      new DropdownControlSchema({
+        field: 'idTonGiao',
+        label: 'Tôn giáo',
+        service: this._tongiaoService
+      }),
+      new DropdownControlSchema({
+        field: 'idQuocTich',
+        label: 'Quốc tịch',
+        service: this._quoctichService
+      }),
+
     ];
   }
 }

@@ -124,8 +124,8 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
     if (this.setting.cols == null) {
       return this.toastWarning('Bạn chưa cấu hình cột cho danh sách');
     }
-    let tooltipSearchText = '';
-    const fieldSearchText = [];
+    let tooltipSearchText = this.setting.tooltipSearchText;
+    const fieldSearchText = this.setting.fieldSearchText;
     for (const col of this.setting.cols) {
       if (col.allowFilter && !col.rawColumn) {
         if (col.fullTextSearch) {

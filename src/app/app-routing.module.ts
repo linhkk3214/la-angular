@@ -96,6 +96,10 @@ const routes: Routes = [
     path: 'dm-chuongtrinhdaotao',
     loadChildren: () => import('../app/components/dm-chuongtrinhdaotao/dm-chuongtrinhdaotao.module').then(m => m.DM_ChuongTrinhDaoTaoModule)
   },
+  {
+    path: 'dotnhaphoc',
+    loadChildren: () => import('../app/components/dotnhaphoc/dotnhaphoc.module').then(m => m.DotNhapHocModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

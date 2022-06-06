@@ -168,11 +168,16 @@ export class DropdownComponent extends ComponentBase implements OnInit {
 
   reStructureItemObject(item: { [key: string]: any }): SelectItem {
     const op: any = {};
-    if (item[this.control.displayField as string]) {
-      op['label'] = item[this.control.displayField as string];
+    if (this.control.funcGetLabel) {
+      op['label'] = this.control.funcGetLabel(item);
     }
     else {
-      op['label'] = item['label'];
+      if (item[this.control.displayField as string]) {
+        op['label'] = item[this.control.displayField as string];
+      }
+      else {
+        op['label'] = item['label'];
+      }
     }
     if (item[this.control.valueField as string]) {
       op['value'] = item[this.control.valueField as string];
