@@ -1,5 +1,5 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { Operator } from 'src/app/shared/models/enums';
+import { FormState, Operator } from 'src/app/shared/models/enums';
 import { DateTimeControlSchema, DropdownControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
@@ -20,7 +20,8 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
       code: 'thongTinChung',
       icon: 'pi pi-sliders-h',
       label: 'Thông tin chung',
-      useScrollbar: true
+      useScrollbar: true,
+      alwayRender: true
     }),
     new TabViewData({
       code: 'danhSach',
@@ -103,7 +104,7 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
   }
 
   setHiddenTab() {
-    if (!this.model.data._id) {
+    if (this.model.formState == FormState.ADD) {
       // Ẩn tab danh sách nếu là form thêm mới
       this.mainTabData[1].hidden = true;
     }

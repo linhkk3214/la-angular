@@ -6,6 +6,10 @@
       {
         "path": "/dotnhaphoc",
         "label": "Đợt nhập học"
+      },
+      {
+        "path": "/danhsachtrungtuyen",
+        "label": "Đanh sách trúng tuyển"
       }
     ]
   },
