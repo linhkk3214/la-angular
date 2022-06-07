@@ -7,7 +7,7 @@
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
   [popupSize]="setting.popupSize" [useDefaultScrollBar]="true" (onHide)="showDetailForm = false">
-  <dotnhaphoc-form #formBase [parentSetting]="setting" [model]="formModel"
+  <danhsachtrungtuyen-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
-  </dotnhaphoc-form>
+  </danhsachtrungtuyen-form>
 </tn-dialog>

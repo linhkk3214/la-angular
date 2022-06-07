@@ -1,5 +1,5 @@
 <div style="height: 100%">
-  <tn-tabview [data]="mainTabData">
+  <tn-tabview [data]="mainTabData" [allowViewAll]="true">
     <ng-template #thongTinChung>
       <crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
       </crud-form>

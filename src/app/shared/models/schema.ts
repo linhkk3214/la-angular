@@ -200,7 +200,7 @@ export class ColumnSchema extends DataSourceSchema {
   rawColumn?: ColumnSchema;
   dataType?: DataType | string;
   dataTypeRefField?: DataType | string;
-  disableCheckBox? = true;
+  disableCheckBox?= true;
   controlType?: ControlType = ControlType.textbox;
   displayFieldInGrid?: string;
   separator?= ', ';
@@ -343,11 +343,12 @@ export class DialogModel {
 export class TabViewData {
   code?: string;
   hidden?: boolean = false;
+  alwayRender?: boolean = false; // Option xác định luôn luôn render component gắn với tab
   icon?: string;
   label?: string;
   headerStyleClass?: string;
   active?: boolean;
-  useScrollbar?= false;
+  useScrollbar?= false; // Config để xác định có sử dụng custom-scrollbar không, nếu không thì dùng scrollbar mặc định của trình duyệt
 
   constructor(init?: TabViewData) {
     for (const key in init) {
