@@ -26,6 +26,12 @@ $width-menu: 250px;
         box-shadow: none;
         border-radius: 0;
         height: 100%;
+        border: none;
+        background: #0d89ec;
+        box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%);
+        &:hover {
+          background: #1f95f3;
+        }
       }
 
       .content-menu-in-header {
@@ -105,10 +111,10 @@ $width-menu: 250px;
           display: none;
           box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%), 0 8px 17px 0 rgb(0 0 0 / 20%);
 
-          >div {
+          > div {
             padding: 0.5em 1.5em 0.5em 1em;
 
-            >i {
+            > i {
               margin-right: 8px;
               font-size: 12px;
             }
@@ -244,7 +250,6 @@ $width-menu: 250px;
 }
 
 @keyframes bounce {
-
   0%,
   20%,
   50%,
