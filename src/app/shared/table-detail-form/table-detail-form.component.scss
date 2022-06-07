@@ -1,0 +1,30 @@
+.tn-check-box-list.p-grid {
+  margin-bottom: -0.5em;
+}
+.btn-clear {
+  height: 30px;
+  cursor: pointer;
+  border: none;
+  background: #337ab7;
+  color: white;
+  border-radius: 3px;
+  padding: 0 10px;
+  margin: 1px 0.5em 0;
+}
+.p-col-horizontal {
+  padding: 0.5em;
+}
+
+::ng-deep .tn-check-box-list {
+  position: relative;
+  &.flex-end {
+      justify-content: flex-end;
+  }
+  &.flex-center {
+      justify-content: center;
+  }
+
+  label{
+      cursor: pointer;
+  }
+}

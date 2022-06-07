@@ -98,4 +98,12 @@ export abstract class ComponentBase {
       idHocKy: defaultSetting.idHocKy
     }
   }
+
+  trackByFuncDefault(index, item) {
+    return index;
+  }
+
+  trackByFuncId(index, item) {
+    return item._id;
+  }
 }

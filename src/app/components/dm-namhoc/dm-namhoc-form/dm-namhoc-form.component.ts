@@ -1,7 +1,7 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { DateCompareValidator } from 'src/app/shared/base-class/validators';
 import { Operator } from 'src/app/shared/models/enums';
-import { TextAreaControlSchema, TextControlSchema, DateTimeControlSchema, MaskControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema, DateTimeControlSchema, MaskControlSchema, TableControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_NamHocService } from '../services/dm-namhoc.service';
 
@@ -47,7 +47,24 @@ export class DM_NamHocFormComponent extends FormBase implements OnInit {
         field: 'ghiChu',
         label: 'Ghi chú',
         width: 12
-      })
+      }),
+      // new TableControlSchema({
+      //   field: 'testes',
+      //   label: 'Danh sách',
+      //   rowTemplate: [
+      //     new TextControlSchema({
+      //       field: 'ma',
+      //       label: 'Mã',
+      //       width: '100px',
+      //       required: true
+      //     }),
+      //     new TextControlSchema({
+      //       field: 'ten',
+      //       label: 'Tên',
+      //       required: true
+      //     })
+      //   ]
+      // })
     ];
   }
 

@@ -1,3 +1,5 @@
+import { TemplateRef } from "@angular/core";
+import { MenuItem } from "primeng/api";
 import { IValidator } from "../base-class/validators";
 import { CrudFormComponent } from "../crud-form/crud-form.component";
 import { BaseService } from "../services/base.service";
@@ -17,6 +19,9 @@ export class FormSchema {
   uniqueField?: string;
   hidden?: boolean = false;
   hiddenCheck?: (rootModel: any, currentNode: ControlTreeNode) => boolean;
+  class?: string = '';
+  textAlign?: TextAlign = TextAlign.Left; // Phục vụ align trong table schema
+  visibleInList?= true;  // Phục vụ trong table schema
   constructor(init?: FormSchema) {
     for (const key in init) {
       this[key] = init[key];
@@ -40,7 +45,7 @@ export class LabelSchema extends FormSchema {
 }
 
 export class TitleSchema extends LabelSchema {
-  class?= 'title-group text-bold';
+  override class?= 'title-group text-bold';
   override width?= 12;
 
   constructor(init?: TitleSchema) {
@@ -190,6 +195,50 @@ export class FileControlSchema extends ControlSchema {
   }
 }
 
+export class TableControlSchema extends ControlSchema {
+  rowTemplate: ControlSchema[];
+  rowButtons?: (rowData) => MenuItem[];
+  footerButtons?: {
+    icon?: string;
+    label?: string;
+    class?: string;
+    message: string;
+  }[];
+  showNumber?= true;
+  showFunction?= true;
+  showFooter?= true;
+  showSave?= false;
+  showEdit?= false;
+  showDelete?= true;
+  showAdd?= true;
+  showDialog?= true;
+  onReordered?: Function;
+  enableAddMulti?= false;
+  pickerControlField?: string;
+  isUnique?= true;
+  enablePaging?= false;
+  limit?= 50;
+  initRowCount?= 1;
+  mdWidth?= 12;
+  widthFunctionColumn?: string;
+  rowButtonTemplate?: TemplateRef<any> = null;
+  summaryTemplate?: TemplateRef<any> = null;
+  headerTemplate?: TemplateRef<any> = null;
+
+  onAdding?: Function;
+  onAdded?: Function;
+  onSave?: Function;
+  onMessage?: Function;
+  onDeleted?: Function;
+
+  constructor(init?: TableControlSchema) {
+    super();
+    for (const key in init) {
+      this[key] = init[key];
+    }
+  }
+}
+
 export class ColumnSchema extends DataSourceSchema {
   override width?: string;
   visible?: boolean = true;
@@ -200,11 +249,11 @@ export class ColumnSchema extends DataSourceSchema {
   rawColumn?: ColumnSchema;
   dataType?: DataType | string;
   dataTypeRefField?: DataType | string;
-  disableCheckBox? = true;
+  disableCheckBox?= true;
   controlType?: ControlType = ControlType.textbox;
   displayFieldInGrid?: string;
   separator?= ', ';
-  textAlign?: TextAlign = TextAlign.Left;
+  override textAlign?: TextAlign = TextAlign.Left;
   funcGetRefDataRow?: (refItems) => {};
   funcSetValueRow?: (rowItem, data) => void;
   constructor(init?: ColumnSchema) {

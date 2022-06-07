@@ -139,7 +139,8 @@ td>.view-mode {
   }
 }
 
-.control {
+.control,
+.control-inside {
   .tn-check-box-list {
     margin-top: 5px;
   }
@@ -262,7 +263,6 @@ td>.view-mode {
   }
 
   .p-datatable .p-datatable-tbody tr td.control-inside {
-    padding: 0px;
 
     .show-in-box:not(.crud-form-control) {
       padding: 0;

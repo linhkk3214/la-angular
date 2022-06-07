@@ -5,12 +5,24 @@
       </ng-container>
     </div>
     <div class="control" [class.error]="_errors[schema.field].length > 0">
-      <ng-container *ngTemplateOutlet="control; context: {$implicit: schema, data: data}"></ng-container>
+      <ng-container
+        *ngTemplateOutlet="control; context: {$implicit: schema, data: data, parentPath: '', fullPath: schema.field}">
+      </ng-container>
     </div>
   </div>
 </div>
 
-<ng-template #control let-schema let-data="data">
+<p-contextMenu #contextMenu [appendTo]="'body'" [model]="buttonContexts">
+</p-contextMenu>
+
+<tn-dialog *ngIf="tableFormShow" #dialog [header]="tableFormTitle" [popupSize]="tableFormPopupSize"
+  (onHide)="tableFormShow = false">
+  <table-detail-form #formBase [service]="setting.service" [schema]="tableFormSchema" [data]="tableFormData"
+    (onSaved)="handleSavedTableRow($event)" (onCancel)="tableFormShow = false">
+  </table-detail-form>
+</tn-dialog>
+
+<ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index">
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TextControlSchema'">
       <input [type]="schema.dataFormat" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
@@ -39,17 +51,113 @@
     <ng-container *ngSwitchCase="'FileControlSchema'">
       <file-upload [control]="schema" [(ngModel)]="data[schema.field]"></file-upload>
     </ng-container>
-    <ng-container *ngSwitchDefault>
+    <ng-container *ngSwitchCase="'TableControlSchema'">
+      <div [class]="schema.class">
+        <tn-scrollbar class="--has-border" [showScrollHorizontal]="true">
+          <p-table class="new-table scr-table table-control" [value]="data[schema.field]"
+            [columns]="schema.headerTemplate" [responsive]="true" [scrollable]="false" [rowTrackBy]="trackByFuncId">
+            <ng-template pTemplate="colgroup">
+              <colgroup>
+                <col *ngIf="schema.showNumber" style="width: 40px" />
+                <ng-container *ngFor="let subControl of schema.rowTemplate">
+                  <col [style.width]="subControl.width" />
+                </ng-container>
+                <col *ngIf="schema.showFunction" [style.width]="schema.widthFunctionColumn" />
+              </colgroup>
+            </ng-template>
+            <ng-template *ngIf="getComponentByType(prefixCustomHeader + schema.field)" pTemplate="header" let-columns>
+              <ng-container *ngTemplateOutlet="getComponentByType(prefixCustomHeader + schema.field),
+                context: {$implicit: schema.headerTemplate, crudForm: this, containerSticky: containerSticky}
+                ">
+              </ng-container>
+            </ng-template>
+            <ng-template *ngIf="!getComponentByType(prefixCustomHeader + schema.field)" pTemplate="header" let-rowData
+              let-columns>
+              <tr>
+                <th *ngIf="schema.showNumber" style="text-align: center">
+                  TT
+                  <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                </th>
+                <ng-container *ngFor="let subControl of schema.rowTemplate">
+                  <th *ngIf="subControl && !subControl.hidden && subControl.visibleInList"
+                    [pTooltip]="subControl.fullLabel || subControl.label" tooltipPosition="top"
+                    style="text-align: center;">
+                    {{subControl.label}}
+                    <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                  </th>
+                </ng-container>
+                <th *ngIf="schema.showFunction" class="table-function column-function">
+                  <div class="cell-header-function"><span>Chức năng</span></div>
+                  <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                </th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-rowData let-ri="rowIndex">
+              <tr [pReorderableRow]="ri">
+                <td *ngIf="schema.showNumber" class="stt" style="text-align: center; vertical-align: inherit">
+                  <span>
+                    {{ri + 1}}
+                  </span>
+                  <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                </td>
+                <ng-container *ngFor="let subControl of schema.rowTemplate; let i = index">
+                  <td *ngIf="subControl && !subControl.hidden && subControl.visibleInList" [class.control-inside]="true"
+                    [class]="subControl.class" [class.center]="subControl.textAlign == textAlign.Center"
+                    [class.right]="subControl.textAlign == textAlign.Right" style="vertical-align: top">
+                    <span class="p-column-title">{{subControl.label}}</span>
+                    <ng-container *ngTemplateOutlet="control; context: getContextTd(subControl, rowData, ri, fullPath)">
+                    </ng-container>
+                    <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                  </td>
+                </ng-container>
+                <td *ngIf="schema.showFunction" style="text-align: center" class="column-function text-center">
+                  <div *ngIf="!schema.rowButtonTemplate" class="p-toolbar-group-center button-group">
+                    <button *ngIf="schema.showSave" [disabled]="rowData._disableSave" type="button" pButton
+                      class="p-button-text p-button-rounded" icon="pi pi-save" [pTooltip]="'Lưu'" tooltipPosition="top"
+                      (click)="saveRow(rowData, ri, schema)"></button>
+                    <button *ngIf="schema.showEdit" [disabled]="rowData._disableEdit" type="button" pButton
+                      class="p-button-text p-button-rounded" icon="pi pi-pencil" [pTooltip]="'Sửa'"
+                      tooltipPosition="top" (click)="editRow(rowData, ri, schema)"></button>
+                    <button *ngIf="schema.showDelete" [disabled]="rowData._disableDelete" type="button" pButton
+                      class="p-button-text p-button-danger p-button-rounded" icon="pi pi-trash" [pTooltip]="'Xóa'"
+                      tooltipPosition="top" (click)="deleteRow(rowData, ri, schema)"></button>
+                  </div>
+                  <div *ngIf="schema.rowButtonTemplate" class="p-toolbar-group-center button-group">
+                    <ng-container
+                      *ngTemplateOutlet="schema.rowButtonTemplate; context: {rowData: rowData, rowIndex: ri, schema: schema}">
+                    </ng-container>
+                  </div>
+                  <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
+                </td>
+              </tr>
+            </ng-template>
+            <ng-template *ngIf="schema.summaryTemplate" pTemplate="summary" let-rowData>
+              <ng-container *ngTemplateOutlet="schema.summaryTemplate; context: {rowData: rowData}">
+              </ng-container>
+            </ng-template>
+          </p-table>
+        </tn-scrollbar>
+        <div *ngIf="schema.showFooter" class="--table-schema-footer">
+          <button *ngIf="schema.showAdd" type="button" pButton style="width:auto" label="Thêm mới" icon="pi pi-plus"
+            class="p-button-text" (click)="addNewRow(data, schema)"></button>
+          <span *ngIf="schema.showDialog" style="font-weight: normal;">
+            <p-checkbox label="Mở dialog" [binary]="true" [(ngModel)]="schema.showEdit">
+            </p-checkbox>
+          </span>
+          <button *ngIf="schema.enableAddMulti" type="button" pButton style="width:auto; margin-left:10px;"
+            label="Thêm nhiều" icon="pi pi-clone" class="p-button-text" (click)="addMultiRow(data, schema, 5)"></button>
+        </div>
+      </div>
     </ng-container>
   </ng-container>
-  <ng-container *ngTemplateOutlet="validation; context: {$implicit: schema, data: data}">
+  <ng-container *ngTemplateOutlet="validation; context: {$implicit: schema, data: data, fullPath: fullPath}">
   </ng-container>
 </ng-template>
 
-<ng-template #validation let-schema let-data="data">
-  <ng-container *ngIf="_errors[schema.field].length > 0">
+<ng-template #validation let-schema let-data="data" let-fullPath="fullPath">
+  <ng-container *ngIf="_errors[fullPath] && _errors[fullPath].length > 0">
     <div class="error-container">
-      <ng-container *ngFor="let error of _errors[schema.field]">
+      <ng-container *ngFor="let error of _errors[fullPath]">
         <div class="error-item" *ngIf="error">
           <ng-container [ngTemplateOutlet]="errorMessage" [ngTemplateOutletContext]="{content: error}">
           </ng-container>
@@ -64,4 +172,10 @@
     <i class="pi pi-ban"></i>
     <span> {{content}}</span>
   </div>
+</ng-template>
+
+<ng-template #containerSticky>
+  <span class="fix-sticky top"></span>
+  <span class="fix-sticky right"></span>
+  <span class="fix-sticky left"></span>
 </ng-template>

@@ -1,11 +1,13 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Injector, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, ElementRef, EventEmitter, Injector, Input, OnInit, Output, QueryList, TemplateRef, ViewChild } from '@angular/core';
+import { MenuItem } from 'primeng/api';
+import { ContextMenu } from 'primeng/contextmenu';
 import { PrefixFieldObjectDropdown } from 'src/app/models/const';
 import { ComponentBase } from '../base-class/component-base';
 import { CompareValidator, DateCompareValidator, EmailValidator, NumberCompareValidator, PhoneNumberValidator, RequiredFieldsValidator, RequiredValidator } from '../base-class/validators';
-import { KeyFunctionReload } from '../models/const';
-import { FormState, Operator } from '../models/enums';
-import { Filter, FilterWithBinding } from '../models/grid-info';
-import { ControlSchema, ControlTreeNode, CrudFormSetting, DateTimeControlSchema, DropdownControlSchema, EventData, FileControlSchema, FormSchema, LabelSchema, MaskControlSchema, TextControlSchema, TitleSchema } from '../models/schema';
+import { KeyFunctionReload, PrefixCustomHeaderTableSchema } from '../models/const';
+import { FormState, Operator, TextAlign } from '../models/enums';
+import { FilterWithBinding } from '../models/grid-info';
+import { ControlSchema, ControlTreeNode, CrudFormSetting, DateTimeControlSchema, DropdownControlSchema, EventData, FileControlSchema, FormSchema, LabelSchema, MaskControlSchema, PopupSize, TableControlSchema, TextControlSchema, TitleSchema } from '../models/schema';
 import { isSameArray } from '../utils/common';
 import { getFilterFromTemplate } from '../utils/crud';
 
@@ -23,6 +25,8 @@ const operatorContrast = {
 })
 export class CrudFormComponent extends ComponentBase implements OnInit, AfterViewInit {
   @ViewChild('container') container: ElementRef;
+  @ContentChildren(TemplateRef) children: QueryList<TemplateRef<any>>;
+  @ViewChild('contextMenu', { static: false }) contextMenu: ContextMenu;
 
   @Input() setting: CrudFormSetting = new CrudFormSetting();
   @Input() data: any;
@@ -42,8 +46,20 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
   _inValidForm = false;
 
   formControls: any = [];
+  templates: { [key: string]: TemplateRef<any> } = {};
+  textAlign = TextAlign;
   focused = false;
-  _prefixCustomHeader = 'customHeader_';
+
+  prefixCustomHeader = PrefixCustomHeaderTableSchema;
+  buttonContexts: MenuItem[] = [];
+  rowDataCurrent: any = {};
+  tableFormShow = false;
+  tableFormTitle: string;
+  tableFormPopupSize = new PopupSize({ width: 1100, height: 650 });
+  tableFormData: any = {};
+  tableFormCurrentRow: number;
+  tableFormSchema: FormSchema[] = [];
+  tableFormCurrentInfo: any = {};
 
   fieldParentField = 'parentField';
 
@@ -54,9 +70,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
   }
 
   ngOnInit(): void {
-    this.setting.schema.forEach(schema => {
-      schema.nameType = schema.constructor.name;
-    });
+    this.initNameType(this.setting.schema);
     this.initLoad();
   }
 
@@ -65,6 +79,15 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       if (this.autoFocus && !this.focused) {
         this.focused = true;
         this.focusFirstControl();
+      }
+    });
+  }
+
+  initNameType(schemas: FormSchema[]) {
+    schemas.forEach(schema => {
+      schema.nameType = schema.constructor.name;
+      if (schema instanceof TableControlSchema) {
+        this.initNameType(schema.rowTemplate);
       }
     });
   }
@@ -102,7 +125,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
 
   private initSchema() {
     for (const control of this.setting.schema) {
-      this.initControlSchema(control);
+      this.initControlSchema(this.data, control);
     }
 
     for (const control of this.setting.schema) {
@@ -114,7 +137,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     this._rootNode.setCrudForm(this);
   }
 
-  private initControlSchema(schema: FormSchema, parentId?) {
+  private initControlSchema(data: any, schema: FormSchema, parentId?: string) {
     if (schema.disabled != true) {
       schema.disabled = null;
     }
@@ -149,6 +172,22 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
         dropdownControlSchema.placeholder = `Chọn ${dropdownControlSchema.label}`;
       }
     }
+    else if (schema instanceof TableControlSchema) {
+      if (!data[schema.field]) data[schema.field] = [this.generateModelAdd(schema)];
+      schema.rowTemplate.forEach(schemaChild => {
+        this.initControlSchema(data[schema.field][0], schemaChild, schema.field);
+      });
+    }
+  }
+
+  generateModelAdd(schema: TableControlSchema) {
+    const result = {
+      _id: this.guid()
+    };
+    schema.rowTemplate.forEach(childSchema => {
+      result[childSchema.field] = null;
+    });
+    return result;
   }
 
   private initBindingControlSchema(schema: any) {
@@ -312,6 +351,11 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
         });
       }
     }
+    else if (schema instanceof TableControlSchema) {
+      schema.rowTemplate.forEach(schemaChild => {
+        this.initValidatorAndCorrector(schemaChild);
+      });
+    }
 
     schema.validators.forEach(validator => {
       if (validator instanceof RequiredFieldsValidator) {
@@ -369,6 +413,160 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       });
     }
   }
+
+  //#region table schema
+
+  getComponentByType(templateName: string) {
+    if (!this.templates[templateName]) {
+      this.templates[templateName] = this.findTemplateFromList(this.children, templateName);
+    }
+    return this.templates[templateName];
+  }
+
+  getContextTd(schema, data, index: number, parentPath: string) {
+    return {
+      $implicit: schema,
+      data,
+      index,
+      showLabel: false,
+      mdWidth: 12,
+      parentPath: `${parentPath}[${index}]`,
+      fullPath: `${parentPath}[${index}].${schema.field}`
+    };
+  }
+
+  public deleteRow(data: any, index, control: TableControlSchema) {
+    this.confirm('Bạn có chắc chắn muốn xóa').then(async rs => {
+      if (!rs) return;
+      const tableNode = this._rootNode.getNodeByPath(control.field);
+      const toDeleteRowNode = tableNode.childNodes[index];
+      tableNode.childNodes.splice(index, 1);
+      tableNode.model.splice(index, 1);
+      const generateEvent = (eventType: string) => {
+        return new EventData({
+          currentNode: tableNode,
+          sourceNode: toDeleteRowNode,
+          eventType,
+          crudForm: this
+        })
+      }
+
+      if (control.onChanged) {
+        try {
+          await control.onChanged(generateEvent('tableChanged'));
+        }
+        catch {
+        }
+      }
+
+      if (control.onDeleted) {
+        try {
+          await control.onChanged(generateEvent('deleted'));
+        }
+        catch {
+        }
+      }
+    });
+  }
+
+  public async addNewRow(data: any, control: TableControlSchema, disableOpenDialog: boolean = false) {
+    if (control.showEdit && !disableOpenDialog) {
+      this.tableFormTitle = `Thêm mới ${control.label}`;
+      this.tableFormSchema = control.rowTemplate;
+      this.tableFormShow = true;
+      this.tableFormCurrentRow = -1;
+      this.tableFormCurrentInfo = {
+        control
+      };
+      return;
+    }
+    const tableNode = this._rootNode.getNodeByPath(control.field);
+
+    tableNode.model.push(this.generateModelAdd(control));
+    tableNode.reinitChildNodes();
+
+    await this.fireEventAddNewRow(tableNode, control);
+  }
+
+  private async fireEventAddNewRow(tableNode: ControlTreeNode, control: TableControlSchema) {
+    const newRowNode = tableNode.childNodes[tableNode.childNodes.length - 1];
+    const generateEvent = (eventType: string) => {
+      return new EventData({
+        currentNode: tableNode,
+        sourceNode: newRowNode,
+        eventType,
+        crudForm: this
+      })
+    }
+    if (control.onChanged) {
+      try {
+        await control.onChanged(generateEvent('tableChanged'));
+      }
+      catch {
+      }
+    }
+
+    if (control.onAdded) {
+      try {
+        await control.onChanged(generateEvent('added'));
+      }
+      catch {
+      }
+    }
+  }
+
+  public addMultiRow(data: any, control: TableControlSchema, length) {
+    for (let i = 0; i < length; i++) {
+      this.addNewRow(data, control, true);
+    }
+  }
+
+  async handleSavedTableRow(data) {
+    this.tableFormShow = false;
+    const control = this.tableFormCurrentInfo.control;
+    const tableNode = this._rootNode.getNodeByPath(control.field);
+    if (this.tableFormCurrentRow > -1) {
+      tableNode.model[this.tableFormCurrentRow] = { ...tableNode.model[this.tableFormCurrentRow], ...data };
+    }
+    else {
+      tableNode.model.push(data);
+      tableNode.reinitChildNodes();
+
+      await this.fireEventAddNewRow(tableNode, control);
+    }
+  }
+
+  public saveRow(index, control: TableControlSchema, tablePath) {
+    const tableNode = this._rootNode.getNodeByPath(tablePath);
+    const curentRowNode = tableNode.childNodes[index];
+    if (control.onSave) {
+      try {
+        control.onSave(new EventData({
+          currentNode: tableNode,
+          sourceNode: curentRowNode,
+          eventType: 'save',
+          crudForm: this
+        }));
+      }
+      catch {
+      }
+    }
+  }
+
+  editRow(data: any, index: number, control: TableControlSchema) {
+    this.tableFormTitle = `Sửa ${control.label}`;
+    this.tableFormSchema = control.rowTemplate;
+    this.tableFormCurrentRow = index;
+    const tableNode = this._rootNode.getNodeByPath(control.field);
+    const toDeleteRowNode = tableNode.childNodes[index];
+    this.tableFormData = toDeleteRowNode.value;
+    this.tableFormCurrentInfo = {
+      control,
+      index
+    };
+    this.tableFormShow = true;
+  }
+  //#endregion
 
   async validateForm(setValidateForm = true): Promise<boolean> {
     if (setValidateForm) {
@@ -477,9 +675,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     }
 
     if (control) {
-      const errors = this._errors[currentNode.field];
-      if (!errors) return true;
-      errors.splice(0, errors.length);
+      this._errors[currentNode.modelPath] = [];
+      const errors = this._errors[currentNode.modelPath];
       if (control.validators && control.validators.length > 0) {
         for (let i = 0; i < control.validators.length; i++) {
           const validator = control.validators[i];
@@ -552,19 +749,6 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       );
     control['_hidden'] = !!result;
     return result;
-  }
-
-  getContextTd(control, data, index, tablePath) {
-    return {
-      control,
-      data,
-      index,
-      tablePath,
-      parentPath: `${tablePath}[${index}]`,
-      path: `${tablePath}[${index}].${control.field}`,
-      showLabel: false,
-      mdWidth: 12
-    };
   }
 
   getControlDataSource(control: DropdownControlSchema, data: any) {

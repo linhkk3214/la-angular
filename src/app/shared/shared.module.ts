@@ -9,6 +9,7 @@ import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ContextMenuModule } from 'primeng/contextmenu';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { FileUploadModule } from 'primeng/fileupload';
@@ -19,9 +20,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
+import { TabViewModule } from 'primeng/tabview';
 import { ToastModule } from 'primeng/toast';
 import { TooltipModule } from 'primeng/tooltip';
-import { TabViewModule } from 'primeng/tabview';
 import { AfterViewCheckedComponent } from './after-view-checked/after-view-checked.component';
 import { CrudFormComponent } from './crud-form/crud-form.component';
 import { CrudListComponent } from './crud-list/crud-list.component';
@@ -33,6 +34,7 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MaskComponent } from './mask/mask.component';
 import { NumberPickerRangeComponent } from './number-picker-range/number-picker-range.component';
 import { PagingComponent } from './paging/paging.component';
+import { TableDetailFormComponent } from './table-detail-form/table-detail-form.component';
 import { TnTabViewComponent } from './tabview/tabview.component';
 import { DatetimePickerRangeComponent } from './tn-datetime-picker-range/tn-datetime-picker-range.component';
 import { TnDialogComponent } from './tn-dialog/tn-dialog.component';
@@ -59,6 +61,7 @@ const declarations: any = [
   PagingComponent,
   TnDialogComponent,
   TnTabViewComponent,
+  TableDetailFormComponent,
 
   TnDatePipe,
 
@@ -94,7 +97,8 @@ const declarations: any = [
     OverlayPanelModule,
     ConfirmDialogModule,
     DialogModule,
-    TabViewModule
+    TabViewModule,
+    ContextMenuModule
   ],
   exports: [
     ...declarations,

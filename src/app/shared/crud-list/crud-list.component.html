@@ -97,7 +97,7 @@
 <ng-template #tableGetGroupFieldFalse>
   <p-table #table [dataKey]="'id'" [scrollable]="false" [scrollHeight]="null" [columns]="setting.cols"
     [paginator]="false" [value]="_dataSource" (onSort)="onSort($event, table)" [class]="_tableClass" [responsive]="true"
-    [lazy]="true" [loading]="model.loading" [(selection)]="model.selectedItems">
+    [lazy]="true" [loading]="model.loading" [rowTrackBy]="trackByFuncId" [(selection)]="model.selectedItems">
     <ng-template *ngIf="hasTemplate('colgroup')" pTemplate="colgroup" let-columns>
       <ng-container *ngTemplateOutlet="getTemplate('colgroup'); context: {$implicit: columns}"></ng-container>
     </ng-template>
