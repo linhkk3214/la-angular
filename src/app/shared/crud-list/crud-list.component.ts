@@ -5,7 +5,7 @@ import { Subject } from "rxjs";
 import { ComponentBase } from "../base-class/component-base";
 import { FieldOrderCrudList, KeyFieldGetRefType } from "../models/const";
 import { ControlType, DataType, EnumGetRefType, Operator, TextAlign } from "../models/enums";
-import { Filter, GridInfo, Sort } from "../models/grid-info";
+import { Filter, FilterWithBinding, GridInfo, Sort } from "../models/grid-info";
 import { ColumnSchema, DateTimeRangeControlSchema, DropdownControlSchema, ListData, ListSetting } from "../models/schema";
 import { TnScrollBarComponent } from "../tn-scrollbar/tn-scrollbar.component";
 import { getFilterFromTemplate } from "../utils/crud";
@@ -80,7 +80,7 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
 
   filterSchema: any = {};
   filterData: any = {};
-  templateFilter: Filter[] = [];
+  templateFilter: FilterWithBinding[] = [];
 
   filter_custom: Filter[] = [];
   // filter của advance search trả về
@@ -481,10 +481,11 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
       if (col.controlType == ControlType.dropdown) {
         if (col.service || (col.dataSource && col.dataSource.length > 0)) {
           templateFilter.push(
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.in,
-              sourceField: col.field
+              sourceField: col.field,
+              sourceValueField: col.field
             })
           );
           this.filterSchema.dropdown[col.field] = new DropdownControlSchema({
@@ -503,37 +504,40 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
       else {
         if (col.dataType == DataType.int || col.dataType == DataType.decimal) {
           templateFilter.push(
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.greaterThanEqual,
               sourceField: col.field,
+              sourceValueField: col.field,
               subField: 0
             }),
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.lowerThanEqual,
               sourceField: col.field,
+              sourceValueField: col.field,
               subField: 1
             })
           );
         }
         else if (col.dataType == DataType.date || col.dataType == DataType.datetime) {
           templateFilter.push(
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.greaterThanEqual,
               sourceField: col.field,
+              sourceValueField: col.field,
               subField: 0,
               funcGetValue: item => {
                 const date = new Date(item);
                 return new Date(date.getFullYear(), date.getMonth(), date.getDate());
-                // return addDay(item, 1, -1);
               }
             }),
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.lowerThanEqual,
               sourceField: col.field,
+              sourceValueField: col.field,
               subField: 1,
               funcGetValue: item => {
                 const date = new Date(item);
@@ -544,19 +548,21 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
         }
         else if (col.dataType == DataType.boolean) {
           templateFilter.push(
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.in,
+              sourceValueField: col.field,
               sourceField: col.field
             })
           );
         }
         else {
           templateFilter.push(
-            new Filter({
+            new FilterWithBinding({
               field: this.getFieldFilter(col),
               operator: Operator.contain,
-              sourceField: col.field
+              sourceField: col.field,
+              sourceValueField: col.field
             })
           );
         }

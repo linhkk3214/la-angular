@@ -12,6 +12,7 @@
   {
     "path": "",
     "label": "Danh mục chung",
+    "icon": "pi pi-list",
     "children": [
       {
         "path": "/dm-loaigiayto",

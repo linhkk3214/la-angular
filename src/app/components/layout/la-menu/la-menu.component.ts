@@ -17,17 +17,31 @@ export class LAMenuComponent implements OnInit {
     const pathActive = window.location.pathname;
     this._httpClient.get('./assets/menu.json')
       .subscribe((lstMenu: any[]) => {
-        this.lstMenu = [
+        lstMenu.forEach(item => {
+          if (!item.icon) {
+            item.icon = 'pi pi-th-large';
+          }
+          if (item.children) {
+            item.children.forEach(child => {
+              if (!child.icon) {
+                child.icon = 'pi pi-star';
+              }
+            });
+          }
+        });
+        const lstMenuCombine = [
           {
             path: '',
-            label: 'Trang chủ'
+            label: 'Trang chủ',
+            icon: 'pi pi-home'
           },
           ...lstMenu
         ];
-        this.lstMenu.forEach(item => {
+        lstMenuCombine.forEach(item => {
           this.deQuySetParent(item);
         })
-        this.setActiveByPath(this.lstMenu, pathActive);
+        this.setActiveByPath(lstMenuCombine, pathActive);
+        this.lstMenu = lstMenuCombine;
       });
   }
 

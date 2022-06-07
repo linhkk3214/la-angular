@@ -1,31 +1,32 @@
 <div style="padding: 0.5em 0">
   <ul *ngIf="lstMenu.length">
     <ng-container *ngFor="let menu of lstMenu">
-      <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menu, icon: 'pi pi-th-large'}"></ng-container>
+      <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menu}"></ng-container>
     </ng-container>
   </ul>
-  <ng-template #itemMenu let-item let-icon="icon">
-    <li class="menu-item" [class.active]="item.active" [class.expanded]="item.expanded">
-      <ng-container *ngIf="item.children && item.children.length">
-        <a class="label" href="#" (click)="handleClickMenu($event, item)">
-          <span class="content"><i [class]="icon"></i>{{item.label}}</span>
-          <span class="collapse-expand">
-            <i *ngIf="!item.expanded" class="pi pi-chevron-down"></i>
-            <i *ngIf="item.expanded" class="pi pi-chevron-up"></i>
-          </span>
-        </a>
-        <ul *ngIf="item.expanded" class="children">
-          <ng-container *ngFor="let menuChild of item.children">
-            <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menuChild, icon: 'pi pi-star'}">
-            </ng-container>
-          </ng-container>
-        </ul>
-      </ng-container>
-      <ng-container *ngIf="!item.children || !item.children.length">
-        <a class="label" href="#" [routerLink]="item.path" (click)="handleClickMenu($event, item)">
-          <span class="content"><i [class]="icon"></i>{{item.label}}</span>
-        </a>
-      </ng-container>
-    </li>
-  </ng-template>
 </div>
+
+<ng-template #itemMenu let-item>
+  <li class="menu-item" [class.active]="item.active" [class.expanded]="item.expanded">
+    <ng-container *ngIf="item.children && item.children.length">
+      <a class="label" href="#" (click)="handleClickMenu($event, item)">
+        <span class="content"><i [class]="item.icon"></i>{{item.label}}</span>
+        <span class="collapse-expand">
+          <i *ngIf="!item.expanded" class="pi pi-chevron-down"></i>
+          <i *ngIf="item.expanded" class="pi pi-chevron-up"></i>
+        </span>
+      </a>
+      <ul *ngIf="item.expanded" class="children">
+        <ng-container *ngFor="let menuChild of item.children">
+          <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menuChild}">
+          </ng-container>
+        </ng-container>
+      </ul>
+    </ng-container>
+    <ng-container *ngIf="!item.children || !item.children.length">
+      <a class="label" href="#" [routerLink]="item.path" (click)="handleClickMenu($event, item)">
+        <span class="content"><i [class]="item.icon"></i>{{item.label}}</span>
+      </a>
+    </ng-container>
+  </li>
+</ng-template>
