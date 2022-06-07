@@ -26,6 +26,7 @@ export class DotNhapHoc_TpHoSoFormComponent extends FormBase implements OnInit {
         field: 'idTpHoSo',
         label: 'Hồ sơ',
         service: this._dm_TpHoSoService,
+        required: true,
       }),
       new MaskControlSchema({
         field: 'soLuongBanChinh',

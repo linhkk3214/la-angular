@@ -99,5 +99,13 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         width: 12
       }),
     ];
+    this.setHiddenTab();
+  }
+
+  setHiddenTab() {
+    if (!this.model.data._id) {
+      // Ẩn tab danh sách nếu là form thêm mới
+      this.mainTabData[1].hidden = true;
+    }
   }
 }
