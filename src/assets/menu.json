@@ -1,12 +1,13 @@
 [
   {
-    "path": "/dotnhaphoc",
-    "label": "Đợt nhập học"
-  },
-  {
-    "path": "/nguoi-hoc",
-    "label": "Hồ sơ người học",
-    "children": []
+    "path": "",
+    "label": "Quản lý nhập học",
+    "children": [
+      {
+        "path": "/dotnhaphoc",
+        "label": "Đợt nhập học"
+      }
+    ]
   },
   {
     "path": "",
