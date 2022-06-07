@@ -57,13 +57,8 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
         label: 'Mã nhập học',
       }),
       new ColumnSchema({
-        field: 'ho',
-        label: 'Họ',
-      }),
-      new ColumnSchema({
-        field: 'ten',
-        label: 'Tên',
-
+        field: 'hoVaTen',
+        label: 'Họ và tên'
       }),
       new ColumnSchema({
         field: 'ngaySinh',
