@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, ViewChild } from '@angular/core';
 import { FormState, Operator } from 'src/app/shared/models/enums';
 import { DateTimeControlSchema, DropdownControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
@@ -6,6 +6,8 @@ import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao
 import { DM_DonViLienKetService } from '../../dm-donvilienket/services/dm-donvilienket.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
+import { DotNhapHoc_TpHoSo_DanhSachFormComponent } from '../../dotnhaphoc-tphoso/dotnhaphoc-tphoso-danhsach-form/dotnhaphoc-tphoso-danhsach-form.component';
+import { DotNhapHoc_TpHoSoService } from '../../dotnhaphoc-tphoso/services/dotnhaphoc-tphoso.service';
 import { DataSourceTrangThai } from '../models/const';
 import { DotNhapHocService } from '../services/dotnhaphoc.service';
 
@@ -15,6 +17,8 @@ import { DotNhapHocService } from '../services/dotnhaphoc.service';
   styleUrls: ['./dotnhaphoc-form.component.scss']
 })
 export class DotNhapHocFormComponent extends FormBase implements OnInit {
+  @ViewChild(DotNhapHoc_TpHoSo_DanhSachFormComponent, { static: false }) danhSachForm: DotNhapHoc_TpHoSo_DanhSachFormComponent;
+  activeIndex: number = 0;
   mainTabData: any[] = [
     new TabViewData({
       code: 'thongTinChung',
@@ -29,9 +33,11 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
       label: 'Danh sách'
     })
   ];
+  danhSachTpHoSo: any[] = [];
   constructor(
     injector: Injector,
-    private _dotnhaphocService: DotNhapHocService,
+    private _dotNhapHocService: DotNhapHocService,
+    private _dotNhapHoc_TpHoSoService: DotNhapHoc_TpHoSoService,
     private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_CoSoDaoTaoService: DM_CoSoDaoTaoService,
@@ -41,7 +47,7 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
   }
 
   override ngOnInit(): void {
-    this.setting.service = this._dotnhaphocService;
+    this.setting.service = this._dotNhapHocService;
     this.setting.schema = [
       new DropdownControlSchema({
         field: 'idHeDaoTao',
@@ -108,5 +114,23 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
       // Ẩn tab danh sách nếu là form thêm mới
       this.mainTabData[1].hidden = true;
     }
+  }
+
+  override async validateForm(baseValidate: boolean) {
+    if (!this.danhSachForm) {
+      return false;
+    }
+    const resultValidateDanhSach = await this.danhSachForm._getResultValidate();
+    if (!resultValidateDanhSach) {
+      if (baseValidate) {
+        this.activeIndex = 1;
+      }
+      return false;
+    }
+    return true;
+  }
+
+  override onBeforeSave() {
+    this.model.data.danhSach = this.danhSachForm.getMinimizedModel().danhSach;
   }
 }

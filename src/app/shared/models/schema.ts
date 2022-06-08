@@ -14,6 +14,7 @@ export class FormSchema {
   fullLabel?: string;
   showLabel?: boolean = true;
   width?: number | string = 6;
+  widthInList?: string;
   disabled?: boolean = false;
   required?: boolean = false;
   uniqueField?: string;
@@ -81,7 +82,8 @@ export class TextControlSchema extends ControlSchema {
 }
 
 export class CheckBoxControlSchema extends ControlSchema {
-  constructor(init?: TextAreaControlSchema) {
+  hiddenLabel?= false;
+  constructor(init?: CheckBoxControlSchema) {
     super();
     for (const key in init) {
       this[key] = init[key];
@@ -220,7 +222,7 @@ export class TableControlSchema extends ControlSchema {
   limit?= 50;
   initRowCount?= 1;
   mdWidth?= 12;
-  widthFunctionColumn?: string;
+  widthFunctionColumn?: string = '100px';
   rowButtonTemplate?: TemplateRef<any> = null;
   summaryTemplate?: TemplateRef<any> = null;
   headerTemplate?: TemplateRef<any> = null;
@@ -479,7 +481,7 @@ export class ControlTreeNode {
   private data: any;
   private hasSchema = true;
 
-  constructor(model: any, schemas: [], crudForm: CrudFormComponent, field?, parentNode?: ControlTreeNode) {
+  constructor(model: any, schemas: FormSchema[] | { [key: string]: FormSchema }, crudForm: CrudFormComponent, field?, parentNode?: ControlTreeNode) {
     this.data = model;
     this.formControls = schemas;
     this._crudForm = crudForm;
@@ -537,7 +539,7 @@ export class ControlTreeNode {
     this.initChildNodes(this.data, this.formControls, this.keysPlus);
   }
 
-  private initChildNodes(model: any, schemas: [], keysPlus: string[]) {
+  private initChildNodes(model: any, schemas: FormSchema[] | { [key: string]: FormSchema }, keysPlus: string[]) {
     if (isLiteralObject(model)) {
       const allKey = new Set([...keysPlus, ...Object.keys(model)]);
       for (const key of allKey) {

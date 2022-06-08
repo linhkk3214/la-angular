@@ -1,12 +1,13 @@
 <div style="height: 100%">
-  <tn-tabview [data]="mainTabData" [allowViewAll]="true">
+  <tn-tabview [data]="mainTabData" [allowViewAll]="true" [(activeIndex)]="activeIndex">
     <ng-template #thongTinChung>
       <crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
       </crud-form>
     </ng-template>
     <ng-template #danhSach>
-      <dotnhaphoc-tphoso [idDotNhapHoc]="model.data._id">
-      </dotnhaphoc-tphoso>
+      <dotnhaphoc-tphoso-danhsach-form [idDotNhapHoc]="model.data._id"></dotnhaphoc-tphoso-danhsach-form>
+      <!-- <dotnhaphoc-tphoso [idDotNhapHoc]="model.data._id">
+      </dotnhaphoc-tphoso> -->
     </ng-template>
   </tn-tabview>
 </div>

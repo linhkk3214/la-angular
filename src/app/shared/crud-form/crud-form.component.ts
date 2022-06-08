@@ -45,7 +45,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
   _errors: any = {};
   _inValidForm = false;
 
-  formControls: any = [];
+  formControls: { [key: string]: FormSchema } = {};
   templates: { [key: string]: TemplateRef<any> } = {};
   textAlign = TextAlign;
   focused = false;
@@ -133,7 +133,13 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       this.initBindingControlSchema(control);
     }
 
-    this._rootNode = new ControlTreeNode(this.data, this.formControls, this);
+    const nodeChild = {};
+    Object.keys(this.formControls).forEach(key => {
+      if (this.formControls[key].uniqueField == this.formControls[key].field) {
+        nodeChild[key] = this.formControls[key];
+      }
+    });
+    this._rootNode = new ControlTreeNode(this.data, nodeChild, this);
     this._rootNode.setCrudForm(this);
   }
 
@@ -178,6 +184,13 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
         this.initControlSchema(data[schema.field][0], schemaChild, schema.field);
       });
     }
+  }
+
+  setTableNodeDataSource(path: string, dataSource: any[]) {
+    if (!path) return;
+    const node = this._rootNode.getNodeByPath(path);
+    node.model.splice(0, node.model.length, ...dataSource);
+    if (node) node.reinitChildNodes();
   }
 
   generateModelAdd(schema: TableControlSchema) {
@@ -436,12 +449,13 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
   }
 
   public deleteRow(data: any, index, control: TableControlSchema) {
-    this.confirm('Bạn có chắc chắn muốn xóa').then(async rs => {
+    this.confirm('Bạn có chắc chắn muốn xóa dòng đã chọn').then(async rs => {
       if (!rs) return;
       const tableNode = this._rootNode.getNodeByPath(control.field);
       const toDeleteRowNode = tableNode.childNodes[index];
-      tableNode.childNodes.splice(index, 1);
       tableNode.model.splice(index, 1);
+      tableNode.childNodes.splice(index, 1);
+      tableNode.reinitChildNodes();
       const generateEvent = (eventType: string) => {
         return new EventData({
           currentNode: tableNode,
@@ -604,22 +618,19 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     return true;
   }
 
-  async handleChangeDropdown(control: DropdownControlSchema, event?, eventType?) {
+  async handleChangeDropdown(control: DropdownControlSchema, event?, eventType?, parentPath?: string) {
     if (control.multiple) {
       if (eventType == 'hide') {
-        await this.handleFieldValueChange(control, event, 'change');
+        await this.handleFieldValueChange(control, event, 'change', parentPath);
       }
     }
     else {
-      await this.handleFieldValueChange(control, event, eventType);
+      await this.handleFieldValueChange(control, event, eventType, parentPath);
     }
   }
 
-  /**
-   * Để nguyên hàm dạng arrow function vì có 1 số form khác gọi
-   */
-  public handleFieldValueChange = async (control: ControlSchema, event?, eventType?) => {
-    let parentNode = this._rootNode.getNodeByPath('');
+  public handleFieldValueChange = async (control: ControlSchema, event?, eventType?, parentPath?: string) => {
+    let parentNode = this._rootNode.getNodeByPath(parentPath);
     let currentNode = parentNode.getChildNode(control.field);
     // validate value
     await this.validate(currentNode);
@@ -642,8 +653,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     this.onChange.emit(eventData);
   };
 
-  handleFirstChanged(data, schema: DropdownControlSchema) {
-    let parentNode = this._rootNode.getNodeByPath('');
+  handleFirstChanged(data, schema: DropdownControlSchema, parentPath?: string) {
+    let parentNode = this._rootNode.getNodeByPath(parentPath);
     let currentNode = parentNode.getChildNode(schema.field);
     const eventData = new EventData({
       currentNode,
@@ -758,6 +769,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
 
   triggerReload(field: string) {
     const control = this.formControls[field];
+    if (!control) return;
+    if (!(control instanceof DropdownControlSchema)) return;
     if (control && control.bindingFilters && control.bindingFilters.length) {
       const parentNode = this._rootNode.getNodeByPath(control.bindingFilters[0].field);
       const eventData = new EventData({

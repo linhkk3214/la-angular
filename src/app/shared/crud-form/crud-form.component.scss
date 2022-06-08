@@ -267,6 +267,13 @@ td>.view-mode {
     .show-in-box:not(.crud-form-control) {
       padding: 0;
     }
+
+    tn-mask {
+      .p-inputgroup-addon {
+        flex: 0 0 auto;
+        padding: 0 0.5em;
+      }
+    }
   }
 
   base-congviec-form {
