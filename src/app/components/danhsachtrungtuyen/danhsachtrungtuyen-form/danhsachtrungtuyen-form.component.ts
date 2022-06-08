@@ -20,7 +20,7 @@ import { AddressService } from '../../user/services/address.service';
 import { DanTocService } from '../../user/services/dantoc.service';
 import { QuocTichService } from '../../user/services/quoctich.service';
 import { ReligionService } from '../../user/services/religion.service';
-import { DataSourceTrangThai } from '../models/const';
+import { DataSourceTrangThaiHoSo } from '../models/const';
 import { DanhSachTrungTuyenService } from '../services/danhsachtrungtuyen.service';
 
 @Component({
@@ -71,6 +71,12 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         label: 'Mã hồ sơ',
         width: 6
       }),
+      new TextControlSchema({
+        field: 'maSV',
+        label: 'Mã sinh viên',
+        width: 6,
+        required: true
+      }),
       new DropdownControlSchema({
         field: 'quocTich',
         label: 'Quốc tịch',
@@ -103,7 +109,8 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
       new DropdownControlSchema({
         field: 'gioiTinh',
         label: 'Giới tính',
-        service: this._dm_GioiTinhService
+        service: this._dm_GioiTinhService,
+        required: true
       }),
       new TextControlSchema({
         field: 'cmnd',
@@ -188,7 +195,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
       }),
       new DropdownControlSchema({
         field: 'khuVuc',
-        label: 'Cơ sở đào tạo',
+        label: 'Khu vực',
         service: this._DM_KhuVucService
       }),
       new TextControlSchema({
@@ -262,10 +269,10 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         field: 'soQD',
         label: 'Số quyết định'
       }),
-      new TextControlSchema({
-        field: 'maSV',
-        label: 'Mã sinh viên',
-        width: 6,
+      new DropdownControlSchema({
+        field: 'trangThai',
+        label: 'Trạng thái',
+        dataSource: DataSourceTrangThaiHoSo,
         required: true
       }),
       new TextAreaControlSchema({

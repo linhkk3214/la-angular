@@ -5,7 +5,7 @@ import { DanhSachTrungTuyenService } from './services/danhsachtrungtuyen.service
 import { DataType, Operator } from 'src/app/shared/models/enums';
 import { DM_KhoaHocService } from '../dm-khoahoc/services/dm-khoahoc.service';
 import { GridInfo } from 'src/app/shared/models/grid-info';
-import { DataSourceTrangThai } from './models/const';
+import { DataSourceTrangThaiHoSo } from './models/const';
 import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
 import { QuocTichService } from '../user/services/quoctich.service';
 import { DanTocService } from '../user/services/dantoc.service';
@@ -49,8 +49,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'trúng tuyển';
     this.setting.service = this._DanhSachTrungTuyenService;
-    this.setting.popupSize.width = 1800;
-    this.setting.popupSize.height = 800;
+    this.setting.popupSize.maximize = true;
     this.setting.cols = [
       new ColumnSchema({
         field: 'maNhapHoc',
@@ -63,11 +62,12 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'ngaySinh',
         label: 'Ngày sinh',
+        dataType: DataType.date
       }),
       new ColumnSchema({
         field: 'gioiTinh',
         label: 'Giới tính',
-        service: this._dm_GioiTinhService
+        service: this._dm_GioiTinhService,
       }),
       new ColumnSchema({
         field: 'idNganhTrungTuyen',
@@ -102,6 +102,11 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'maSV',
         label: 'Mã sinh viên',
+      }),
+      new ColumnSchema({
+        field: 'trangThai',
+        label: 'Trạng thái',
+        dataSource: DataSourceTrangThaiHoSo,
       }),
 
     ];

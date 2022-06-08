@@ -5,8 +5,8 @@ import { BaseService } from "../../../shared/services/base.service";
 @Injectable({
   providedIn: 'root'
 })
-export class DotNhapHoc_HoSoService extends BaseService {
+export class DanhSachLopHanhChinhService extends BaseService {
   constructor(httpClient: HttpClient) {
-    super(httpClient, 'DotNhapHoc_HoSo');
+    super(httpClient, 'DanhSachLopHanhChinh');
   }
 }
