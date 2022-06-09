@@ -26,30 +26,35 @@
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TextControlSchema'">
       <input [type]="schema.dataFormat" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
-        (change)="handleFieldValueChange(schema, $event, 'change')" />
+        (change)="handleFieldValueChange(schema, $event, 'change', parentPath)" />
     </ng-container>
     <ng-container *ngSwitchCase="'TextAreaControlSchema'">
       <textarea pInputTextarea [placeholder]="schema.placeholder" [style.height]="schema.height"
-        [(ngModel)]="data[schema.field]" (change)="handleFieldValueChange(schema, $event, 'change')"></textarea>
+        [(ngModel)]="data[schema.field]"
+        (change)="handleFieldValueChange(schema, $event, 'change', parentPath)"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
-      <dropdown [control]="schema" [(ngModel)]="data[schema.field]" (onChanged)="handleFirstChanged(null, schema)"
-        (onFirstChanged)="handleFirstChanged($event, schema)">
+      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
+        (onChanged)="handleFirstChanged(null, schema, parentPath)"
+        (onFirstChanged)="handleFirstChanged($event, schema, parentPath)">
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
       <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"
-        (onChanged)="handleFieldValueChange(schema, $event, 'change')"></datetime-picker>
+        (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></datetime-picker>
     </ng-container>
     <ng-container *ngSwitchCase="'CheckBoxControlSchema'">
-      <p-checkbox [binary]="true" [(ngModel)]="data[schema.field]" [label]="schema.label"></p-checkbox>
+      <p-checkbox [binary]="true" [(ngModel)]="data[schema.field]" [label]="!schema.hiddenLabel ? schema.label : null">
+      </p-checkbox>
     </ng-container>
     <ng-container *ngSwitchCase="'MaskControlSchema'">
-      <tn-mask [control]="schema" [(ngModel)]="data[schema.field]">
+      <tn-mask [control]="schema" [(ngModel)]="data[schema.field]"
+        (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)">
       </tn-mask>
     </ng-container>
     <ng-container *ngSwitchCase="'FileControlSchema'">
-      <file-upload [control]="schema" [(ngModel)]="data[schema.field]"></file-upload>
+      <file-upload [control]="schema" [(ngModel)]="data[schema.field]"
+        (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></file-upload>
     </ng-container>
     <ng-container *ngSwitchCase="'TableControlSchema'">
       <div [class]="schema.class">
@@ -60,7 +65,7 @@
               <colgroup>
                 <col *ngIf="schema.showNumber" style="width: 40px" />
                 <ng-container *ngFor="let subControl of schema.rowTemplate">
-                  <col [style.width]="subControl.width" />
+                  <col [style.width]="subControl.widthInList" />
                 </ng-container>
                 <col *ngIf="schema.showFunction" [style.width]="schema.widthFunctionColumn" />
               </colgroup>
@@ -94,7 +99,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-rowData let-ri="rowIndex">
               <tr [pReorderableRow]="ri">
-                <td *ngIf="schema.showNumber" class="stt" style="text-align: center; vertical-align: inherit">
+                <td *ngIf="schema.showNumber" class="stt center" style="vertical-align: inherit">
                   <span>
                     {{ri + 1}}
                   </span>
