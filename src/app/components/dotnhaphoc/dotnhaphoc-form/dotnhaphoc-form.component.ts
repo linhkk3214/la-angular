@@ -30,7 +30,8 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
     new TabViewData({
       code: 'danhSach',
       icon: 'pi pi-sliders-h',
-      label: 'Danh sách'
+      label: 'Danh sách',
+      useScrollbar: true,
     })
   ];
   danhSachTpHoSo: any[] = [];
@@ -106,14 +107,6 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         width: 12
       }),
     ];
-    this.setHiddenTab();
-  }
-
-  setHiddenTab() {
-    if (this.model.formState == FormState.ADD) {
-      // Ẩn tab danh sách nếu là form thêm mới
-      this.mainTabData[1].hidden = true;
-    }
   }
 
   override async validateForm(baseValidate: boolean) {

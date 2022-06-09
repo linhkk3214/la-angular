@@ -125,7 +125,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
 
   private initSchema() {
     for (const control of this.setting.schema) {
-      this.initControlSchema(this.data, control);
+      this.initControlSchema(control);
     }
 
     for (const control of this.setting.schema) {
@@ -133,17 +133,11 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       this.initBindingControlSchema(control);
     }
 
-    const nodeChild = {};
-    Object.keys(this.formControls).forEach(key => {
-      if (this.formControls[key].uniqueField == this.formControls[key].field) {
-        nodeChild[key] = this.formControls[key];
-      }
-    });
-    this._rootNode = new ControlTreeNode(this.data, nodeChild, this);
+    this._rootNode = new ControlTreeNode(this.data, this);
     this._rootNode.setCrudForm(this);
   }
 
-  private initControlSchema(data: any, schema: FormSchema, parentId?: string) {
+  private initControlSchema(schema: FormSchema, parentId?: string) {
     if (schema.disabled != true) {
       schema.disabled = null;
     }
@@ -164,7 +158,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
 
     if (schema.field) {
       let key = schema.field;
-      if (parentId != null) key = parentId + '.' + key;
+      if (parentId != null)
+        key = parentId + '.' + key;
       schema.uniqueField = key;
       this.formControls[key] = schema;
     }
@@ -179,10 +174,9 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       }
     }
     else if (schema instanceof TableControlSchema) {
-      if (!data[schema.field]) data[schema.field] = [this.generateModelAdd(schema)];
-      schema.rowTemplate.forEach(schemaChild => {
-        this.initControlSchema(data[schema.field][0], schemaChild, schema.field);
-      });
+      for (const subControl of schema.rowTemplate) {
+        this.initControlSchema(subControl, schema.field);
+      }
     }
   }
 
@@ -198,7 +192,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       _id: this.guid()
     };
     schema.rowTemplate.forEach(childSchema => {
-      result[childSchema.field] = null;
+      result[childSchema.field] = childSchema.defaultValue;
     });
     return result;
   }
@@ -427,6 +421,43 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     }
   }
 
+  initControlDefaultValueFromExternal() {
+    for (const control of this.setting.schema) {
+      this.initControlDefaultValue(this.data, control);
+    }
+  }
+
+  private initControlDefaultValue(parentModel, control, parentPath?: string) {
+    let _parentPath = control.field;
+    if (parentPath != null) _parentPath = parentPath + '.' + _parentPath;
+
+    if (control instanceof TableControlSchema) {
+      if (!parentModel[control.field] || !(parentModel[control.field] instanceof Array)) {
+        parentModel[control.field] = [];
+      }
+      const addMore = control.initRowCount - parentModel[control.field].length;
+      if (addMore > 0) {
+        this.addMultiRow(parentModel, control, addMore);
+      }
+    }
+    else {
+      if (!parentModel.hasOwnProperty(control.field) && control.field != null) {
+        if (control.defaultValue !== null && control.defaultValue !== undefined) {
+          parentModel[control.field] = control.defaultValue;
+        }
+        else if (control instanceof DropdownControlSchema) {
+          if (control.autoDisplayFirst
+            && control._component
+            && control._component._hasLoadedDatasource
+            && control._component.dataSourceInternal.length > 0
+          ) {
+            parentModel[control.field] = control._component.dataSourceInternal[0].value[control.valueField];
+          }
+        }
+      }
+    }
+  }
+
   //#region table schema
 
   getComponentByType(templateName: string) {
@@ -496,7 +527,12 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     }
     const tableNode = this._rootNode.getNodeByPath(control.field);
 
-    tableNode.model.push(this.generateModelAdd(control));
+    const dataTable = this.generateModelAdd(control);
+    const parentPath = tableNode.modelPath + '[' + tableNode.model.length + ']';
+    for (const subControl of control.rowTemplate) {
+      this.initControlDefaultValue(dataTable, subControl, parentPath);
+    }
+    tableNode.model.push(dataTable);
     tableNode.reinitChildNodes();
 
     await this.fireEventAddNewRow(tableNode, control);
