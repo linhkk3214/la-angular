@@ -15,6 +15,16 @@
   },
   {
     "path": "",
+    "label": "Quản lý hồ sơ người học",
+    "children": [
+      {
+        "path": "/danhsachlophanhchinh",
+        "label": "Danh mục lớp hành chính"
+      }
+    ]
+  },
+  {
+    "path": "",
     "label": "Danh mục chung",
     "icon": "pi pi-list",
     "children": [
