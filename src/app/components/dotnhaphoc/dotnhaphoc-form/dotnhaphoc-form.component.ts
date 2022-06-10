@@ -18,6 +18,7 @@ import { DotNhapHocService } from '../services/dotnhaphoc.service';
 })
 export class DotNhapHocFormComponent extends FormBase implements OnInit {
   @ViewChild(DotNhapHoc_TpHoSo_DanhSachFormComponent) danhSachForm: DotNhapHoc_TpHoSo_DanhSachFormComponent;
+  defaultSettings: any = {};
   activeIndex: number = 0;
   mainTabData: any[] = [
     new TabViewData({
@@ -49,12 +50,19 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
 
   override ngOnInit(): void {
     this.setting.service = this._dotNhapHocService;
+    this.defaultSettings = this.getDefaultSetting();
+    let coValueHeDaoTao = false;
+    if (this.defaultSettings) {
+      coValueHeDaoTao = true;
+    }
     this.setting.schema = [
       new DropdownControlSchema({
         field: 'idHeDaoTao',
         label: 'Hệ đào tạo',
         service: this._dm_HeDaoTaoService,
-        required: true
+        required: true,
+        defaultValue: this.defaultSettings ? this.defaultSettings.idHeDaoTao : null,
+        disabled: !!this.defaultSettings,
       }),
       new DropdownControlSchema({
         field: 'idKhoaHoc',
@@ -128,7 +136,6 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
     this.model.data.danhSach = this.danhSachForm.getMinimizedModel().danhSach;
     // ĐOạn Này để FIX VALUE Của CHECK Box = false neu nhu value = null
     // Vi tren server dang required trường này
-    // A sẽ fix bug này sau nhé o nhung vi sao lai required the a
     this.model.data.danhSach.forEach(item => {
       item.nopOnline = !!item.nopOnline;
       item.nopTrucTiep = !!item.nopTrucTiep;

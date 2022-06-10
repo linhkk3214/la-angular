@@ -82,7 +82,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         required: true
       }),
       new DateTimeControlSchema({
-        field: 'ngaySinh',
+        field: 'NgaySinh',
         label: 'Ngày sinh',
         required: true,
         width: 6
@@ -94,13 +94,13 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         required: true
       }),
       new DropdownControlSchema({
-        field: 'quocTich',
+        field: 'idQuocTich',
         label: 'Quốc tịch',
         service: this._dm_QuocTichService,
         required: true,
       }),
       new DropdownControlSchema({
-        field: 'danToc',
+        field: 'idDanToc',
         label: 'Dân tộc',
         service: this._dm_DanTocService
       }),
@@ -131,7 +131,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         isAvatar: true
       }),
       new TextControlSchema({
-        field: 'sdt',
+        field: 'DienThoai',
         label: 'Số điện thoại',
         width: 6
       }),
@@ -167,7 +167,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         ]
       }),
       new TextControlSchema({
-        field: 'email',
+        field: 'Email',
         label: 'Email',
       }),
       new DropdownControlSchema({
@@ -212,7 +212,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         service: this._DM_DoiTuongDaoTaoService
       }),
       new TextAreaControlSchema({
-        field: 'ghiChu',
+        field: 'GhiChu',
         label: 'Ghi chú',
         width: 12
       })

@@ -17,6 +17,7 @@ export class AppComponent implements OnInit, OnDestroy {
   showHelp = false;
   user: any;
   showContext = false;
+  clickedContextMenuUser = false;
   textSetting = '';
   settingDialogModel = new DialogModel({
     header: 'Cấu hình mặc định',
@@ -80,11 +81,16 @@ export class AppComponent implements OnInit, OnDestroy {
     if (!this.showContext) return;
     if (!evt.target || !(evt.target as HTMLElement).closest('.user-info')) {
       this.showContext = false;
+      this.clickedContextMenuUser = false;
+    }
+    else if (!this.clickedContextMenuUser) {
+      this.showContext = false;
     }
   };
 
   showContextMenuUser() {
     this.showContext = true;
+    this.clickedContextMenuUser = !this.clickedContextMenuUser;
   }
 
   logout() {

@@ -6,7 +6,8 @@ ul {
 
 .menu-item {
   font-size: 16px;
-  > .label {
+
+  >.label {
     padding: 0.75em 1.5em;
     width: 100%;
     display: flex;
@@ -14,19 +15,23 @@ ul {
     text-decoration: none;
     color: #646464;
 
-    > .content {
+    >.content {
       flex: 1 1;
+      display: flex;
+      align-items: flex-start;
 
-      > i {
+      >i {
         margin-right: 0.5em;
+        margin-top: 6px;
         font-size: 12px;
       }
     }
 
-    > .collapse-expand {
+    >.collapse-expand {
       flex: 0 0 auto;
+      margin-left: 5px;
 
-      > i {
+      >i {
         font-size: 12px;
       }
     }
@@ -38,8 +43,9 @@ ul {
     .menu-item {
       .label {
         padding-left: 2em;
-        > .content {
-          > i {
+
+        >.content {
+          >i {
             font-size: 10px;
           }
         }
@@ -49,14 +55,14 @@ ul {
 
   &.active,
   &:hover {
-    > .label {
+    >.label {
       background: #e7e7e7;
       color: #0095ff;
     }
 
     ul {
       .menu-item.active {
-        > .label {
+        >.label {
           background: unset;
         }
       }
@@ -66,7 +72,7 @@ ul {
   &:hover {
     ul {
       .menu-item.active:hover {
-        > .label {
+        >.label {
           background: #e7e7e7;
         }
       }

@@ -20,6 +20,10 @@ import { DM_DoiTuongDaoTaoService } from '../dm-doituongdaotao/services/dm-doitu
 import { DM_HocLucService } from '../dm-hocluc/services/dm-hocluc.service';
 import { DM_HanhKiemService } from '../dm-hanhkiem/services/dm-hanhkiem.service';
 import { DotNhapHocService } from '../dotnhaphoc/services/dotnhaphoc.service';
+import { DanhSachLopHanhChinhService } from '../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
+import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
+import { DM_TrangThaiNguoiHocService } from '../dm-trangthainguoihoc/services/dm-trangthainguoihoc.service';
+import { ReligionService } from '../user/services/religion.service';
 @Component({
   selector: 'hosonguoihoc',
   templateUrl: './hosonguoihoc.component.html',
@@ -33,6 +37,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
     private _dm_QuocTichService: QuocTichService,
     private _dm_DanTocService: DanTocService,
     private _dm_GioiTinhService: DM_GioiTinhService,
+    private _dm_TonGiaoService: ReligionService,
     private _addressService: AddressService,
     private _DM_NganhService: DM_NganhService,
     private _DM_KhuVucService: DM_KhuVucService,
@@ -42,6 +47,11 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
     private _DM_DoiTuongDaoTaoService: DM_DoiTuongDaoTaoService,
     private _DM_HocLucService: DM_HocLucService,
     private _DM_HanhKiemService: DM_HanhKiemService,
+    private _DM_TrangThaiNguoiHocService: DM_TrangThaiNguoiHocService,
+    private _DM_KhoaVienService: DM_KhoaVienService,
+    private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
+    private _DM_HeDaoTaoService: DM_HeDaoTaoService,
+    private _DM_KhoaHocService: DM_KhoaHocService
   ) {
     super(injector);
   }
@@ -52,63 +62,66 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
     this.setting.popupSize.maximize = true;
     this.setting.cols = [
       new ColumnSchema({
-        field: 'maNhapHoc',
-        label: 'Mã nhập học',
+        field: 'masv',
+        label: 'Mã sinh viên',
+
+
       }),
       new ColumnSchema({
         field: 'hoVaTen',
         label: 'Họ và tên'
       }),
       new ColumnSchema({
-        field: 'ngaySinh',
+        field: 'NgaySinh',
         label: 'Ngày sinh',
+
         dataType: DataType.date
       }),
       new ColumnSchema({
-        field: 'gioiTinh',
+        field: 'GioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
       }),
       new ColumnSchema({
-        field: 'idNganhTrungTuyen',
-        label: 'Ngành trúng tuyển',
+        field: 'idHe',
+        label: 'Hệ',
+        service: this._DM_HeDaoTaoService,
+      }),
+      new ColumnSchema({
+        field: 'idKhoaHoc',
+        label: 'Khóa học',
+        service: this._DM_KhoaHocService,
+      }),
+      new ColumnSchema({
+        field: 'idKhoa',
+        label: 'Khoa/Viện',
+        service: this._DM_KhoaVienService,
+      }),
+      new ColumnSchema({
+        field: 'idNganh',
+        label: 'Ngành',
         service: this._DM_NganhService,
       }),
       new ColumnSchema({
-        field: 'tongDiem',
-        label: 'Tổng điểm'
+        field: 'idLopHanhChinh',
+        label: 'Lớp hành chính',
+        service: this._DanhSachLopHanhChinhService,
       }),
       new ColumnSchema({
-        field: 'idHtTuyenSinh',
-        label: 'Hình thức tuyển sinh',
-        service: this._DM_HtTuyenSinhService,
-
-      }),
-      new ColumnSchema({
-        field: 'idDotNhapHoc',
-        label: 'Đợt nhập học',
-        service: this._dm_DotNhapHocService,
+        field: 'idTrangThai',
+        label: 'Trạng thái',
+        service: this._DM_TrangThaiNguoiHocService,
       }),
       new ColumnSchema({
         field: 'idDoiTuongDaoTao',
         label: 'Đối tượng đào tạo',
-        service: this._DM_DoiTuongDaoTaoService,
+        service: this._DM_DoiTuongDaoTaoService
+      }),
+      new ColumnSchema({
+        field: 'GhiChu',
+        label: 'Ghi chú',
 
-      }),
-      new ColumnSchema({
-        field: 'soQD',
-        label: 'Số quyết định'
-      }),
-      new ColumnSchema({
-        field: 'maSV',
-        label: 'Mã sinh viên',
-      }),
-      new ColumnSchema({
-        field: 'trangThai',
-        label: 'Trạng thái',
-        dataSource: DataSourceTrangThaiHoSo,
-      }),
-
+      })
     ];
     super.ngOnInit();
   }

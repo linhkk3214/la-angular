@@ -27,6 +27,7 @@ export class DotNhapHoc_TpHoSo_DanhSachFormComponent extends FormBase implements
       new TableControlSchema({
         field: 'danhSach',
         label: 'Danh sách hồ sơ',
+        initRowCount: 0,
         showLabel: false,
         width: 12,
         rowTemplate: [
