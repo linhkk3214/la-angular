@@ -125,7 +125,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
 
   private initSchema() {
     for (const control of this.setting.schema) {
-      this.initControlSchema(control);
+      this.initControlSchema(this.data, control);
     }
 
     for (const control of this.setting.schema) {
@@ -137,7 +137,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     this._rootNode.setCrudForm(this);
   }
 
-  private initControlSchema(schema: FormSchema, parentId?: string) {
+  private initControlSchema(data: any, schema: FormSchema, parentId?: string) {
     if (schema.disabled != true) {
       schema.disabled = null;
     }
@@ -174,8 +174,11 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       }
     }
     else if (schema instanceof TableControlSchema) {
+      if (!data[schema.field] || !(data[schema.field] instanceof Array)) {
+        data[schema.field] = [];
+      }
       for (const subControl of schema.rowTemplate) {
-        this.initControlSchema(subControl, schema.field);
+        this.initControlSchema(data[schema.field], subControl, schema.field);
       }
     }
   }
@@ -432,9 +435,6 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     if (parentPath != null) _parentPath = parentPath + '.' + _parentPath;
 
     if (control instanceof TableControlSchema) {
-      if (!parentModel[control.field] || !(parentModel[control.field] instanceof Array)) {
-        parentModel[control.field] = [];
-      }
       const addMore = control.initRowCount - parentModel[control.field].length;
       if (addMore > 0) {
         this.addMultiRow(parentModel, control, addMore);
