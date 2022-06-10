@@ -79,7 +79,7 @@ export abstract class FormBase extends ComponentBase implements OnInit {
       this.getDetail();
     }
     else {
-      // this.crudForm.initControlDefaultValueFromExternal();
+      this.crudForm.initControlDefaultValueFromExternal();
     }
   }
 
@@ -116,8 +116,8 @@ export abstract class FormBase extends ComponentBase implements OnInit {
             crudForm: this.crudForm
           });
           await this.initDataAdd(event);
+          this.crudForm.initControlDefaultValueFromExternal();
         }
-        // this.crudForm.initControlDefaultValueFromExternal();
       }
     }
     // Override cách lấy dữ liệu getDetail
@@ -137,8 +137,8 @@ export abstract class FormBase extends ComponentBase implements OnInit {
             crudForm: this.crudForm
           });
           await this.initDataAdd(event);
+          this.crudForm.initControlDefaultValueFromExternal();
         }
-        // this.crudForm.initControlDefaultValueFromExternal();
       }
     }
   }

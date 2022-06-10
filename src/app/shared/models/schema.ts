@@ -58,6 +58,7 @@ export class TitleSchema extends LabelSchema {
 }
 
 export class ControlSchema extends FormSchema {
+  defaultValue?: any;
   _component?: any;
   validators?: IValidator[] = [];
   onChanged?: Function;
@@ -83,6 +84,7 @@ export class TextControlSchema extends ControlSchema {
 
 export class CheckBoxControlSchema extends ControlSchema {
   hiddenLabel?= false;
+  override defaultValue? = false;
   constructor(init?: CheckBoxControlSchema) {
     super();
     for (const key in init) {
@@ -460,8 +462,8 @@ export class EventData {
     return this.currentNode.parentControl;
   }
 
-  get formControls(): FormSchema[] {
-    return this.currentNode.formControls;
+  get formControls() {
+    return this.currentNode.crudForm.formControls;
   }
 }
 
@@ -474,32 +476,31 @@ export class ControlTreeNode {
   rootNode: ControlTreeNode;
   childNodes: ControlTreeNode[] = [];
   control: ControlSchema;
-  formControls;
   keysPlus: string[];
   private _crudForm: CrudFormComponent;
   private childNodeDic = {};
   private data: any;
   private hasSchema = true;
 
-  constructor(model: any, schemas: FormSchema[] | { [key: string]: FormSchema }, crudForm: CrudFormComponent, field?, parentNode?: ControlTreeNode) {
+  constructor(model: any, crudForm: CrudFormComponent, field?: string | number, parentNode?: ControlTreeNode) {
     this.data = model;
-    this.formControls = schemas;
     this._crudForm = crudForm;
     if (parentNode) {
       if (parentNode.modelPath != null) {
         if (typeof field === 'string') {
-          this.modelPath = parentNode.modelPath + '.' + field;
-          this.schemaPath = parentNode.schemaPath + '.' + field;
+          this.modelPath = `${parentNode.modelPath}.${field}`;
+          this.schemaPath = `${parentNode.schemaPath}.${field}`;
         }
         else if (typeof field === 'number') {
-          this.modelPath = parentNode.modelPath + '[' + field + ']';
+          this.modelPath = `${parentNode.modelPath}[${field}]`;
           this.schemaPath = parentNode.schemaPath;
           this.hasSchema = false;
         }
       }
       else {
-        this.modelPath = field;
-        this.schemaPath = field;
+        const strField = field.toString();
+        this.modelPath = strField;
+        this.schemaPath = strField;
       }
 
       this.rootNode = parentNode.rootNode;
@@ -508,10 +509,10 @@ export class ControlTreeNode {
       this.rootNode = this;
     }
 
-    this.field = field;
+    this.field = field?.toString();
     this.parentNode = parentNode;
     if (this.hasSchema) {
-      this.control = schemas[this.schemaPath];
+      this.control = this._crudForm.formControls[this.schemaPath];
       if (this.control) {
         if (!this.control['nodes']) {
           this.control['nodes'] = {};
@@ -519,32 +520,35 @@ export class ControlTreeNode {
         this.control['nodes'][this.modelPath] = this;
       }
     }
-    const schema = schemas[this.schemaPath];
-    let keysPlus = [];
-    if (schema) {
-
-    }
-    else {
+    const schema = this._crudForm.formControls[this.schemaPath];
+    this.keysPlus = [];
+    if (!schema) {
+      // Là root node
       if (!this.schemaPath) {
-        keysPlus = Object.keys(schemas);
+        const nodeChild = {};
+        Object.keys(this._crudForm.formControls).forEach(key => {
+          const _control = this._crudForm.formControls[key];
+          if (_control.uniqueField == _control.field) {
+            this.keysPlus.push(key);
+          }
+        });
       }
     }
-    this.keysPlus = keysPlus;
-    this.initChildNodes(model, schemas, keysPlus);
+    this.initChildNodes(model, this.keysPlus);
   }
 
   public reinitChildNodes() {
     this.childNodes.length = 0;
     this.childNodeDic = {};
-    this.initChildNodes(this.data, this.formControls, this.keysPlus);
+    this.initChildNodes(this.data, this.keysPlus);
   }
 
-  private initChildNodes(model: any, schemas: FormSchema[] | { [key: string]: FormSchema }, keysPlus: string[]) {
+  private initChildNodes(model: any, keysPlus: string[]) {
     if (isLiteralObject(model)) {
       const allKey = new Set([...keysPlus, ...Object.keys(model)]);
       for (const key of allKey) {
         if (key != '_status' && key != '_errors' && key != '_source') {
-          const childNode = new ControlTreeNode(model[key], schemas, this._crudForm, key, this);
+          const childNode = new ControlTreeNode(model[key], this._crudForm, key, this);
           this.childNodes.push(childNode);
           this.childNodeDic[childNode.field] = childNode;
         }
@@ -554,7 +558,7 @@ export class ControlTreeNode {
       let i = 0;
       if (model.length > 0) {
         for (const item of model) {
-          const childNode = new ControlTreeNode(item, schemas, this._crudForm, i, this);
+          const childNode = new ControlTreeNode(item, this._crudForm, i, this);
           childNode.parentNode = this;
           this.childNodes.push(childNode);
           this.childNodeDic[childNode.field] = childNode;

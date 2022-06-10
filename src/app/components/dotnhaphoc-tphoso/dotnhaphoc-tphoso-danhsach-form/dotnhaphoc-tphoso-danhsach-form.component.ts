@@ -62,14 +62,14 @@ export class DotNhapHoc_TpHoSo_DanhSachFormComponent extends FormBase implements
             label: 'Nộp online',
             hiddenLabel: true,
             textAlign: TextAlign.Center,
-            widthInList: '100px'
+            widthInList: '100px',
           }),
           new CheckBoxControlSchema({
             field: 'nopTrucTiep',
             label: 'Nộp trực tiếp',
             hiddenLabel: true,
             textAlign: TextAlign.Center,
-            widthInList: '100px'
+            widthInList: '100px',
           })
         ]
       })
