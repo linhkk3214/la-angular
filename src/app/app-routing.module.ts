@@ -105,8 +105,16 @@ const routes: Routes = [
     loadChildren: () => import('../app/components/dotnhaphoc/dotnhaphoc.module').then(m => m.DotNhapHocModule)
   },
   {
+    path: 'danhsachtrungtuyen',
+    loadChildren: () => import('../app/components/danhsachtrungtuyen/danhsachtrungtuyen.module').then(m => m.DanhSachTrungTuyenModule)
+  },
+  {
     path: 'danhsachlophanhchinh',
     loadChildren: () => import('../app/components/danhsachlophanhchinh/danhsachlophanhchinh.module').then(m => m.DanhSachLopHanhChinhModule)
+  },
+  {
+    path: 'hosonguoihoc',
+    loadChildren: () => import('../app/components/hosonguoihoc/hosonguoihoc.module').then(m => m.HoSoNguoiHocModule)
   },
   { path: '**', component: NotFoundComponent }
 ];

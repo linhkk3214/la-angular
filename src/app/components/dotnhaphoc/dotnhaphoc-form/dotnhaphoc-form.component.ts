@@ -17,7 +17,7 @@ import { DotNhapHocService } from '../services/dotnhaphoc.service';
   styleUrls: ['./dotnhaphoc-form.component.scss']
 })
 export class DotNhapHocFormComponent extends FormBase implements OnInit {
-  @ViewChild(DotNhapHoc_TpHoSo_DanhSachFormComponent, { static: false }) danhSachForm: DotNhapHoc_TpHoSo_DanhSachFormComponent;
+  @ViewChild(DotNhapHoc_TpHoSo_DanhSachFormComponent) danhSachForm: DotNhapHoc_TpHoSo_DanhSachFormComponent;
   activeIndex: number = 0;
   mainTabData: any[] = [
     new TabViewData({
@@ -106,14 +106,6 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
         width: 12
       }),
     ];
-    this.setHiddenTab();
-  }
-
-  setHiddenTab() {
-    if (this.model.formState == FormState.ADD) {
-      // Ẩn tab danh sách nếu là form thêm mới
-      this.mainTabData[1].hidden = true;
-    }
   }
 
   override async validateForm(baseValidate: boolean) {
@@ -131,6 +123,14 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
   }
 
   override onBeforeSave() {
+    // Lấy dữ liệu danh sách từ form danh sách để gửi lên server kèm vói thông tin hiện có của đợt
     this.model.data.danhSach = this.danhSachForm.getMinimizedModel().danhSach;
+    // ĐOạn Này để FIX VALUE Của CHECK Box = false neu nhu value = null
+    // Vi tren server dang required trường này
+    // A sẽ fix bug này sau nhé o nhung vi sao lai required the a
+    this.model.data.danhSach.forEach(item => {
+      item.nopOnline = !!item.nopOnline;
+      item.nopTrucTiep = !!item.nopTrucTiep;
+    });
   }
 }

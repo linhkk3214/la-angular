@@ -18,6 +18,10 @@
     "label": "Quản lý hồ sơ người học",
     "children": [
       {
+        "path": "/hosonguoihoc",
+        "label": "Hồ sơ người học"
+      },
+      {
         "path": "/danhsachlophanhchinh",
         "label": "Danh mục lớp hành chính"
       }

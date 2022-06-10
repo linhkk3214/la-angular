@@ -5,8 +5,8 @@ import { DanhSachLopHanhChinhService } from './services/danhsachlophanhchinh.ser
 import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../dm-khoahoc/services/dm-khoahoc.service';
 import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
-import { DM_NganhService } from '../dm-nganh/services/dm-nganh.service';
 import { HoSoCanBoService } from '../user/services/hosocanbo';
+import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 @Component({
   selector: 'danhsachlophanhchinh',
   templateUrl: './danhsachlophanhchinh.component.html',
@@ -19,7 +19,7 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
     private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_KhoaVienService: DM_KhoaVienService,
-    private _dm_NganhService: DM_NganhService,
+    private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
     private _HoSoCanBoService: HoSoCanBoService,
   ) {
     super(injector);
@@ -56,12 +56,17 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'idKhoaVien',
         label: 'Khoa/Viện',
-        service: this._dm_KhoaHocService
+        service: this._dm_KhoaVienService
       }),
       new ColumnSchema({
-        field: 'idNganh',
+        field: 'idChuongTrinhDaoTao',
         label: 'Ngành',
-        service: this._dm_NganhService
+        service: this._dm_CTĐTService
+      }),
+      new ColumnSchema({
+        field: 'idGVCN',
+        label: 'Giáo viên chủ nhiệm',
+        service: this._HoSoCanBoService
       }),
       new ColumnSchema({
         field: 'siSo',

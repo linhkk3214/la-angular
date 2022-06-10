@@ -1,6 +1,8 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Operator } from 'src/app/shared/models/enums';
 import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
+import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
 import { DM_KhoaVienService } from '../../dm-khoavien/services/dm-khoavien.service';
@@ -20,6 +22,7 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
     private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_KhoaVienService: DM_KhoaVienService,
+    private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
     private _dm_NganhService: DM_NganhService,
     private _HoSoCanBoService: HoSoCanBoService,
   ) {
@@ -39,7 +42,10 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
         field: 'idKhoaHoc',
         label: 'Khóa học',
         required: true,
-        service: this._dm_KhoaHocService
+        service: this._dm_KhoaHocService,
+        bindingFilters: [
+          this.newBindingFilter('idHeDaoTao', Operator.equal, 'idHeDaoTao')
+        ],
       }),
       new DropdownControlSchema({
         field: 'idKhoaVien',
@@ -48,10 +54,17 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
         service: this._dm_KhoaVienService
       }),
       new DropdownControlSchema({
-        field: 'idNganh',
+        field: 'idChuongTrinhDaoTao',
         label: 'Ngành',
         required: true,
-        service: this._dm_NganhService
+        service: this._dm_CTĐTService,
+        bindingFilters: [
+          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
+        ],
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        }
       }),
       new TextControlSchema({
         field: 'ma',
