@@ -24,6 +24,10 @@
       {
         "path": "/danhsachlophanhchinh",
         "label": "Danh mục lớp hành chính"
+      },
+      {
+        "path": "/dotcapnhathosonguoihoc",
+        "label": "Đợt cập nhật hồ sơ người học"
       }
     ]
   },

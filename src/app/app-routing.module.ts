@@ -116,6 +116,10 @@ const routes: Routes = [
     path: 'hosonguoihoc',
     loadChildren: () => import('../app/components/hosonguoihoc/hosonguoihoc.module').then(m => m.HoSoNguoiHocModule)
   },
+  {
+    path: 'dotcapnhathosonguoihoc',
+    loadChildren: () => import('../app/components/dotcapnhathosonguoihoc/dotcapnhathosonguoihoc.module').then(m => m.DotCapNhatHoSoNguoiHocModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
