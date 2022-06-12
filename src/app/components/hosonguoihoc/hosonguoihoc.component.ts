@@ -69,7 +69,8 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'hoVaTen',
-        label: 'Họ và tên'
+        label: 'Họ và tên',
+        width: '150px'
       }),
       new ColumnSchema({
         field: 'NgaySinh',

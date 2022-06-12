@@ -21,15 +21,6 @@ export class DM_DonViLienKetFormComponent extends FormBase implements OnInit {
   override ngOnInit(): void {
     this.setting.service = this._dm_DonViLienKetService;
     this.setting.schema = [
-      new DropdownControlSchema({
-        field: 'test',
-        multiple: true,
-        service: this._userService,
-        fieldPlus: 'ho',
-        funcGetLabel: item => {
-          return `${item.ho} ${item.ten}`;
-        }
-      }),
       new TextControlSchema({
         field: 'ma',
         label: 'Mã',

@@ -6,6 +6,8 @@ import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.servi
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
 import { DM_KhoaVienService } from '../../dm-khoavien/services/dm-khoavien.service';
 import { DM_NganhService } from '../../dm-nganh/services/dm-nganh.service';
+import { DataSourceTrangThai } from '../../dotnhaphoc/models/const';
+import { DataSourceTruongDuocSua } from '../models/const';
 import { DotCapNhatHoSoNguoiHocService } from '../services/dotcapnhathosonguoihoc.service';
 
 @Component({
@@ -78,11 +80,18 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
         service: this._dm_LopHanhChinhService,
         multiple: true
       }),
+      new DropdownControlSchema({
+        field: 'truongDuocSua',
+        label: 'Trường được phép sửa',
+        dataSource: DataSourceTruongDuocSua,
+        multiple: true
+      }),
       new TextAreaControlSchema({
         field: 'ghiChu',
         label: 'Ghi chú',
         width: 12
       }),
+
     ];
   }
 }
