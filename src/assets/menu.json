@@ -28,6 +28,10 @@
       {
         "path": "/dotcapnhathosonguoihoc",
         "label": "Đợt cập nhật hồ sơ người học"
+      },
+      {
+        "path": "/danhsachquyetdinhchuyennganh",
+        "label": "Danh sách quyết định chuyển ngành"
       }
     ]
   },
