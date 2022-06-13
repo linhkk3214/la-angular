@@ -1,3 +1,16 @@
+.menu-container {
+  padding: 0.5em 0 0 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  >div:first-child {
+    flex: 1 1;
+    overflow: hidden;
+  }
+}
+
 ul {
   list-style: none;
   margin: 0;
@@ -14,6 +27,7 @@ ul {
     align-items: center;
     text-decoration: none;
     color: #646464;
+    background: white;
 
     >.content {
       flex: 1 1;
@@ -82,6 +96,32 @@ ul {
   &.expanded {
     ul {
       display: block;
+    }
+  }
+
+  &[level="1"] {
+    >.label {
+      position: sticky;
+      top: 0;
+    }
+  }
+}
+
+::ng-deep la-menu {
+  .search-menu {
+
+    .p-autocomplete {
+      width: 100%;
+
+      .p-inputtext {
+        border-radius: 0;
+        width: 100%;
+        border-left: none;
+        border-right: none;
+        border-bottom: none;
+        outline: none;
+        box-shadow: none;
+      }
     }
   }
 }

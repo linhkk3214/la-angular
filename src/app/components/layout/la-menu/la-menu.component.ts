@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'la-menu',
@@ -8,8 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LAMenuComponent implements OnInit {
   lstMenu: any[] = [];
+  keyword: any;
+  lstMenuFull = [];
+  filteredMenu = [];
   constructor(
-    private _httpClient: HttpClient
+    private _httpClient: HttpClient,
+    private _router: Router
   ) {
   }
 
@@ -46,6 +51,11 @@ export class LAMenuComponent implements OnInit {
   }
 
   deQuySetParent(itemMenu) {
+    if (itemMenu.path) {
+      this.lstMenuFull.push(
+        { value: itemMenu.path, label: itemMenu.label }
+      );
+    }
     if (!itemMenu.children) return;
     itemMenu.children.forEach(item => {
       item.parent = itemMenu;
@@ -97,5 +107,26 @@ export class LAMenuComponent implements OnInit {
         this.deQuyRemoveActive(itemMenu.children);
       }
     });
+  }
+
+  filterMenu(evt: any) {
+    let filtered: any[] = [];
+    let query = evt.query.toLowerCase();
+    for (let i = 0; i < this.lstMenuFull.length; i++) {
+      let itemMenu = this.lstMenuFull[i];
+      if (itemMenu.label.toLowerCase().indexOf(query) > -1) {
+        filtered.push(itemMenu);
+      }
+    }
+
+    this.filteredMenu = filtered;
+  }
+
+  selectMenu(evt: any) {
+    this.keyword = '';
+    this.filteredMenu = [];
+    this.deQuyRemoveActive(this.lstMenu);
+    this.setActiveByPath(this.lstMenu, evt.value);
+    this._router.navigate([evt.value]);
   }
 }

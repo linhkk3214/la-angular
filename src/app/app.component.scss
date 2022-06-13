@@ -147,6 +147,7 @@ $width-menu: 285px;
   .body {
     flex: 1 1;
     display: flex;
+    overflow: hidden;
 
     .menu {
       flex: 0 0 $width-menu;

@@ -15,7 +15,7 @@ import { HoSoCanBoService } from '../../user/services/hosocanbo';
 import { DanhSachQuyetDinhKhenThuongService } from '../services/danhsachquyetdinhkhenthuong.service';
 
 @Component({
-  selector: 'DanhSachQuyetDinhKhenThuong-form',
+  selector: 'danhsachquyetdinhkhenthuong-form',
   templateUrl: './danhsachquyetdinhkhenthuong-form.component.html',
   styleUrls: ['./danhsachquyetdinhkhenthuong-form.component.scss']
 })
