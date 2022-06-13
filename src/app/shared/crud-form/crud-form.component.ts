@@ -712,6 +712,25 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     }
   }
 
+  handleDataSourceLoaded(dataSource: any[], schema: DropdownControlSchema, parentPath?: string) {
+    let parentNode = this._rootNode.getNodeByPath(parentPath);
+    let currentNode = parentNode.getChildNode(schema.field);
+    const eventData = new EventData({
+      currentNode,
+      sourceEvent: null,
+      sourceNode: currentNode,
+      crudForm: this,
+      eventType: 'dataSourceLoaded',
+      data: dataSource
+    });
+    if (schema.callbackDataFinish) {
+      try {
+        schema.callbackDataFinish(eventData);
+      }
+      catch (err) { }
+    }
+  }
+
   // true là thỏa mãn, false là không thỏa mãn (Ở cấp hiện tại chứ chưa kiểm tra cấp con)
   private async validate(currentNode: ControlTreeNode, force: boolean = false): Promise<boolean> {
     const control = currentNode.control;

@@ -85,7 +85,7 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
         service: this._HoSoCanBoService
       }),
       new DropdownControlSchema({
-        field: 'idCVHT',
+        field: 'idCVHTs',
         label: 'Cố vấn học tập',
         service: this._HoSoCanBoService,
         multiple: true

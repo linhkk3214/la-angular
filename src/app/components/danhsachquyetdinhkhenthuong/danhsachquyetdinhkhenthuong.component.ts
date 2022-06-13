@@ -1,7 +1,7 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { ColumnSchema, DropdownControlSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
-import { DanhSachQuyetDinhChuyenNganhService } from './services/danhsachquyetdinhchuyennganh.service';
+import { DanhSachQuyetDinhKhenThuongService } from './services/danhsachquyetdinhkhenthuong.service';
 import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../dm-khoahoc/services/dm-khoahoc.service';
 import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
@@ -14,14 +14,14 @@ import { DM_HocKyService } from '../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 import { DataType } from 'src/app/shared/models/enums';
 @Component({
-  selector: 'danhsachquyetdinhchuyennganh',
-  templateUrl: './danhsachquyetdinhchuyennganh.component.html',
-  styleUrls: ['./danhsachquyetdinhchuyennganh.component.scss']
+  selector: 'DanhSachQuyetDinhKhenThuong',
+  templateUrl: './danhsachquyetdinhkhenthuong.component.html',
+  styleUrls: ['./danhsachquyetdinhkhenthuong.component.scss']
 })
-export class DanhSachQuyetDinhChuyenNganhComponent extends ListBase implements OnInit {
+export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements OnInit {
   constructor(
     injector: Injector,
-    private _DanhSachQuyetDinhChuyenNganhService: DanhSachQuyetDinhChuyenNganhService,
+    private _DanhSachQuyetDinhKhenThuongService: DanhSachQuyetDinhKhenThuongService,
     private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_NamHocService: DM_NamHocService,
@@ -37,7 +37,7 @@ export class DanhSachQuyetDinhChuyenNganhComponent extends ListBase implements O
 
   override ngOnInit(): void {
     this.setting.objectName = 'quyết định chuyển ngành';
-    this.setting.service = this._DanhSachQuyetDinhChuyenNganhService;
+    this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
     this.setting.cols = [

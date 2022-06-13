@@ -134,11 +134,6 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
   override onBeforeSave() {
     // Lấy dữ liệu danh sách từ form danh sách để gửi lên server kèm vói thông tin hiện có của đợt
     this.model.data.danhSach = this.danhSachForm.getMinimizedModel().danhSach;
-    // ĐOạn Này để FIX VALUE Của CHECK Box = false neu nhu value = null
-    // Vi tren server dang required trường này
-    this.model.data.danhSach.forEach(item => {
-      item.nopOnline = !!item.nopOnline;
-      item.nopTrucTiep = !!item.nopTrucTiep;
-    });
+
   }
 }

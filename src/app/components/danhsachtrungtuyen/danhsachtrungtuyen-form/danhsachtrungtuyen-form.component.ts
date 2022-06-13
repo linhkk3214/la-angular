@@ -53,6 +53,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
 
   override ngOnInit(): void {
     this.setting.service = this._DanhSachTrungTuyenService;
+    const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
       new DropdownControlSchema({
         field: 'idDotNhapHoc',
@@ -64,7 +65,8 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         field: 'maNhapHoc',
         label: 'Mã nhập học',
         required: true,
-        width: 6
+        width: 6,
+        disabled: isNotFormAdd
       }),
       new TextControlSchema({
         field: 'maHoSo',

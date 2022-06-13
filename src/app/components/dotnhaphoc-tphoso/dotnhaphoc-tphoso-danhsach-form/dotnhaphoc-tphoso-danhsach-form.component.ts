@@ -1,6 +1,6 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator, TextAlign } from 'src/app/shared/models/enums';
-import { CheckBoxControlSchema, DropdownControlSchema, MaskControlSchema, TableControlSchema } from 'src/app/shared/models/schema';
+import { CheckBoxControlSchema, DropdownControlSchema, EventData, MaskControlSchema, TableControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
 import { DotNhapHoc_TpHoSoService } from '../services/dotnhaphoc-tphoso.service';
@@ -35,7 +35,24 @@ export class DotNhapHoc_TpHoSo_DanhSachFormComponent extends FormBase implements
             field: 'idTpHoSo',
             label: 'Hồ sơ',
             service: this._dm_TpHoSoService,
+            fieldPlus: 'ma',
             required: true,
+            // Hàm sẽ chạy sau khi dataSource của dropdown được load
+            callbackDataFinish: (evt: EventData) => {
+              const rowModel = evt.currentNode.parentModel;
+              // Tìm bản ghi thành phần hồ sơ được chọn
+              const itemSelected = evt.data.find(q => q.value == rowModel.idTpHoSo);
+              if (itemSelected) {
+                // Set mã hồ sơ theo thông tin lấy được từ bản ghi thành phần hồ sơ được chọn
+                rowModel.maHoSo = itemSelected.ma;
+              }
+            }
+          }),
+          new TextControlSchema({
+            field: 'maHoSo',
+            label: 'Mã hồ sơ',
+            widthInList: '80px',
+            disabled: true
           }),
           new MaskControlSchema({
             field: 'soLuongBanChinh',
@@ -85,4 +102,5 @@ export class DotNhapHoc_TpHoSo_DanhSachFormComponent extends FormBase implements
     ])).data;
     this.crudForm.setTableNodeDataSource('danhSach', lstData);
   }
+
 }

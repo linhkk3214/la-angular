@@ -24,6 +24,7 @@ import { DanhSachLopHanhChinhService } from '../danhsachlophanhchinh/services/da
 import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
 import { DM_TrangThaiNguoiHocService } from '../dm-trangthainguoihoc/services/dm-trangthainguoihoc.service';
 import { ReligionService } from '../user/services/religion.service';
+import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 @Component({
   selector: 'hosonguoihoc',
   templateUrl: './hosonguoihoc.component.html',
@@ -39,6 +40,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
     private _dm_GioiTinhService: DM_GioiTinhService,
     private _dm_TonGiaoService: ReligionService,
     private _addressService: AddressService,
+    private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
     private _DM_NganhService: DM_NganhService,
     private _DM_KhuVucService: DM_KhuVucService,
     private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
@@ -101,7 +103,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'idNganh',
         label: 'Ngành',
-        service: this._DM_NganhService,
+        service: this._dm_CTĐTService,
       }),
       new ColumnSchema({
         field: 'idLopHanhChinh',

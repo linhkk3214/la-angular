@@ -13,8 +13,8 @@
       <ng-container *ngIf="!value || value.length == 0">{{control.placeholder}}</ng-container>
       <ng-container *ngIf="value && value.length > 0">
         <span *ngFor="let selectedItem of lstObjectSelected" class="custom-select-item">
-          {{selectedItem.label}}<span class="remove-item" (click)="removeItem($event, selectedItem)"><i
-              class="pi pi-times"></i></span>
+          {{selectedItem.label}}<span *ngIf="!control.disabled" class="remove-item"
+            (click)="removeItem($event, selectedItem)"><i class="pi pi-times"></i></span>
         </span>
       </ng-container>
     </ng-template>

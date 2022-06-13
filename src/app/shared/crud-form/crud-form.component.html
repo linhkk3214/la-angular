@@ -25,18 +25,19 @@
 <ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index">
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TextControlSchema'">
-      <input [type]="schema.dataFormat" pInputText [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
-        (change)="handleFieldValueChange(schema, $event, 'change', parentPath)" />
+      <input [type]="schema.dataFormat" pInputText [disabled]="schema.disabled" [placeholder]="schema.placeholder"
+        [(ngModel)]="data[schema.field]" (change)="handleFieldValueChange(schema, $event, 'change', parentPath)" />
     </ng-container>
     <ng-container *ngSwitchCase="'TextAreaControlSchema'">
-      <textarea pInputTextarea [placeholder]="schema.placeholder" [style.height]="schema.height"
-        [(ngModel)]="data[schema.field]"
+      <textarea pInputTextarea [disabled]="schema.disabled" [placeholder]="schema.placeholder"
+        [style.height]="schema.height" [(ngModel)]="data[schema.field]"
         (change)="handleFieldValueChange(schema, $event, 'change', parentPath)"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
       <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
         (onChanged)="handleFirstChanged(null, schema, parentPath)"
-        (onFirstChanged)="handleFirstChanged($event, schema, parentPath)">
+        (onFirstChanged)="handleFirstChanged($event, schema, parentPath)"
+        (onDataSourceLoaded)="handleDataSourceLoaded($event, schema, parentPath)">
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">

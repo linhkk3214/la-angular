@@ -12,18 +12,18 @@ import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
 import { DM_NganhService } from '../../dm-nganh/services/dm-nganh.service';
 import { HoSoNguoiHocService } from '../../hosonguoihoc/services/hosonguoihoc.service';
 import { HoSoCanBoService } from '../../user/services/hosocanbo';
-import { DanhSachQuyetDinhChuyenNganhService } from '../services/danhsachquyetdinhchuyennganh.service';
+import { DanhSachQuyetDinhKhenThuongService } from '../services/danhsachquyetdinhkhenthuong.service';
 
 @Component({
-  selector: 'danhsachquyetdinhchuyennganh-form',
-  templateUrl: './danhsachquyetdinhchuyennganh-form.component.html',
-  styleUrls: ['./danhsachquyetdinhchuyennganh-form.component.scss']
+  selector: 'DanhSachQuyetDinhKhenThuong-form',
+  templateUrl: './danhsachquyetdinhkhenthuong-form.component.html',
+  styleUrls: ['./danhsachquyetdinhkhenthuong-form.component.scss']
 })
-export class DanhSachQuyetDinhChuyenNganhFormComponent extends FormBase implements OnInit {
+export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implements OnInit {
   defaultSetting: any = {};
   constructor(
     injector: Injector,
-    private _DanhSachQuyetDinhChuyenNganhService: DanhSachQuyetDinhChuyenNganhService,
+    private _DanhSachQuyetDinhKhenThuongService: DanhSachQuyetDinhKhenThuongService,
     private _dm_HeDaoTaoService: DM_HeDaoTaoService,
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_NamHocService: DM_NamHocService,
@@ -38,7 +38,7 @@ export class DanhSachQuyetDinhChuyenNganhFormComponent extends FormBase implemen
   }
 
   override ngOnInit(): void {
-    this.setting.service = this._DanhSachQuyetDinhChuyenNganhService;
+    this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
     // Lấy setting mặc định được cấu hình
     this.defaultSetting = this.getDefaultSetting();
     const isNotFormAdd = !this._isFormAddNew();

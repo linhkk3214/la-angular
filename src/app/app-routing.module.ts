@@ -124,6 +124,14 @@ const routes: Routes = [
     path: 'danhsachquyetdinhchuyennganh',
     loadChildren: () => import('../app/components/danhsachquyetdinhchuyennganh/danhsachquyetdinhchuyennganh.module').then(m => m.DanhSachQuyetDinhChuyenNganhModule)
   },
+  {
+    path: 'danhsachloaikhenthuong',
+    loadChildren: () => import('../app/components/danhsachloaikhenthuong/danhsachloaikhenthuong.module').then(m => m.DanhSachLoaiKhenThuongModule)
+  },
+  {
+    path: 'danhsachquyetdinhkhenthuong',
+    loadChildren: () => import('../app/components/danhsachquyetdinhkhenthuong/danhsachquyetdinhkhenthuong.module').then(m => m.DanhSachQuyetDinhKhenThuongModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

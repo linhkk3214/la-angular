@@ -6,7 +6,7 @@
 </div>
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
-  [popupSize]="setting.popupSize" [useDefaultScrollBar]="true" (onHide)="showDetailForm = false">
+  [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
   <hosonguoihoc-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
   </hosonguoihoc-form>

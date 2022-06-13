@@ -37,6 +37,16 @@
   },
   {
     "path": "",
+    "label": "Quản lý khen thưởng",
+    "children": [
+      {
+        "path": "/danhsachloaikhenthuong",
+        "label": "Danh mục loại khen thưởng"
+      }
+    ]
+  },
+  {
+    "path": "",
     "label": "Danh mục chung",
     "icon": "pi pi-list",
     "children": [

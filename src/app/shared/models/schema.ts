@@ -84,7 +84,7 @@ export class TextControlSchema extends ControlSchema {
 
 export class CheckBoxControlSchema extends ControlSchema {
   hiddenLabel?= false;
-  override defaultValue? = false;
+  override defaultValue?= false;
   constructor(init?: CheckBoxControlSchema) {
     super();
     for (const key in init) {
@@ -150,9 +150,9 @@ export class DropdownControlSchema extends DataSourceSchema {
   sortField?= '';
   sortDir?: 1 | -1 = 1;
   fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
-  defaultFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  filterWhileProcess?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  bindingFilters?: FilterWithBinding[]; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  defaultFilters?: Filter[] | Promise<Filter[]>; // Filter mặc định của dropdown
+  filterWhileProcess?: Filter[] | Promise<Filter[]>;
+  bindingFilters?: FilterWithBinding[];
   modifyFilter?: Function;
   autoDisplayFirst?: boolean = false;
   callbackDataFinish?: (evt: EventData) => void;
