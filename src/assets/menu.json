@@ -51,6 +51,20 @@
   },
   {
     "path": "",
+    "label": "Quản lý quyết định học tập",
+    "children": [
+      {
+        "path": "/danhsachloaiquyetdinh",
+        "label": "Danh mục loại quyết định"
+      },
+      {
+        "path": "/danhsachquyetdinhhoctap",
+        "label": "Danh mục quyết định học tập"
+      }
+    ]
+  },
+  {
+    "path": "",
     "label": "Danh mục chung",
     "icon": "pi pi-list",
     "children": [

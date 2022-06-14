@@ -132,6 +132,14 @@ const routes: Routes = [
     path: 'danhsachquyetdinhkhenthuong',
     loadChildren: () => import('../app/components/danhsachquyetdinhkhenthuong/danhsachquyetdinhkhenthuong.module').then(m => m.DanhSachQuyetDinhKhenThuongModule)
   },
+  {
+    path: 'danhsachloaiquyetdinh',
+    loadChildren: () => import('../app/components/danhsachloaiquyetdinh/danhsachloaiquyetdinh.module').then(m => m.DanhSachLoaiQuyetDinhModule)
+  },
+  {
+    path: 'danhsachquyetdinhhoctap',
+    loadChildren: () => import('../app/components/danhsachquyetdinhhoctap/danhsachquyetdinhhoctap.module').then(m => m.DanhSachQuyetDinhHocTapModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
