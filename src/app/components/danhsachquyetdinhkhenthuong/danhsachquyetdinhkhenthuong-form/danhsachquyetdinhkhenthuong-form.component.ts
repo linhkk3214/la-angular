@@ -1,7 +1,8 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema, FileControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema, FileControlSchema, TableControlSchema, EventData } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
+import { DanhSachLoaiKhenThuongService } from '../../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
@@ -28,10 +29,11 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_NamHocService: DM_NamHocService,
     private _dm_HocKyService: DM_HocKyService,
-    private _dm_HoSoNguoiHocService: HoSoNguoiHocService,
+    private _hoSoNguoiHocService: HoSoNguoiHocService,
     private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
-    private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
+    private _danhSachLopHanhChinhService: DanhSachLopHanhChinhService,
     private _dm_NganhService: DM_NganhService,
+    private _DanhSachLoaiKhenThuongService: DanhSachLoaiKhenThuongService,
     private _HoSoCanBoService: HoSoCanBoService,
   ) {
     super(injector);
@@ -43,97 +45,40 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
     this.defaultSetting = this.getDefaultSetting();
     const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
-      new DropdownControlSchema({
-        field: 'idKhoaHoc',
-        label: 'Khóa học',
+      new TextControlSchema({
+        field: 'soQd',
+        label: 'Số quyết định',
         required: true,
-        service: this._dm_KhoaHocService,
-        disabled: isNotFormAdd
+      }),
+      new DateTimeControlSchema({
+        field: 'ngayQd',
+        label: 'Ngày quyết định',
       }),
       new DropdownControlSchema({
-        field: 'idNganhHienTai',
-        label: 'Từ ngành',
-        required: true,
-        service: this._dm_CTĐTService,
-        bindingFilters: [
-          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
-        ],
-        fieldPlus: 'soCTDT',
-        funcGetLabel: item => {
-          return `${item.soCTDT} - ${item.ten}`;
-        },
-        disabled: isNotFormAdd
-      }),
-      new DropdownControlSchema({
-        field: 'lstIdNguoiHoc',
-        label: 'Người học',
-        required: true,
-        service: this._dm_HoSoNguoiHocService,
-        bindingFilters: isNotFormAdd ? null : [
-          this.newBindingFilter('idNganh', Operator.equal, 'idNganhHienTai')
-        ],
-        fieldPlus: 'masv',
-        funcGetLabel: item => {
-          return `${item.masv} - ${item.hoVaTen}`;
-        },
-        multiple: true,
-        disabled: isNotFormAdd
-      }),
-      new DropdownControlSchema({
-        field: 'idNganhChuyen',
-        label: 'Sang ngành',
-        required: true,
-        service: this._dm_CTĐTService,
-        bindingFilters: [
-          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
-        ],
-        fieldPlus: 'soCTDT',
-        funcGetLabel: item => {
-          return `${item.soCTDT} - ${item.ten}`;
-        },
-        disabled: isNotFormAdd
-      }),
-      new DropdownControlSchema({
-        field: 'idLopChuyen',
-        label: 'Sang lớp',
-        required: true,
-        service: this._DanhSachLopHanhChinhService,
-        bindingFilters: [
-          this.newBindingFilter('idChuongTrinhDaoTao', Operator.equal, 'idNganhChuyen')
-        ],
-        disabled: isNotFormAdd,
-      }),
-      new DropdownControlSchema({
-        field: 'idNamHocAd',
-        label: 'Năm học áp dụng',
-        required: true,
+        field: 'idNamHoc',
+        label: 'Năm học',
         service: this._dm_NamHocService,
+        required: true,
         sortField: 'nam',
         sortDir: -1,
-        disabled: isNotFormAdd
       }),
       new DropdownControlSchema({
-        field: 'idHocKyAd',
-        label: 'Học kỳ áp dụng',
+        field: 'idHocKy',
+        label: 'Học kỳ',
         required: true,
         service: this._dm_HocKyService,
         defaultFilters: [
           this.newFilter('idHeDaoTao', Operator.equal, this.defaultSetting.idHeDaoTao)
         ],
         bindingFilters: [
-          this.newBindingFilter('idNamHoc', Operator.equal, 'idNamHocAd')
+          this.newBindingFilter('idNamHoc', Operator.equal, 'idNamHoc')
         ],
-        disabled: isNotFormAdd,
       }),
-      new TextControlSchema({
-        field: 'soQd',
-        label: 'Số quyết định',
-        width: 6
-      }),
-      new DateTimeControlSchema({
-        field: 'ngayQd',
-        label: 'Ngày quyết định',
-        width: 6
+      new DropdownControlSchema({
+        field: 'idLoaiKhenThuong',
+        label: 'Loại khen thưởng',
+        required: true,
+        service: this._DanhSachLoaiKhenThuongService,
       }),
       new DropdownControlSchema({
         field: 'idNguoiKy',
@@ -143,12 +88,85 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
       new TextAreaControlSchema({
         field: 'noiDung',
         label: 'Nội dung',
-        width: 12
       }),
       new FileControlSchema({
         field: 'lstDinhKem',
         label: 'Đính kèm'
       }),
+      // new DropdownControlSchema({
+      //   field: 'lstIdNguoiHoc',
+      //   label: 'Người học',
+      //   service: this._HoSoNguoiHocService,
+      //   multiple: true,
+      //   fieldPlus: 'masv',
+      //   funcGetLabel: item => {
+      //     return `${item.masv} - ${item.hoVaTen}`;
+      //   },
+      // }),
+      new TableControlSchema({
+        field: 'danhSachNguoiHoc',
+        label: 'Người học',
+        width: 12,
+        rowTemplate: [
+          new DropdownControlSchema({
+            field: 'idNguoiHoc',
+            label: 'Người học',
+            service: this._hoSoNguoiHocService,
+            displayField: 'hoVaTen',
+            fieldPlus: 'masv,NgaySinh,idLopHanhChinh',
+            onChanged: (evt: EventData) => {
+              const dropdownControl = <DropdownControlSchema>evt.control;
+              const itemNguoiHocSelected = dropdownControl._component.dataSourceInternal.find(q => q.value == evt.parentModel.idNguoiHoc);
+              this.setDataNguoiHoc(evt.parentModel, itemNguoiHocSelected);
+            }
+          }),
+          new TextControlSchema({
+            field: 'maSv',
+            label: 'Mã sinh viên',
+            disabled: true
+          }),
+          new DateTimeControlSchema({
+            field: 'ngaySinh',
+            label: 'Ngày sinh',
+            disabled: true
+          }),
+          new DropdownControlSchema({
+            field: 'idLop',
+            label: 'Lớp hành chính',
+            service: this._danhSachLopHanhChinhService,
+            disabled: true
+          })
+        ]
+      })
     ];
+  }
+
+  setDataNguoiHoc(model: any, itemNguoiHoc: any) {
+    model.maSv = itemNguoiHoc.masv;
+    model.idLop = itemNguoiHoc.idLopHanhChinh;
+    model.ngaySinh = itemNguoiHoc.NgaySinh ? new Date(itemNguoiHoc.NgaySinh) : null;
+  }
+
+  override async modifyDetailData(data: any): Promise<void> {
+    // Lấy danh sách người học
+    if (data.lstIdNguoiHoc) {
+      const lstNguoiHoc = (await this._hoSoNguoiHocService.getAllByFilter([
+        this.newFilter('_id', Operator.in, data.lstIdNguoiHoc)
+      ])).data;
+      data.danhSachNguoiHoc = lstNguoiHoc.map(q => {
+        const result = {
+          idNguoiHoc: q._id
+        };
+        this.setDataNguoiHoc(result, q);
+        return result;
+      });
+    }
+  }
+
+  override onBeforeSave(): void | Promise<boolean> {
+    this.model.data.lstIdNguoiHoc = [];
+    if (this.model.data.danhSachNguoiHoc && this.model.data.danhSachNguoiHoc.length) {
+      this.model.data.lstIdNguoiHoc = this.model.data.danhSachNguoiHoc.map(q => q.idNguoiHoc);
+    }
   }
 }
