@@ -13,6 +13,7 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
 import { DM_HocKyService } from '../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 import { DataType } from 'src/app/shared/models/enums';
+import { DanhSachLoaiKhenThuongService } from '../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 @Component({
   selector: 'DanhSachQuyetDinhKhenThuong',
   templateUrl: './danhsachquyetdinhkhenthuong.component.html',
@@ -31,46 +32,17 @@ export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements On
     private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
     private _dm_NganhService: DM_NganhService,
     private _HoSoCanBoService: HoSoCanBoService,
+    private _DanhSachLoaiKhenThuongService: DanhSachLoaiKhenThuongService
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'quyết định chuyển ngành';
+    this.setting.objectName = 'quyết định khen thưởng';
     this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
     this.setting.cols = [
-      new ColumnSchema({
-        field: 'idNganhHienTai',
-        label: 'Từ ngành',
-        required: true,
-        service: this._dm_CTĐTService,
-      }),
-      new ColumnSchema({
-        field: 'idNganhChuyen',
-        label: 'Sang ngành',
-        required: true,
-        service: this._dm_CTĐTService,
-      }),
-      new ColumnSchema({
-        field: 'idLopChuyen',
-        label: 'Sang lớp',
-        required: true,
-        service: this._DanhSachLopHanhChinhService,
-      }),
-      new ColumnSchema({
-        field: 'idNamHocAd',
-        label: 'Năm học áp dụng',
-        required: true,
-        service: this._dm_NamHocService,
-      }),
-      new ColumnSchema({
-        field: 'idHocKyAd',
-        label: 'Học kỳ áp dụng',
-        required: true,
-        service: this._dm_HocKyService,
-      }),
       new ColumnSchema({
         field: 'soQd',
         label: 'Số quyết định',
@@ -80,6 +52,26 @@ export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements On
         label: 'Ngày quyết định',
         dataType: DataType.date
       }),
+      new ColumnSchema({
+        field: 'idNamHoc',
+        label: 'Năm học',
+        service: this._dm_NamHocService,
+      }),
+      new ColumnSchema({
+        field: 'idHocKy',
+        label: 'Học kỳ',
+        service: this._dm_HocKyService,
+      }),
+      new ColumnSchema({
+        field: 'idLoaiKhenThuong',
+        label: 'Loại khen thưởng',
+        service: this._DanhSachLoaiKhenThuongService,
+      }),
+      new ColumnSchema({
+        field: 'idNguoiKy',
+        label: 'Người ký',
+        service: this._HoSoCanBoService
+      })
     ];
     super.ngOnInit();
   }

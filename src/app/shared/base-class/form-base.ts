@@ -163,6 +163,7 @@ export abstract class FormBase extends ComponentBase implements OnInit {
     data.__disableEdit = this.model.data.__disableEdit;
 
     mergeJSON(this.model.data, data);
+    this.crudForm.initRootNode();
     if (this.forceOnlyView) {
       this.__isFormView = true;
       this.model.formState = FormState.VIEW;

@@ -133,6 +133,10 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       this.initBindingControlSchema(control);
     }
 
+    this.initRootNode();
+  }
+
+  initRootNode() {
     this._rootNode = new ControlTreeNode(this.data, this);
     this._rootNode.setCrudForm(this);
   }

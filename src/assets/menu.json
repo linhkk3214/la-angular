@@ -42,6 +42,10 @@
       {
         "path": "/danhsachloaikhenthuong",
         "label": "Danh mục loại khen thưởng"
+      },
+      {
+        "path": "/danhsachquyetdinhkhenthuong",
+        "label": "Danh sách quyết định khen thưởng"
       }
     ]
   },
