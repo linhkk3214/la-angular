@@ -1,9 +1,11 @@
 @import "./layout.scss";
 @import "./control.scss";
+
 body {
   margin: 0;
   padding: 0;
 }
+
 crud-form {
   .control-container {
 
@@ -27,5 +29,95 @@ crud-form {
         color: red
       }
     }
+  }
+}
+
+.flex-container-fit-child {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+
+  >div.fit-content {
+    flex: 1 1;
+    position: relative;
+
+    >div {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
+  }
+
+  .fit-content {
+    .flexcolumn {
+      border: none;
+    }
+
+    .defaulFlexColumn .crud-list-table table {
+      th {
+        border-top: 1px solid $border-table-color  !important;
+        border-left: 1px solid $border-table-color  !important;
+      }
+
+      td {
+        border-left: 1px solid $border-table-color  !important;
+      }
+
+      tr:last-child td {
+        border-left: 1px solid $border-table-color  !important;
+        //border-bottom: 1px solid $border-table-color !important;
+      }
+
+      td:last-child,
+      th:last-child {
+        border-right: 1px solid $border-table-color  !important;
+      }
+    }
+
+    .row-bottom-sticky {
+      position: sticky;
+      z-index: 4;
+      width: 100%;
+      height: 1px;
+      bottom: 0;
+
+      &:after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        bottom: 0px;
+        border-bottom: 1px solid #eee;
+      }
+    }
+  }
+}
+
+.custom-card {
+  margin-bottom: 0px;
+  position: relative;
+  border-radius: 0px;
+  padding: 0.5em 1em !important;
+  min-height: calc(100vh - 54px);
+  &[height-type="0"] {
+      min-height: calc(100vh - 54px);
+  }
+
+  &[height-type="1"] {
+      min-height: 150px;
+  }
+
+  &[height-type="-1"] {
+      min-height: 0;
+
+      &.flex-container-fit-child {
+          height: auto;
+      }
+
+      &.flex-container-fit-child > div.fit-content > div {
+          position: unset;
+      }
   }
 }

@@ -70,23 +70,25 @@
             [ngTemplateOutlet]="getTemplate('topGrid')"></ng-container>
         </div>
         <div class="container-table fit-content --table-responsive">
-          <div class="container-table-inner">
-            <tn-scrollbar *ngIf="showScrollBar" #scrollbar>
-              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
-              </ng-container>
-              <ng-container *ngIf="hasTemplate('afterCrudList')">
-                <ng-container [ngTemplateOutlet]="getTemplate('afterCrudList')"></ng-container>
-              </ng-container>
-            </tn-scrollbar>
-            <div *ngIf="!showScrollBar">
-              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
-              </ng-container>
-            </div>
+          <div>
+            <div class="container-table-inner">
+              <tn-scrollbar *ngIf="showScrollBar" #scrollbar>
+                <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+                </ng-container>
+                <ng-container *ngIf="hasTemplate('afterCrudList')">
+                  <ng-container [ngTemplateOutlet]="getTemplate('afterCrudList')"></ng-container>
+                </ng-container>
+              </tn-scrollbar>
+              <div *ngIf="!showScrollBar">
+                <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+                </ng-container>
+              </div>
 
-            <div class="table-border-line --top"></div>
-            <div class="table-border-line --right"></div>
-            <div class="table-border-line --bottom"></div>
-            <div class="table-border-line --left"></div>
+              <div class="table-border-line --top"></div>
+              <div class="table-border-line --right"></div>
+              <div class="table-border-line --bottom"></div>
+              <div class="table-border-line --left"></div>
+            </div>
           </div>
         </div>
       </div>
