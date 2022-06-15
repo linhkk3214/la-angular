@@ -46,6 +46,10 @@
       {
         "path": "/danhsachquyetdinhkhenthuong",
         "label": "Danh sách quyết định khen thưởng"
+      },
+      {
+        "path": "/quyetdinhkhenthuong-thongke",
+        "label": "Thống kê"
       }
     ]
   },
@@ -59,7 +63,29 @@
       },
       {
         "path": "/danhsachquyetdinhhoctap",
-        "label": "Danh mục quyết định học tập"
+        "label": "Danh sách quyết định học tập"
+      }
+    ]
+  },
+  {
+    "path": "",
+    "label": "Quản lý học bổng tài trợ",
+    "children": [
+      {
+        "path": "/dm-loaidonvitaitro",
+        "label": "Loại đơn vị tài trợ"
+      },
+      {
+        "path": "/danhmucdonvitaitro",
+        "label": "Danh mục đơn vị tài trợ"
+      },
+      {
+        "path": "/danhmuchocbong",
+        "label": "Danh mục học bổng"
+      },
+      {
+        "path": "/danhsachquyetdinhhocbong",
+        "label": "Danh sách quyết định học bổng"
       }
     ]
   },

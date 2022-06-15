@@ -100,7 +100,8 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
 
   constructor(
     public _injector: Injector,
-    public _datePipe: DatePipe
+    public _datePipe: DatePipe,
+    public _decimalPipe: DecimalPipe
   ) {
     super(_injector);
   }
@@ -221,6 +222,11 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
             column.visible = false;
           }
         }
+        // else if (column.dataType == 'int' || column.dataType == 'decimal') {
+        //   column.pipes = [
+        //     this.deci
+        //   ]
+        // }
       }
     }
     cols.length = 0;

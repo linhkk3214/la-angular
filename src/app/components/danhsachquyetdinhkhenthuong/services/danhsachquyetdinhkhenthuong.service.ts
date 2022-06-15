@@ -9,4 +9,8 @@ export class DanhSachQuyetDinhKhenThuongService extends BaseService {
   constructor(httpClient: HttpClient) {
     super(httpClient, 'DanhSachQuyetDinhKhenThuong');
   }
+
+  thongKe(idNamHoc: string) {
+    return this.defaultPost(`${this.serviceUri}/ThongKe`, { idNamHoc });
+  }
 }

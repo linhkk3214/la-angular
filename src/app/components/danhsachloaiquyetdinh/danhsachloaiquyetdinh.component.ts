@@ -35,12 +35,12 @@ export class DanhSachLoaiQuyetDinhComponent extends ListBase implements OnInit {
         fullTextSearch: true
       }),
       new ColumnSchema({
-        field: 'trangthainganh1',
+        field: 'trangThaiNganh1',
         label: 'Trạng thái ngành 1 sau duyệt',
         service: this._dm_TrangThaiNguoiHocService,
       }),
       new ColumnSchema({
-        field: 'trangthainganh2',
+        field: 'trangThaiNganh2',
         label: 'Trạng thái ngành 2 sau duyệt',
         service: this._dm_TrangThaiNguoiHocService,
       }),

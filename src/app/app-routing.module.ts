@@ -140,6 +140,26 @@ const routes: Routes = [
     path: 'danhsachquyetdinhhoctap',
     loadChildren: () => import('../app/components/danhsachquyetdinhhoctap/danhsachquyetdinhhoctap.module').then(m => m.DanhSachQuyetDinhHocTapModule)
   },
+  {
+    path: 'dm-loaidonvitaitro',
+    loadChildren: () => import('../app/components/dm-loaidonvitaitro/dm-loaidonvitaitro.module').then(m => m.DM_LoaiDonViTaiTroModule)
+  },
+  {
+    path: 'danhmucdonvitaitro',
+    loadChildren: () => import('../app/components/danhmucdonvitaitro/danhmucdonvitaitro.module').then(m => m.DanhMucDonViTaiTroModule)
+  },
+  {
+    path: 'danhmuchocbong',
+    loadChildren: () => import('../app/components/danhmuchocbong/danhmuchocbong.module').then(m => m.DanhMucHocBongModule)
+  },
+  {
+    path: 'danhsachquyetdinhhocbong',
+    loadChildren: () => import('../app/components/danhsachquyetdinhhocbong/danhsachquyetdinhhocbong.module').then(m => m.DanhSachQuyetDinhHocBongModule)
+  },
+  {
+    path: 'quyetdinhkhenthuong-thongke',
+    loadChildren: () => import('../app/components/quyetdinhkhenthuong-thongke/quyetdinhkhenthuong-thongke.module').then(m => m.QuyetDinhKhenThuong_ThongKeModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

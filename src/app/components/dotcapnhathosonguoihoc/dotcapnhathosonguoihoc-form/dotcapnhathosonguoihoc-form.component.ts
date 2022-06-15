@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, DateTimeControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
@@ -49,7 +49,11 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
         required: true,
         width: 6
       }),
-
+      new TitleSchema({
+        field: 'abc',
+        text: 'Phạm vi',
+        width: 12
+      }),
       new DropdownControlSchema({
         field: 'idHeDaoTao',
         label: 'Hệ đào tạo',

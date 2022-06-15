@@ -89,7 +89,11 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
         field: 'idNguoiKy',
         label: 'Người ký',
         service: this._HoSoCanBoService,
-        required: true
+        required: true,
+        fieldPlus: 'ma',
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new DateTimeControlSchema({
         field: 'ngayHieuLuc',
@@ -120,7 +124,7 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
             label: 'Người học',
             service: this._hoSoNguoiHocService,
             displayField: 'hoVaTen',
-            fieldPlus: 'masv,NgaySinh,idLopHanhChinh',
+            fieldPlus: 'masv,NgaySinh,idLopHanhChinh, idNganh',
             onChanged: (evt: EventData) => {
               const dropdownControl = <DropdownControlSchema>evt.control;
               const itemNguoiHocSelected = dropdownControl._component.dataSourceInternal.find(q => q.value == evt.parentModel.idNguoiHoc);
@@ -142,6 +146,12 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
             label: 'Lớp hành chính',
             service: this._danhSachLopHanhChinhService,
             disabled: true
+          }),
+          new DropdownControlSchema({
+            field: 'idNganh',
+            label: 'Ngành',
+            service: this._dm_CTĐTService,
+            disabled: true
           })
         ]
       })
@@ -150,6 +160,7 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
 
   setDataNguoiHoc(model: any, itemNguoiHoc: any) {
     model.maSv = itemNguoiHoc.masv;
+    model.idNganh = itemNguoiHoc.idNganh;
     model.idLop = itemNguoiHoc.idLopHanhChinh;
     model.ngaySinh = itemNguoiHoc.NgaySinh ? new Date(itemNguoiHoc.NgaySinh) : null;
   }

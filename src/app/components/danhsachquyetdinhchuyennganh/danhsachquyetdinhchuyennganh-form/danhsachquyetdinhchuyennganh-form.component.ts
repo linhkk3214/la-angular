@@ -138,7 +138,11 @@ export class DanhSachQuyetDinhChuyenNganhFormComponent extends FormBase implemen
       new DropdownControlSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        fieldPlus: 'ma',
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new TextAreaControlSchema({
         field: 'noiDung',

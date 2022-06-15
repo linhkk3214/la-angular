@@ -1,5 +1,5 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
-import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema } from 'src/app/shared/models/schema';
+import { TextAreaControlSchema, TextControlSchema, DropdownControlSchema, MaskControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DanhSachLoaiKhenThuongService } from '../services/danhsachloaikhenthuong.service';
@@ -33,9 +33,10 @@ export class DanhSachLoaiKhenThuongFormComponent extends FormBase implements OnI
         required: true,
         width: 6
       }),
-      new TextControlSchema({
+      new MaskControlSchema({
         field: 'soTien',
         label: 'Số tiền',
+        suffix: 'đồng',
       }),
       new TextAreaControlSchema({
         field: 'ghiChu',

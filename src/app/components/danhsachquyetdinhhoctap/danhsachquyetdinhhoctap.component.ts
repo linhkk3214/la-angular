@@ -62,7 +62,10 @@ export class DanhSachQuyetDinhHocTapComponent extends ListBase implements OnInit
       new ColumnSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new ColumnSchema({
         field: 'ngayHieuLuc',

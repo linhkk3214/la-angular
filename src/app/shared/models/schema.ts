@@ -255,11 +255,12 @@ export class ColumnSchema extends DataSourceSchema {
   dataTypeRefField?: DataType | string;
   disableCheckBox?= true;
   controlType?: ControlType = ControlType.textbox;
+  fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
   displayFieldInGrid?: string;
   separator?= ', ';
   override textAlign?: TextAlign = TextAlign.Left;
-  funcGetRefDataRow?: (refItems) => {};
-  funcSetValueRow?: (rowItem, data) => void;
+  funcGetRefDataRow?: (refItems) => {}; // Dùng để modify chuỗi kết quả reference text của cột có service và là multiple
+  funcSetValueRow?: (rowItem, data) => void; // Dùng để gán thêm các thuộc tính cho dòng của table, dựa vào thông tin datasource của bản ghi reference tương ứng
   constructor(init?: ColumnSchema) {
     super();
     for (const key in init) {

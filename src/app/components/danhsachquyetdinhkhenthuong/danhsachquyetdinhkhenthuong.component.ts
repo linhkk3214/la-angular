@@ -14,6 +14,8 @@ import { DM_HocKyService } from '../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
 import { DataType } from 'src/app/shared/models/enums';
 import { DanhSachLoaiKhenThuongService } from '../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
+import { GridInfo } from 'src/app/shared/models/grid-info';
+import { ResponseResult } from 'src/app/shared/models/response-result';
 @Component({
   selector: 'DanhSachQuyetDinhKhenThuong',
   templateUrl: './danhsachquyetdinhkhenthuong.component.html',
@@ -70,7 +72,10 @@ export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements On
       new ColumnSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       })
     ];
     super.ngOnInit();

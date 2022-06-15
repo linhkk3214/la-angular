@@ -266,6 +266,8 @@
           <button *ngIf="!rowData.hiddenEdit" type="button" pButton pRipple [disabled]="disableEdit(rowData)"
             [pTooltip]="'Sửa'" tooltipPosition="top" class="p-button-rounded p-button-text p-button-info link-or-action"
             icon="pi pi-pencil" (click)="edit(rowData)"></button>
+          <ng-container [ngTemplateOutletContext]="{rowData: rowData, rowIndex: index}"
+            [ngTemplateOutlet]="getTemplate('buttonBetween')"></ng-container>
           <button *ngIf="!rowData.hiddenDelete" type="button" pButton pRipple [disabled]="disableDelete(rowData)"
             [pTooltip]="'Xóa'" tooltipPosition="top"
             class="p-button-rounded p-button-text p-button-danger link-or-action" icon="pi pi-trash"
@@ -308,10 +310,10 @@
         {{rowData[field] | tnDate:col.dataType:col.format}}
       </span>
       <span *ngSwitchCase="'int'">
-        {{rowData[field]}}
+        {{rowData[field] | number}}
       </span>
       <span *ngSwitchCase="'decimal'">
-        {{rowData[field]}}
+        {{rowData[field] | number}}
       </span>
       <span *ngSwitchCase="'boolean'">
         <p-checkbox class="boolean-data-type" [(ngModel)]="rowData[field]" [binary]="true"

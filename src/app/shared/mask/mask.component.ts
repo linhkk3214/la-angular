@@ -39,6 +39,9 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {
     this.maskFormat = this.getMaskByType();
+    if (!this.control.autoFormat) {
+      this.thousandSeperator = '';
+    }
   }
 
   writeValue(obj: any): void {

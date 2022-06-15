@@ -83,7 +83,11 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
       new DropdownControlSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        fieldPlus: 'ma',
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new TextAreaControlSchema({
         field: 'noiDung',
@@ -113,7 +117,7 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
             label: 'Người học',
             service: this._hoSoNguoiHocService,
             displayField: 'hoVaTen',
-            fieldPlus: 'masv,NgaySinh,idLopHanhChinh',
+            fieldPlus: 'masv, NgaySinh, idLopHanhChinh, idNganh',
             onChanged: (evt: EventData) => {
               const dropdownControl = <DropdownControlSchema>evt.control;
               const itemNguoiHocSelected = dropdownControl._component.dataSourceInternal.find(q => q.value == evt.parentModel.idNguoiHoc);
@@ -135,6 +139,12 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
             label: 'Lớp hành chính',
             service: this._danhSachLopHanhChinhService,
             disabled: true
+          }),
+          new DropdownControlSchema({
+            field: 'idNganh',
+            label: 'Ngành',
+            service: this._dm_CTĐTService,
+            disabled: true
           })
         ]
       })
@@ -143,6 +153,7 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
 
   setDataNguoiHoc(model: any, itemNguoiHoc: any) {
     model.maSv = itemNguoiHoc.masv;
+    model.idNganh = itemNguoiHoc.idNganh;
     model.idLop = itemNguoiHoc.idLopHanhChinh;
     model.ngaySinh = itemNguoiHoc.NgaySinh ? new Date(itemNguoiHoc.NgaySinh) : null;
   }

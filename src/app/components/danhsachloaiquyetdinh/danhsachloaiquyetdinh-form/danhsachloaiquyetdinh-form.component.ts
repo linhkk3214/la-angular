@@ -36,14 +36,14 @@ export class DanhSachLoaiQuyetDinhFormComponent extends FormBase implements OnIn
         width: 6
       }),
       new DropdownControlSchema({
-        field: 'trangthainganh1',
+        field: 'trangThaiNganh1',
         label: 'Trạng thái ngành 1 sau duyệt',
         required: true,
         service: this._dm_TrangThaiNguoiHocService,
         width: 12
       }),
       new DropdownControlSchema({
-        field: 'trangthainganh2',
+        field: 'trangThaiNganh2',
         label: 'Trạng thái ngành 2 sau duyệt',
         service: this._dm_TrangThaiNguoiHocService,
         width: 12
