@@ -2,6 +2,10 @@
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
+    <ng-template #buttonBefore let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-list" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="Xem khen thưởng kỷ luật" tooltipPosition="top" (click)="viewKhenThuongKyLuat(rowData)"></button>
+    </ng-template>
   </crud-list>
 </div>
 
@@ -10,4 +14,13 @@
   <hosonguoihoc-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
   </hosonguoihoc-form>
+</tn-dialog>
+
+<tn-dialog *ngIf="khenThuongKyLuatDialogModel.showEditForm" #dialog [header]="khenThuongKyLuatDialogModel.header"
+  [popupSize]="khenThuongKyLuatDialogModel.popupSize" [useDefaultScrollBar]="true"
+  (onHide)="khenThuongKyLuatDialogModel.showEditForm = false">
+  <hosonguoihoc-khenthuong-kyluat #formBase [parentSetting]="setting"
+    [model]="khenThuongKyLuatDialogModel.data.formModel" (onSaved)="khenThuongKyLuatDialogModel.showEditForm = false;"
+    (onCancel)="khenThuongKyLuatDialogModel.showEditForm = false">
+  </hosonguoihoc-khenthuong-kyluat>
 </tn-dialog>

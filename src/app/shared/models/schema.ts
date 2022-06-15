@@ -402,7 +402,7 @@ export class TabViewData {
   label?: string;
   headerStyleClass?: string;
   active?: boolean;
-  useScrollbar?= false; // Config để xác định có sử dụng custom-scrollbar không, nếu không thì dùng scrollbar mặc định của trình duyệt
+  useScrollbar?= true; // Config để xác định có sử dụng custom-scrollbar không, nếu không thì dùng scrollbar mặc định của trình duyệt
 
   constructor(init?: TabViewData) {
     for (const key in init) {

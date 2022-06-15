@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
@@ -17,12 +17,31 @@ import { ReligionService } from '../../user/services/religion.service';
 import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 
 @Component({
-  selector: 'hosonguoihoc-form',
-  templateUrl: './hosonguoihoc-form.component.html',
-  styleUrls: ['./hosonguoihoc-form.component.scss']
+  selector: 'hosonguoihoc-khenthuong-kyluat',
+  templateUrl: './hosonguoihoc-khenthuong-kyluat.component.html',
+  styleUrls: ['./hosonguoihoc-khenthuong-kyluat.component.scss']
 })
-export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
-
+export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements OnInit {
+  mainTabData: TabViewData[] = [
+    new TabViewData({
+      code: 'thongTinChung',
+      icon: 'pi pi-info-circle',
+      label: 'Thông tin chung'
+    }),
+    new TabViewData({
+      code: 'khenThuong',
+      icon: 'pi pi-ban',
+      label: 'Danh sách khen thưởng',
+      useScrollbar: false
+    }),
+    new TabViewData({
+      code: 'kyLuat',
+      icon: 'pi pi-check',
+      label: 'Danh sách kỷ luật',
+      useScrollbar: false
+    })
+  ];
+  activeIndex = 1;
   constructor(
     injector: Injector,
     private _HoSoNguoiHocService: HoSoNguoiHocService,
