@@ -25,7 +25,7 @@
 <ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index">
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TitleSchema'">
-      <h1>{{schema.text}}</h1>
+      <div class="title-schema">{{schema.text}}</div>
     </ng-container>
     <ng-container *ngSwitchCase="'TextControlSchema'">
       <input [type]="schema.dataFormat" pInputText [disabled]="schema.disabled" [placeholder]="schema.placeholder"
