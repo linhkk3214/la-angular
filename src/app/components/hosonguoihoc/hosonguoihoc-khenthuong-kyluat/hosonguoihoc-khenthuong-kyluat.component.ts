@@ -29,16 +29,29 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       label: 'Thông tin chung'
     }),
     new TabViewData({
+      code: 'tuyenSinh',
+      icon: 'pi pi-bookmark',
+      label: 'Thông tin Tuyển sinh'
+    }),
+    new TabViewData({
       code: 'khenThuong',
-      icon: 'pi pi-ban',
-      label: 'Danh sách khen thưởng',
-      useScrollbar: false
+      icon: 'pi pi-star',
+      label: 'Danh sách khen thưởng'
     }),
     new TabViewData({
       code: 'kyLuat',
-      icon: 'pi pi-check',
-      label: 'Danh sách kỷ luật',
-      useScrollbar: false
+      icon: 'pi pi-times',
+      label: 'Danh sách kỷ luật'
+    }),
+    new TabViewData({
+      code: 'quyetDinh',
+      icon: 'pi pi-file',
+      label: 'Danh sách quyết định'
+    }),
+    new TabViewData({
+      code: 'hocBong',
+      icon: 'pi pi-money-bill',
+      label: 'Danh sách học bổng'
     })
   ];
   activeIndex = 1;

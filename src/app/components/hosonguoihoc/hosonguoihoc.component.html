@@ -3,8 +3,8 @@
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
     <ng-template #buttonBefore let-rowData="rowData">
-      <button type="button" pButton icon="pi pi-list" class="p-button-text p-button-rounded p-button-success"
-        pTooltip="Xem khen thưởng kỷ luật" tooltipPosition="top" (click)="viewKhenThuongKyLuat(rowData)"></button>
+      <button type="button" pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="Xem hồ sơ người học" tooltipPosition="top" (click)="viewKhenThuongKyLuat(rowData)"></button>
     </ng-template>
   </crud-list>
 </div>
