@@ -34,7 +34,8 @@ export class DanhSachLoaiKhenThuongComponent extends ListBase implements OnInit 
       }),
       new ColumnSchema({
         field: 'soTien',
-        label: 'Số tiền'
+        label: 'Số tiền',
+        dataType: 'int'
       }),
       new ColumnSchema({
         field: 'ghiChu',
