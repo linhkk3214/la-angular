@@ -154,7 +154,8 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     }
     if (this.selectedValue != this.selectedValueBefore) {
       this.selectedValueBefore = this.selectedValue;
-      this.fireChange();
+      if (!this.rawValue)
+        this.fireChange();
     }
   }
 
@@ -194,6 +195,19 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     }
 
     return <SelectItem>op;
+  }
+
+  resetControl() {
+    if (this.selectedValue != null) {
+      if (this.control.multiple) {
+        this.selectedValue = [];
+      }
+      else {
+        this.selectedValue = null;
+      }
+      this.dataSourceInternal = [];
+      this.fireChange();
+    }
   }
 
   writeValue(obj: any): void {
