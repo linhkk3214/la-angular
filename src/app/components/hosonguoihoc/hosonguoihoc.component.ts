@@ -18,7 +18,7 @@ import { HoSoNguoiHocService } from './services/hosonguoihoc.service';
 })
 export class HoSoNguoiHocComponent extends ListBase implements OnInit {
   khenThuongKyLuatDialogModel = new DialogModel({
-    header: 'Chi tiết hồ sơ người học',
+    header: 'Xem hồ sơ người học',
     popupSize: new PopupSize({
       maximize: true
     })

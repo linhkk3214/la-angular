@@ -3,40 +3,33 @@ import { ListBase } from 'src/app/shared/base-class/list-base';
 import { DataType, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ColumnSchema } from 'src/app/shared/models/schema';
-import { DanhSachLoaiKhenThuongService } from '../../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
-import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
-import { DanhSachQuyetDinhKhenThuongService } from '../../danhsachquyetdinhkhenthuong/services/danhsachquyetdinhkhenthuong.service';
-import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
+import { DanhSachLoaiQuyetDinhService } from '../../danhsachloaiquyetdinh/services/danhsachloaiquyetdinh.service';
+import { DanhSachQuyetDinhHocTapService } from '../../danhsachquyetdinhhoctap/services/danhsachquyetdinhhoctap.service';
+import { DanhSachTrungTuyenService } from '../../danhsachtrungtuyen/services/danhsachtrungtuyen.service';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
-import { DM_NganhService } from '../../dm-nganh/services/dm-nganh.service';
 import { HoSoCanBoService } from '../../user/services/hosocanbo';
-import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 @Component({
-  selector: 'hosonguoihoc-khenthuong',
-  templateUrl: './hosonguoihoc-khenthuong.component.html',
-  styleUrls: ['./hosonguoihoc-khenthuong.component.scss']
+  selector: 'hosonguoihoc-quyetdinhhoctap',
+  templateUrl: './hosonguoihoc-quyetdinhhoctap.component.html',
+  styleUrls: ['./hosonguoihoc-quyetdinhhoctap.component.scss']
 })
-export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit {
+export class HoSoNguoiHoc_QuyetDinhHocTapComponent extends ListBase implements OnInit {
   @Input() idNguoiHoc: string;
   constructor(
     injector: Injector,
-    private _DanhSachQuyetDinhKhenThuongService: DanhSachQuyetDinhKhenThuongService,
-    private _DanhSachLoaiKhenThuongService: DanhSachLoaiKhenThuongService,
+    private _danhSachQuyetDinhHocTapService: DanhSachQuyetDinhHocTapService,
     private _dm_NamHocService: DM_NamHocService,
     private _dm_HocKyService: DM_HocKyService,
-    private _dm_HoSoNguoiHocService: HoSoNguoiHocService,
-    private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
-    private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
-    private _dm_NganhService: DM_NganhService,
-    private _HoSoCanBoService: HoSoCanBoService,
+    private _danhMucLoaiQuyetDinhService: DanhSachLoaiQuyetDinhService,
+    private _hoSoCanBoServie: HoSoCanBoService
   ) {
     super(injector);
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'khen thưởng';
-    this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
+    this.setting.objectName = 'thông tin tuyển sinh';
+    this.setting.service = this._danhSachQuyetDinhHocTapService;
     this.setting.hiddenPageTitle = true;
     this.setting.hiddenAdd = true;
     this.setting.hiddenDelete = true;
@@ -49,33 +42,43 @@ export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit
         label: 'Số quyết định',
       }),
       new ColumnSchema({
-        field: 'ngayQd',
-        label: 'Ngày quyết định',
+        field: 'ngayBanHanh',
+        label: 'Ngày ban hành',
+        dataType: DataType.date
+      }),
+      new ColumnSchema({
+        field: 'ngayHieuLuc',
+        label: 'Ngày hiệu lực',
         dataType: DataType.date
       }),
       new ColumnSchema({
         field: 'idNamHoc',
         label: 'Năm học',
-        service: this._dm_NamHocService,
+        service: this._dm_NamHocService
       }),
       new ColumnSchema({
         field: 'idHocKy',
         label: 'Học kỳ',
-        service: this._dm_HocKyService,
+        service: this._dm_HocKyService
       }),
       new ColumnSchema({
-        field: 'idLoaiKhenThuong',
-        label: 'Loại khen thưởng',
-        service: this._DanhSachLoaiKhenThuongService,
+        field: 'idLoaiQuyetDinh',
+        label: 'Loại quyết định',
+        service: this._danhMucLoaiQuyetDinhService,
+        fieldPlus: 'soTienMoiSuat',
+        funcSetValueRow: (rowItem, data) => {
+          rowItem.soTienMoiSuat = data.soTienMoiSuat;
+        }
       }),
       new ColumnSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
-        service: this._HoSoCanBoService,
+        service: this._hoSoCanBoServie,
         funcGetLabel: item => {
           return `${item.ten} (${item.ma})`;
         },
-      })
+      }),
+
     ];
     super.ngOnInit();
   }

@@ -29,7 +29,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       label: 'Thông tin chung'
     }),
     new TabViewData({
-      code: 'tuyenSinh',
+      code: 'thongTinTuyenSinh',
       icon: 'pi pi-bookmark',
       label: 'Thông tin Tuyển sinh'
     }),
@@ -44,7 +44,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       label: 'Danh sách kỷ luật'
     }),
     new TabViewData({
-      code: 'quyetDinh',
+      code: 'quyetDinhHocTap',
       icon: 'pi pi-file',
       label: 'Danh sách quyết định'
     }),

@@ -7,8 +7,14 @@
     <ng-template #khenThuong>
       <hosonguoihoc-khenthuong [idNguoiHoc]="model.data._id"></hosonguoihoc-khenthuong>
     </ng-template>
-    <ng-template #kyLuat>
-      <div>345</div>
+    <ng-template #thongTinTuyenSinh>
+      <hosonguoihoc-thongtintuyensinh [idNguoiHoc]="model.data._id"></hosonguoihoc-thongtintuyensinh>
+    </ng-template>
+    <ng-template #quyetDinhHocTap>
+      <hosonguoihoc-quyetdinhhoctap [idNguoiHoc]="model.data._id"></hosonguoihoc-quyetdinhhoctap>
+    </ng-template>
+    <ng-template #hocBong>
+      <hosonguoihoc-hocbong [idNguoiHoc]="model.data._id"></hosonguoihoc-hocbong>
     </ng-template>
   </tn-tabview>
 </div>
