@@ -39,11 +39,6 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       label: 'Danh sách khen thưởng'
     }),
     new TabViewData({
-      code: 'kyLuat',
-      icon: 'pi pi-times',
-      label: 'Danh sách kỷ luật'
-    }),
-    new TabViewData({
       code: 'quyetDinhHocTap',
       icon: 'pi pi-file',
       label: 'Danh sách quyết định'

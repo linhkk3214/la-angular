@@ -66,7 +66,13 @@ export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit
       new ColumnSchema({
         field: 'idLoaiKhenThuong',
         label: 'Loại khen thưởng',
+        fieldPlus: 'soTien',
         service: this._DanhSachLoaiKhenThuongService,
+      }),
+      new ColumnSchema({
+        field: 'soTien',
+        label: 'Số tiền',
+        dataType: 'int'
       }),
       new ColumnSchema({
         field: 'idNguoiKy',

@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
@@ -47,6 +47,11 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
     this.setting.service = this._HoSoNguoiHocService;
     const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
+      new TitleSchema({
+        field: 'abc',
+        text: 'Thông tin chung',
+        width: 12
+      }),
       new TextControlSchema({
         field: 'masv',
         label: 'Mã sinh viên',
@@ -156,6 +161,11 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       new TextControlSchema({
         field: 'Email',
         label: 'Email',
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'Thông tin ngành chính',
+        width: 12
       }),
       new DropdownControlSchema({
         field: 'idHe',

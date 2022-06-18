@@ -47,19 +47,21 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
         field: 'idHeDaoTao',
         label: 'Hệ đào tạo',
         service: this._dm_HeDaoTaoService,
-        width: '170px',
+        width: '200px',
 
       }),
       new ColumnSchema({
         field: 'idKhoaHoc',
         label: 'Khóa học',
-        service: this._dm_KhoaHocService
+        service: this._dm_KhoaHocService,
+        width: '170px',
+
       }),
       new ColumnSchema({
         field: 'idKhoaVien',
         label: 'Khoa/Viện',
         service: this._dm_KhoaVienService,
-        width: '170px',
+        width: '200px',
 
       }),
       new ColumnSchema({

@@ -31,6 +31,11 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
   override ngOnInit(): void {
     this.setting.service = this._dotcapnhathosonguoihocService;
     this.setting.schema = [
+      new TitleSchema({
+        field: 'abc',
+        text: 'Thông tin đợt',
+        width: 12
+      }),
       new TextControlSchema({
         field: 'ten',
         label: 'Tên đợt',

@@ -55,6 +55,7 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
         field: 'idLopHanhChinh',
         label: 'Lớp hành chính',
         service: this._danhSachLopHanhChinhService,
+        displayField: 'ten',
       }),
       new ColumnSchema({
         field: 'idKhoa',
@@ -82,7 +83,7 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
   }
 
   override getPromiseGetData(gridInfo: GridInfo): Promise<ResponseResult> {
-    return this._DanhSachQuyetDinhKhenThuongService.thongKe('629b25c78d379fdf2441e113');
+    return this._DanhSachQuyetDinhKhenThuongService.thongKe('629ac72c9a1bc7aaf7bdd93b');
   }
 
   override async beforeRenderDataSource(datasource: any): Promise<any> {

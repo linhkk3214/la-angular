@@ -27,11 +27,6 @@ export class DotNhapHocComponent extends ListBase implements OnInit {
     this.setting.popupSize.height = 650;
     this.setting.cols = [
       new ColumnSchema({
-        field: 'idKhoaHoc',
-        label: 'Khóa học',
-        service: this._dm_KhoaHocService
-      }),
-      new ColumnSchema({
         field: 'ma',
         label: 'Mã đợt',
         fullTextSearch: true
@@ -40,6 +35,11 @@ export class DotNhapHocComponent extends ListBase implements OnInit {
         field: 'ten',
         label: 'Tên đợt',
         fullTextSearch: true,
+      }),
+      new ColumnSchema({
+        field: 'idKhoaHoc',
+        label: 'Khóa học',
+        service: this._dm_KhoaHocService
       }),
       new ColumnSchema({
         field: 'timeBd',
