@@ -147,7 +147,7 @@ export class DanhSachQuyetDinhChuyenNganhFormComponent extends FormBase implemen
       new TextAreaControlSchema({
         field: 'noiDung',
         label: 'Nội dung',
-        width: 12
+        width: 6
       }),
       new FileControlSchema({
         field: 'lstDinhKem',

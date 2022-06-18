@@ -49,7 +49,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
     this.setting.schema = [
       new TitleSchema({
         field: 'abc',
-        text: 'Thông tin chung',
+        text: 'THÔNG TIN CHUNG',
         width: 12
       }),
       new TextControlSchema({
@@ -164,7 +164,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new TitleSchema({
         field: 'abc',
-        text: 'Thông tin ngành chính',
+        text: 'THÔNG TIN NGÀNH CHÍNH',
         width: 12
       }),
       new DropdownControlSchema({
@@ -225,7 +225,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       new TextAreaControlSchema({
         field: 'GhiChu',
         label: 'Ghi chú',
-        width: 12
+        width: 6
       })
     ];
   }

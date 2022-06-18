@@ -41,7 +41,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'hồ sơ người học';
     this.setting.service = this._HoSoNguoiHocService;
-    this.setting.widthFunctionColumn = '8.2rem';
+    this.setting.widthFunctionColumn = '9.5rem';
     this.setting.popupSize.maximize = true;
     this.setting.cols = [
       new ColumnSchema({
@@ -99,11 +99,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
         label: 'Đối tượng đào tạo',
         service: this._DM_DoiTuongDaoTaoService
       }),
-      new ColumnSchema({
-        field: 'GhiChu',
-        label: 'Ghi chú',
 
-      })
     ];
     super.ngOnInit();
   }

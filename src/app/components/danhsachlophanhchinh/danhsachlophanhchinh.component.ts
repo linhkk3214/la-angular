@@ -40,14 +40,12 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'ten',
         label: 'Tên lớp',
-        width: '250px',
         fullTextSearch: true
       }),
       new ColumnSchema({
         field: 'idHeDaoTao',
         label: 'Hệ đào tạo',
         service: this._dm_HeDaoTaoService,
-        width: '200px',
 
       }),
       new ColumnSchema({
@@ -61,14 +59,12 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
         field: 'idKhoaVien',
         label: 'Khoa/Viện',
         service: this._dm_KhoaVienService,
-        width: '200px',
 
       }),
       new ColumnSchema({
         field: 'idChuongTrinhDaoTao',
         label: 'Ngành',
         service: this._dm_CTĐTService,
-        width: '170px',
       }),
       new ColumnSchema({
         field: 'idGVCN',

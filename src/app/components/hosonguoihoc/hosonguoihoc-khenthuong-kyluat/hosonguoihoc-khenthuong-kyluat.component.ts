@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
@@ -74,6 +74,11 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
     this.setting.service = this._HoSoNguoiHocService;
     const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN CHUNG',
+        width: 12
+      }),
       new TextControlSchema({
         field: 'masv',
         label: 'Mã sinh viên',
@@ -183,6 +188,11 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       new TextControlSchema({
         field: 'Email',
         label: 'Email',
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN NGÀNH CHÍNH',
+        width: 12
       }),
       new DropdownControlSchema({
         field: 'idHe',

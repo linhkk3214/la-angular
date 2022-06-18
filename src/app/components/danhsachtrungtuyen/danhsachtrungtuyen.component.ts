@@ -50,6 +50,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
     this.setting.objectName = 'trúng tuyển';
     this.setting.service = this._DanhSachTrungTuyenService;
     this.setting.popupSize.maximize = true;
+    this.setting.widthFunctionColumn = '8.2rem';
     this.setting.cols = [
       new ColumnSchema({
         field: 'maNhapHoc',
