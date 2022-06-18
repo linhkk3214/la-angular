@@ -14,6 +14,7 @@ import { AddressService } from '../../user/services/address.service';
 import { DanTocService } from '../../user/services/dantoc.service';
 import { QuocTichService } from '../../user/services/quoctich.service';
 import { ReligionService } from '../../user/services/religion.service';
+import { DataSourceMoiQuanHe } from '../models/const';
 import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 
 @Component({
@@ -36,17 +37,17 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
     new TabViewData({
       code: 'khenThuong',
       icon: 'pi pi-star',
-      label: 'Danh sách khen thưởng'
+      label: 'Khen thưởng'
     }),
     new TabViewData({
       code: 'quyetDinhHocTap',
       icon: 'pi pi-file',
-      label: 'Danh sách quyết định'
+      label: 'Quyết định học tập'
     }),
     new TabViewData({
       code: 'hocBong',
       icon: 'pi pi-money-bill',
-      label: 'Danh sách học bổng'
+      label: 'Học bổng'
     })
   ];
   activeIndex = 1;
@@ -144,50 +145,21 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         label: 'Nơi cấp',
         width: 3
       }),
+      new TextControlSchema({
+        field: 'DienThoai',
+        label: 'Số điện thoại',
+        width: 3
+      }),
+      new TextControlSchema({
+        field: 'Email',
+        label: 'Email',
+        width: 3
+      }),
       new FileControlSchema({
         field: 'Anh',
         label: 'Ảnh',
         multiple: false,
         isAvatar: true
-      }),
-      new TextControlSchema({
-        field: 'DienThoai',
-        label: 'Số điện thoại'
-      }),
-      new DropdownControlSchema({
-        field: 'idTinh',
-        label: 'Tỉnh / Thành phố',
-        service: this._addressService,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 1)
-        ]
-      }),
-      new DropdownControlSchema({
-        field: 'idHuyen',
-        label: 'Quận / Huyện',
-        service: this._addressService,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 2)
-        ],
-        bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
-        ]
-      }),
-      new DropdownControlSchema({
-        field: 'idXa',
-        label: 'Phường / Xã',
-        service: this._addressService,
-        // isServerLoad: true,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 3)
-        ],
-        bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
-        ]
-      }),
-      new TextControlSchema({
-        field: 'Email',
-        label: 'Email',
       }),
       new TitleSchema({
         field: 'abc',
@@ -199,7 +171,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         label: 'Hệ',
         service: this._DM_HeDaoTaoService,
         required: true,
-        disabled: isNotFormAdd
+        disabled: isNotFormAdd,
       }),
       new DropdownControlSchema({
         field: 'idKhoaHoc',
@@ -249,11 +221,159 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         label: 'Đối tượng đào tạo',
         service: this._DM_DoiTuongDaoTaoService
       }),
-      new TextAreaControlSchema({
-        field: 'GhiChu',
-        label: 'Ghi chú',
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN QUÊ QUÁN',
         width: 12
-      })
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhqq',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyenqq',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXaqq',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'HỘ KHẨU THƯỜNG TRÚ',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhtt',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyentt',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXatt',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'ĐỊA CHỈ HIỆN NAY',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhhn',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyenhn',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXahn',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'QUAN HỆ NHÂN THÂN',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'moiQuanHe',
+        label: 'Mối quan hệ',
+        width: 2,
+        dataSource: DataSourceMoiQuanHe
+      }),
+      new TextControlSchema({
+        field: 'tenNhanThan',
+        label: 'Họ và tên',
+        width: 2
+      }),
+      new DateTimeControlSchema({
+        field: 'ngaySinhNhanThan',
+        label: 'Ngày sinh',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'ngheNghiepNhanThan',
+        label: 'Nghề nghiệp',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'noiONhanThan',
+        label: 'Nơi ở nhân thân',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'sdtNhanThan',
+        label: 'Số điện thoại',
+        width: 2
+      }),
     ];
   }
 

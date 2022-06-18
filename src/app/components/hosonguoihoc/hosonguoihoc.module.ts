@@ -19,7 +19,7 @@ import { HoSoNguoiHocComponent } from './hosonguoihoc.component';
     HoSoNguoiHoc_KhenThuongComponent,
     HoSoNguoiHoc_ThongTinTuyenSinhComponent,
     HoSoNguoiHoc_HocBongComponent,
-    HoSoNguoiHoc_QuyetDinhHocTapComponent
+    HoSoNguoiHoc_QuyetDinhHocTapComponent,
   ],
   imports: [
     CommonModule,

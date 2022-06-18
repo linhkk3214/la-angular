@@ -27,10 +27,8 @@ export class HoSoNguoiHoc_HocBongComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'học bổng';
     this.setting.service = this._danhSachQuyetDinhHocBongService;
-    this.setting.hiddenPageTitle = true;
+    // this.setting.hiddenPageTitle = true;
     this.setting.hiddenAdd = true;
-    this.setting.hiddenDelete = true;
-    this.setting.hiddenFunctionColumn = true;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
     this.setting.cols = [

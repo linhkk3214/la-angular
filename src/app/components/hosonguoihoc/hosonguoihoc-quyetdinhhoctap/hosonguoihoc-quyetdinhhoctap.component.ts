@@ -1,8 +1,9 @@
+import { TitleCasePipe } from '@angular/common';
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ListBase } from 'src/app/shared/base-class/list-base';
 import { DataType, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
-import { ColumnSchema } from 'src/app/shared/models/schema';
+import { ColumnSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { DanhSachLoaiQuyetDinhService } from '../../danhsachloaiquyetdinh/services/danhsachloaiquyetdinh.service';
 import { DanhSachQuyetDinhHocTapService } from '../../danhsachquyetdinhhoctap/services/danhsachquyetdinhhoctap.service';
 import { DanhSachTrungTuyenService } from '../../danhsachtrungtuyen/services/danhsachtrungtuyen.service';
@@ -30,10 +31,8 @@ export class HoSoNguoiHoc_QuyetDinhHocTapComponent extends ListBase implements O
   override ngOnInit(): void {
     this.setting.objectName = 'thông tin tuyển sinh';
     this.setting.service = this._danhSachQuyetDinhHocTapService;
-    this.setting.hiddenPageTitle = true;
+    // this.setting.hiddenPageTitle = true;
     this.setting.hiddenAdd = true;
-    this.setting.hiddenDelete = true;
-    this.setting.hiddenFunctionColumn = true;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
     this.setting.cols = [
