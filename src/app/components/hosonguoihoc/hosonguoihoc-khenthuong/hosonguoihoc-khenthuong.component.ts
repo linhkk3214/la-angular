@@ -66,6 +66,9 @@ export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit
         label: 'Loại khen thưởng',
         fieldPlus: 'soTien',
         service: this._DanhSachLoaiKhenThuongService,
+        funcSetValueRow: (rowItem, data) => {
+          rowItem.soTien = data.soTien;
+        }
       }),
       new ColumnSchema({
         field: 'soTien',

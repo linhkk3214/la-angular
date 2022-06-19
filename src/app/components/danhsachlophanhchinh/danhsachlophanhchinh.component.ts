@@ -30,6 +30,7 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
     this.setting.service = this._DanhSachLopHanhChinhService;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 500;
+    this.setting.widthFunctionColumn = '8.2rem';
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
@@ -69,7 +70,10 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'idGVCN',
         label: 'Giáo viên chủ nhiệm',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new ColumnSchema({
         field: 'siSo',

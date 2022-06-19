@@ -33,7 +33,7 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
     this.setting.schema = [
       new TitleSchema({
         field: 'abc',
-        text: 'Thông tin đợt',
+        text: 'THÔNG TIN ĐỢT',
         width: 12
       }),
       new TextControlSchema({
@@ -56,7 +56,7 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
       }),
       new TitleSchema({
         field: 'abc',
-        text: 'Phạm vi',
+        text: 'PHẠM VI',
         width: 12
       }),
       new DropdownControlSchema({

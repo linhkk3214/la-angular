@@ -15,6 +15,7 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
   styleUrls: ['./quyetdinhkhenthuong-thongke.component.scss']
 })
 export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements OnInit {
+  defaultSettings: any = {};
   constructor(
     injector: Injector,
     private _DanhSachQuyetDinhKhenThuongService: DanhSachQuyetDinhKhenThuongService,
@@ -29,15 +30,16 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
   override ngOnInit(): void {
     this.setting.objectName = 'người học khen thưởng';
     this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
-    this.setting.widthFunctionColumn = '10rem'; // Điều chỉnh lại kích thước cột chức năng vì thêm nút mới
+    this.setting.hiddenFunctionColumn = true;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
+    this.setting.hiddenAdd = true
     this.setting.cols = [
       new ColumnSchema({
         field: 'maSv',
         label: 'Mã sinh viên',
-        sort: false,
-        allowFilter: false
+        // sort: false,
+        // allowFilter: false
       }),
       new ColumnSchema({
         field: 'idNguoiHoc',
@@ -49,18 +51,15 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
           rowItem.maSv = data.masv;
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
           rowItem.idKhoa = data.idKhoa;
-        }
+        },
       }),
       new ColumnSchema({
         field: 'idLopHanhChinh',
-        label: 'Lớp hành chính',
-        service: this._danhSachLopHanhChinhService,
-        displayField: 'ten',
+        label: 'Lớp hành chính',//Chưa xử lý lấy tên lớp hành chính
       }),
       new ColumnSchema({
         field: 'idKhoa',
         label: 'Khoa/Viện',
-        service: this._dm_KhoaVienService
       }),
       new ColumnSchema({
         field: 'quyetDinhKhenThuongs',
@@ -68,22 +67,30 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
         //multiple: true,
         // service: this._DanhSachLoaiKhenThuongService,
         dataType: 'quyetDinhKhenThuongs',
-        fieldPlus: 'soTien',
-        funcSetValueRow: (rowItem, data) => {
-          rowItem.soTien = data.soTien;
-        }
+      }),
+      new ColumnSchema({
+        field: 'soQd',
+        label: 'Số quyết định',
+        dataType: 'soQd',
+      }),
+      new ColumnSchema({
+        field: 'ngayQd',
+        label: 'Ngày quyết định',
+        dataType: 'ngayQd',
       }),
       new ColumnSchema({
         field: 'soTien',
         label: 'Số tiền',
-        dataType: 'int'
+        dataType: 'soTien',//Không khai báo được kiểu int
       }),
     ];
     super.ngOnInit();
   }
 
   override getPromiseGetData(gridInfo: GridInfo): Promise<ResponseResult> {
-    return this._DanhSachQuyetDinhKhenThuongService.thongKe('629ac72c9a1bc7aaf7bdd93b');
+    this.defaultSettings = this.getDefaultSetting();
+    let coValueNamHoc = this.defaultSettings.idNamHoc
+    return this._DanhSachQuyetDinhKhenThuongService.thongKe(coValueNamHoc);
   }
 
   override async beforeRenderDataSource(datasource: any): Promise<any> {
@@ -103,7 +110,10 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
     datasource.forEach(item => {
       item.quyetDinhKhenThuongs.forEach(qd => {
         const itemLoaiKhenThuong = lstLoaiKhenThuong.find(q => q._id == qd.idLoaiKhenThuong);
+        // const itemLoaiKhenThuong = lstLoaiKhenThuong.find(q => q._id == qd.idLoaiKhenThuong);
         qd.loaiKhenThuong = itemLoaiKhenThuong.ten;
+        qd.soTien = itemLoaiKhenThuong.soTien;
+
       });
     });
   }

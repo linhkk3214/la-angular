@@ -4,12 +4,28 @@
     (onReloaded)="_unmarkLoading()">
     <ng-template #quyetDinhKhenThuongs let-rowData="rowData">
       <div *ngFor="let loaiKhenThuong of rowData.quyetDinhKhenThuongs">
-        {{loaiKhenThuong.loaiKhenThuong}} ({{loaiKhenThuong.soQuyetDinhs.toString()}})
+        {{loaiKhenThuong.loaiKhenThuong}}
       </div>
     </ng-template>
-    <ng-template #buttonBefore let-rowData="rowData">
-      <button type="button" pButton icon="pi pi-download" class="p-button-text p-button-rounded p-button-success"
-        pTooltip="Download" (click)="handleClick(rowData)"></button>
+    <ng-template #soTien let-rowData="rowData">
+      <div *ngFor="let loaiKhenThuong of rowData.quyetDinhKhenThuongs">
+        {{loaiKhenThuong.soTien}}
+      </div>
+    </ng-template>
+    <ng-template #soQd let-rowData="rowData">
+      <div *ngFor="let quyetDinh of rowData.quyetDinhKhenThuongs">
+        {{quyetDinh.soQuyetDinhs.toString()}}
+      </div>
+    </ng-template>
+    <ng-template #ngayQd let-rowData="rowData">
+      <div *ngFor="let quyetDinh of rowData.quyetDinhKhenThuongs">
+        {{quyetDinh.ngayQuyetDinh.toString()}}
+      </div>
+    </ng-template>
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-success"
+        label="Xuất báo cáo">
+      </button>
     </ng-template>
     <!-- <ng-template #buttonBetween>
       123
