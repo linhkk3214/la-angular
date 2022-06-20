@@ -55,16 +55,18 @@ $border-color: #ced4da;
 
 .avatar-container {
   position: relative;
-  width: 100px;
-  height: 100px;
+  // width: 100px;
+  // height: 100px;
 
   .image-container {
     width: 100%;
     height: 100%;
+    overflow: hidden;
 
     img {
-      width: 100%;
-      height: 100%
+      max-width: 100%;
+      max-height: 100%;
+      display: block;
     }
   }
 
@@ -81,5 +83,11 @@ $border-color: #ced4da;
     cursor: pointer;
     display: block;
     border: 1px solid #eee;
+
+    .icon-delete {
+      color: #ff5050 !important;
+      font-weight: bold;
+      font-size: 0.9em;
+    }
   }
 }

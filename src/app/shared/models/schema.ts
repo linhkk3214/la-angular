@@ -14,6 +14,7 @@ export class FormSchema {
   fullLabel?: string;
   showLabel?: boolean = true;
   width?: number | string = 6;
+  rowSpan?: number = 1;
   widthInList?: string;
   disabled?: boolean = false;
   required?: boolean = false;

@@ -53,11 +53,20 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         text: 'THÔNG TIN CHUNG',
         width: 12
       }),
+      new FileControlSchema({
+        field: 'anh',
+        label: 'Ảnh',
+        multiple: false,
+        isAvatar: true,
+        rowSpan: 3,
+        width: 2
+      }),
       new TextControlSchema({
         field: 'maSv',
         label: 'Mã sinh viên',
         required: true,
-        disabled: isNotFormAdd
+        disabled: isNotFormAdd,
+        width: 4
       }),
       new TextControlSchema({
         field: 'ho',
@@ -75,14 +84,14 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         field: 'ngaySinh',
         label: 'Ngày sinh',
         required: true,
-        width: 3
+        width: 2
       }),
       new DropdownControlSchema({
         field: 'gioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
         required: true,
-        width: 3
+        width: 2
       }),
       new DropdownControlSchema({
         field: 'idQuocTich',
@@ -101,12 +110,12 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         field: 'idTonGiao',
         label: 'Tôn giáo',
         service: this._dm_TonGiaoService,
-        width: 3,
+        width: 2,
       }),
       new TextControlSchema({
         field: 'cmndSo',
         label: 'Số CMND/CCCD',
-        width: 3
+        width: 2
       }),
       new DateTimeControlSchema({
         field: 'cmndNgayCap',
@@ -127,12 +136,6 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         field: 'email',
         label: 'Email',
         width: 3
-      }),
-      new FileControlSchema({
-        field: 'anh',
-        label: 'Ảnh',
-        multiple: false,
-        isAvatar: true
       }),
       new TitleSchema({
         field: 'abc',
