@@ -1,8 +1,8 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ListBase } from 'src/app/shared/base-class/list-base';
-import { DataType, Operator } from 'src/app/shared/models/enums';
+import { DataType, FormState, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
-import { ColumnSchema } from 'src/app/shared/models/schema';
+import { ColumnSchema, CrudFormData, DialogModel, PopupSize } from 'src/app/shared/models/schema';
 import { DanhMucHocBongService } from '../../danhmuchocbong/services/danhmuchocbong.service';
 import { DanhSachQuyetDinhHocBongService } from '../../danhsachquyetdinhhocbong/services/danhsachquyetdinhhocbong.service';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
@@ -14,6 +14,12 @@ import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
 })
 export class HoSoNguoiHoc_HocBongComponent extends ListBase implements OnInit {
   @Input() idNguoiHoc: string;
+  quyetDinhModel = new DialogModel({
+    header: 'Xem quyết định',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   constructor(
     injector: Injector,
     private _danhSachQuyetDinhHocBongService: DanhSachQuyetDinhHocBongService,
@@ -75,4 +81,12 @@ export class HoSoNguoiHoc_HocBongComponent extends ListBase implements OnInit {
       this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
     );
   }
+
+  viewQuyetDinh(rowData) {
+    this.quyetDinhModel.data.formModel = new CrudFormData();
+    this.quyetDinhModel.data.formModel.formState = FormState.VIEW;
+    this.quyetDinhModel.data.formModel.data = { _id: rowData._id };
+    this.quyetDinhModel.showEditForm = true;
+  }
 }
+

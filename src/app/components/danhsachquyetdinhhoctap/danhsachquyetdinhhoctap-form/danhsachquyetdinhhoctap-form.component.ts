@@ -116,26 +116,29 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
       }),
       new TableControlSchema({
         field: 'danhSachNguoiHoc',
-        label: 'Người học',
+        label: 'Danh sách sinh viên',
         width: 12,
         rowTemplate: [
           new DropdownControlSchema({
             field: 'idNguoiHoc',
             label: 'Người học',
             service: this._hoSoNguoiHocService,
-            displayField: 'hoVaTen',
-            fieldPlus: 'masv,NgaySinh,idLopHanhChinh, idNganh',
+            // displayField: 'hoVaTen',
+            funcGetLabel: item => {
+              return `${item.hoVaTen} (${item.maSv})`;
+            },
+            fieldPlus: 'maSv,ngaySinh,idLopHanhChinh, idNganh',
             onChanged: (evt: EventData) => {
               const dropdownControl = <DropdownControlSchema>evt.control;
               const itemNguoiHocSelected = dropdownControl._component.dataSourceInternal.find(q => q.value == evt.parentModel.idNguoiHoc);
               this.setDataNguoiHoc(evt.parentModel, itemNguoiHocSelected);
             }
           }),
-          new TextControlSchema({
-            field: 'maSv',
-            label: 'Mã sinh viên',
-            disabled: true
-          }),
+          // new TextControlSchema({
+          //   field: 'maSv',
+          //   label: 'Mã sinh viên',
+          //   disabled: true
+          // }),
           new DateTimeControlSchema({
             field: 'ngaySinh',
             label: 'Ngày sinh',
@@ -159,10 +162,10 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
   }
 
   setDataNguoiHoc(model: any, itemNguoiHoc: any) {
-    model.maSv = itemNguoiHoc.masv;
+    model.maSv = itemNguoiHoc.maSv;
     model.idNganh = itemNguoiHoc.idNganh;
     model.idLop = itemNguoiHoc.idLopHanhChinh;
-    model.ngaySinh = itemNguoiHoc.NgaySinh ? new Date(itemNguoiHoc.NgaySinh) : null;
+    model.ngaySinh = itemNguoiHoc.ngaySinh ? new Date(itemNguoiHoc.ngaySinh) : null;
   }
 
   override async modifyDetailData(data: any): Promise<void> {

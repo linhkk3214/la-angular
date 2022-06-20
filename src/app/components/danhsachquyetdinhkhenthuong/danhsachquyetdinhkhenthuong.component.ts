@@ -42,7 +42,7 @@ export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements On
   override ngOnInit(): void {
     this.setting.objectName = 'quyết định khen thưởng';
     this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
-    this.setting.popupSize.width = 1100;
+    this.setting.popupSize.width = 1300;
     this.setting.popupSize.height = 700;
     this.setting.cols = [
       new ColumnSchema({

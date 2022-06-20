@@ -2,9 +2,23 @@
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
-    <ng-template #function>
+    <ng-template #customTitle>
+      <h1 style="font-weight: 700;
+      font-size: 18px;
+      border-bottom: 2px solid #cfcfcf;
+      color: #025ba7;
+      padding: 0px 0 15px 5px;">DANH SÁCH KHEN THƯỞNG</h1>
+    </ng-template>
+    <ng-template #function let-rowData="rowData">
       <button type="button" pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-info"
-        pTooltip="Xem quyết định"></button>
+        pTooltip="Xem quyết định" (click)="viewQuyetDinh(rowData)"></button>
     </ng-template>
   </crud-list>
 </div>
+
+<tn-dialog *ngIf="quyetDinhModel.showEditForm" #dialog [header]="quyetDinhModel.header"
+  [popupSize]="quyetDinhModel.popupSize" (onHide)="quyetDinhModel.showEditForm = false">
+  <danhsachquyetdinhkhenthuong-form #formBase [parentSetting]="setting" [model]="quyetDinhModel.data.formModel"
+    (onSaved)="quyetDinhModel.showEditForm = false;" (onCancel)="quyetDinhModel.showEditForm = false">
+  </danhsachquyetdinhkhenthuong-form>
+</tn-dialog>

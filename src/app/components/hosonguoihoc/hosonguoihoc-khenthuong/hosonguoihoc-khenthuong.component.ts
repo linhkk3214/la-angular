@@ -1,8 +1,9 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ListBase } from 'src/app/shared/base-class/list-base';
-import { DataType, Operator } from 'src/app/shared/models/enums';
+import { DataType, FormState, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
-import { ColumnSchema } from 'src/app/shared/models/schema';
+import { ColumnSchema, CrudFormData, DialogModel, PopupSize } from 'src/app/shared/models/schema';
 import { DanhSachLoaiKhenThuongService } from '../../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DanhSachQuyetDinhKhenThuongService } from '../../danhsachquyetdinhkhenthuong/services/danhsachquyetdinhkhenthuong.service';
@@ -19,16 +20,18 @@ import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 })
 export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit {
   @Input() idNguoiHoc: string;
+  quyetDinhModel = new DialogModel({
+    header: 'Xem quyết định',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   constructor(
     injector: Injector,
     private _DanhSachQuyetDinhKhenThuongService: DanhSachQuyetDinhKhenThuongService,
     private _DanhSachLoaiKhenThuongService: DanhSachLoaiKhenThuongService,
     private _dm_NamHocService: DM_NamHocService,
     private _dm_HocKyService: DM_HocKyService,
-    private _dm_HoSoNguoiHocService: HoSoNguoiHocService,
-    private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
-    private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
-    private _dm_NganhService: DM_NganhService,
     private _HoSoCanBoService: HoSoCanBoService,
   ) {
     super(injector);
@@ -92,4 +95,12 @@ export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit
       this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
     );
   }
+
+  viewQuyetDinh(rowData) {
+    this.quyetDinhModel.data.formModel = new CrudFormData();
+    this.quyetDinhModel.data.formModel.formState = FormState.VIEW;
+    this.quyetDinhModel.data.formModel.data = { _id: rowData._id };
+    this.quyetDinhModel.showEditForm = true;
+  }
+
 }

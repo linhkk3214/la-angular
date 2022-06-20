@@ -72,9 +72,9 @@ export class DanhSachQuyetDinhChuyenNganhFormComponent extends FormBase implemen
         bindingFilters: isNotFormAdd ? null : [
           this.newBindingFilter('idNganh', Operator.equal, 'idNganhHienTai')
         ],
-        fieldPlus: 'masv',
+        fieldPlus: 'maSv',
         funcGetLabel: item => {
-          return `${item.masv} - ${item.hoVaTen}`;
+          return `${item.maSv} - ${item.hoVaTen}`;
         },
         multiple: true,
         disabled: isNotFormAdd

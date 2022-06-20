@@ -50,7 +50,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
       label: 'Học bổng'
     })
   ];
-  activeIndex = 1;
+  activeIndex = 0;
   constructor(
     injector: Injector,
     private _HoSoNguoiHocService: HoSoNguoiHocService,
@@ -81,7 +81,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         width: 12
       }),
       new TextControlSchema({
-        field: 'masv',
+        field: 'maSv',
         label: 'Mã sinh viên',
         required: true,
         disabled: isNotFormAdd
@@ -99,13 +99,13 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         required: true
       }),
       new DateTimeControlSchema({
-        field: 'NgaySinh',
+        field: 'ngaySinh',
         label: 'Ngày sinh',
         required: true,
         width: 3
       }),
       new DropdownControlSchema({
-        field: 'GioiTinh',
+        field: 'gioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
         required: true,
@@ -131,32 +131,32 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
         width: 3,
       }),
       new TextControlSchema({
-        field: 'CmndSo',
+        field: 'cmndSo',
         label: 'Số CMND/CCCD',
         width: 3
       }),
       new DateTimeControlSchema({
-        field: 'CmndNgayCap',
+        field: 'cmndNgayCap',
         label: 'Ngày cấp',
         width: 3
       }),
       new TextControlSchema({
-        field: 'CmndNoiCap',
+        field: 'cmndNoiCap',
         label: 'Nơi cấp',
         width: 3
       }),
       new TextControlSchema({
-        field: 'DienThoai',
+        field: 'dienThoai',
         label: 'Số điện thoại',
         width: 3
       }),
       new TextControlSchema({
-        field: 'Email',
+        field: 'email',
         label: 'Email',
         width: 3
       }),
       new FileControlSchema({
-        field: 'Anh',
+        field: 'anh',
         label: 'Ảnh',
         multiple: false,
         isAvatar: true
@@ -243,7 +243,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 2)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhqq')
         ],
         width: 4
       }),
@@ -256,7 +256,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 3)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyenqq')
         ],
         width: 4
       }),
@@ -282,7 +282,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 2)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhtt')
         ],
         width: 4
       }),
@@ -295,7 +295,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 3)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyentt')
         ],
         width: 4
       }),
@@ -321,7 +321,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 2)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhhn')
         ],
         width: 4
       }),
@@ -334,7 +334,7 @@ export class HoSoNguoiHoc_KhenThuong_KyLuatComponent extends FormBase implements
           this.newFilter('level', Operator.equal, 3)
         ],
         bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyenhn')
         ],
         width: 4
       }),

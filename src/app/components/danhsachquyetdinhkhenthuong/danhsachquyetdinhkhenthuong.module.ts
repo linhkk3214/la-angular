@@ -13,11 +13,24 @@ import { DanhSachQuyetDinhKhenThuongComponent } from './danhsachquyetdinhkhenthu
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    SharedModule
+  ],
+  exports: [
+    DanhSachQuyetDinhKhenThuongComponent,
+    DanhSachQuyetDinhKhenThuongFormComponent
+  ]
+})
+export class DanhSachQuyetDinhKhenThuongWithoutRouteModule { }
+
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    DanhSachQuyetDinhKhenThuongWithoutRouteModule,
     DanhSachQuyetDinhKhenThuongRoutingModule
   ],
   exports: [
-    DanhSachQuyetDinhKhenThuongComponent
   ]
 })
 export class DanhSachQuyetDinhKhenThuongModule { }

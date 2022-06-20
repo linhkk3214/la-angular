@@ -14,10 +14,22 @@ import { DanhSachQuyetDinhHocBongComponent } from './danhsachquyetdinhhocbong.co
   imports: [
     CommonModule,
     SharedModule,
-    DanhSachQuyetDinhHocBongRoutingModule
   ],
   exports: [
-    DanhSachQuyetDinhHocBongComponent
+    DanhSachQuyetDinhHocBongComponent,
+    DanhSachQuyetDinhHocBongFormComponent
+  ]
+})
+export class DanhSachQuyetDinhHocBongWithoutRouteModule { }
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    DanhSachQuyetDinhHocBongRoutingModule,
+    DanhSachQuyetDinhHocBongWithoutRouteModule
+  ],
+  exports: [
   ]
 })
 export class DanhSachQuyetDinhHocBongModule { }

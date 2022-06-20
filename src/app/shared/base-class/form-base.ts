@@ -141,6 +141,8 @@ export abstract class FormBase extends ComponentBase implements OnInit {
         }
       }
     }
+
+    this.__isFormView = this._isFormView();
   }
 
   async initDataAdd(evt: EventData) {

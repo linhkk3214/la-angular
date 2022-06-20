@@ -45,22 +45,22 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
     this.setting.popupSize.maximize = true;
     this.setting.cols = [
       new ColumnSchema({
-        field: 'masv',
+        field: 'maSv',
         label: 'Mã sinh viên',
       }),
       new ColumnSchema({
         field: 'hoVaTen',
         label: 'Họ và tên',
-        width: '150px'
+        width: '150px',
       }),
       new ColumnSchema({
-        field: 'NgaySinh',
+        field: 'ngaySinh',
         label: 'Ngày sinh',
 
         dataType: DataType.date
       }),
       new ColumnSchema({
-        field: 'GioiTinh',
+        field: 'gioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
       }),

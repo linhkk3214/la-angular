@@ -31,7 +31,7 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
     new TabViewData({
       code: 'danhSach',
       icon: 'pi pi-sliders-h',
-      label: 'Danh sách',
+      label: 'Thành phần hồ sơ',
       useScrollbar: true,
     })
   ];

@@ -101,23 +101,36 @@ crud-form {
   border-radius: 0px;
   padding: 0.5em 1em !important;
   min-height: calc(100vh - 54px);
+
   &[height-type="0"] {
-      min-height: calc(100vh - 54px);
+    min-height: calc(100vh - 54px);
   }
 
   &[height-type="1"] {
-      min-height: 150px;
+    min-height: 150px;
   }
 
   &[height-type="-1"] {
-      min-height: 0;
+    min-height: 0;
 
-      &.flex-container-fit-child {
-          height: auto;
-      }
+    &.flex-container-fit-child {
+      height: auto;
+    }
 
-      &.flex-container-fit-child > div.fit-content > div {
-          position: unset;
-      }
+    &.flex-container-fit-child>div.fit-content>div {
+      position: unset;
+    }
+  }
+}
+
+.title-schema {
+  font-weight: 700;
+  font-size: 18px;
+  border-bottom: 2px solid #cfcfcf;
+  color: #025ba7;
+  padding: 0px 0 15px 5px;
+
+  &.no-border {
+    border-bottom: none;
   }
 }

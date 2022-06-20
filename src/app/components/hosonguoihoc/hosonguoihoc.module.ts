@@ -1,6 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../../shared/shared.module';
+import { DanhSachQuyetDinhHocBongWithoutRouteModule } from '../danhsachquyetdinhhocbong/danhsachquyetdinhhocbong.module';
+import { DanhSachQuyetDinhHocTapWithoutRouteModule } from '../danhsachquyetdinhhoctap/danhsachquyetdinhhoctap.module';
+import { DanhSachQuyetDinhKhenThuongFormComponent } from '../danhsachquyetdinhkhenthuong/danhsachquyetdinhkhenthuong-form/danhsachquyetdinhkhenthuong-form.component';
+import { DanhSachQuyetDinhKhenThuongWithoutRouteModule } from '../danhsachquyetdinhkhenthuong/danhsachquyetdinhkhenthuong.module';
 import { HoSoNguoiHocFormComponent } from './hosonguoihoc-form/hosonguoihoc-form.component';
 import { HoSoNguoiHoc_HocBongComponent } from './hosonguoihoc-hocbong/hosonguoihoc-hocbong.component';
 import { HoSoNguoiHoc_KhenThuong_KyLuatComponent } from './hosonguoihoc-khenthuong-kyluat/hosonguoihoc-khenthuong-kyluat.component';
@@ -19,12 +23,15 @@ import { HoSoNguoiHocComponent } from './hosonguoihoc.component';
     HoSoNguoiHoc_KhenThuongComponent,
     HoSoNguoiHoc_ThongTinTuyenSinhComponent,
     HoSoNguoiHoc_HocBongComponent,
-    HoSoNguoiHoc_QuyetDinhHocTapComponent,
+    HoSoNguoiHoc_QuyetDinhHocTapComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
     HoSoNguoiHocRoutingModule,
+    DanhSachQuyetDinhKhenThuongWithoutRouteModule,
+    DanhSachQuyetDinhHocTapWithoutRouteModule,
+    DanhSachQuyetDinhHocBongWithoutRouteModule
   ],
   exports: [
     HoSoNguoiHocComponent

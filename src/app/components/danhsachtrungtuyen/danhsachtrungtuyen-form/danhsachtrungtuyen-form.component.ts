@@ -80,7 +80,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         width: 6
       }),
       new TextControlSchema({
-        field: 'maSV',
+        field: 'maSv',
         label: 'Mã sinh viên',
         width: 6,
         required: true

@@ -1,5 +1,6 @@
-import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { GridInfo } from "src/app/shared/models/grid-info";
 import { BaseService } from "../../../shared/services/base.service";
 
 @Injectable({
@@ -10,7 +11,7 @@ export class DanhSachQuyetDinhKhenThuongService extends BaseService {
     super(httpClient, 'DanhSachQuyetDinhKhenThuong');
   }
 
-  thongKe(idNamHoc: string) {
-    return this.defaultPost(`${this.serviceUri}/ThongKe`, { idNamHoc });
+  thongKe(idNamHoc: string, gridInfo: GridInfo) {
+    return this.defaultPost(`${this.serviceUri}/ThongKe/${idNamHoc}`, gridInfo);
   }
 }

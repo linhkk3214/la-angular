@@ -261,6 +261,9 @@ export class ColumnSchema extends DataSourceSchema {
   override textAlign?: TextAlign = TextAlign.Left;
   funcGetRefDataRow?: (refItems) => {}; // Dùng để modify chuỗi kết quả reference text của cột có service và là multiple
   funcSetValueRow?: (rowItem, data) => void; // Dùng để gán thêm các thuộc tính cho dòng của table, dựa vào thông tin datasource của bản ghi reference tương ứng
+  // Thứ tự ưu tiên get ref data của crud-list
+  // Nếu có value nghĩa là những cột này cần phải lấy dữ liệu xong rồi mới đến cột khác
+  order?: number;
   constructor(init?: ColumnSchema) {
     super();
     for (const key in init) {

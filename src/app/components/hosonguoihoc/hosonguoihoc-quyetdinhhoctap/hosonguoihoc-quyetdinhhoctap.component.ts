@@ -1,9 +1,9 @@
 import { TitleCasePipe } from '@angular/common';
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { ListBase } from 'src/app/shared/base-class/list-base';
-import { DataType, Operator } from 'src/app/shared/models/enums';
+import { DataType, FormState, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
-import { ColumnSchema, TitleSchema } from 'src/app/shared/models/schema';
+import { ColumnSchema, CrudFormData, DialogModel, PopupSize, TitleSchema } from 'src/app/shared/models/schema';
 import { DanhSachLoaiQuyetDinhService } from '../../danhsachloaiquyetdinh/services/danhsachloaiquyetdinh.service';
 import { DanhSachQuyetDinhHocTapService } from '../../danhsachquyetdinhhoctap/services/danhsachquyetdinhhoctap.service';
 import { DanhSachTrungTuyenService } from '../../danhsachtrungtuyen/services/danhsachtrungtuyen.service';
@@ -17,6 +17,12 @@ import { HoSoCanBoService } from '../../user/services/hosocanbo';
 })
 export class HoSoNguoiHoc_QuyetDinhHocTapComponent extends ListBase implements OnInit {
   @Input() idNguoiHoc: string;
+  quyetDinhModel = new DialogModel({
+    header: 'Xem quyết định',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   constructor(
     injector: Injector,
     private _danhSachQuyetDinhHocTapService: DanhSachQuyetDinhHocTapService,
@@ -86,5 +92,11 @@ export class HoSoNguoiHoc_QuyetDinhHocTapComponent extends ListBase implements O
     gridInfo.filters.push(
       this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
     );
+  }
+  viewQuyetDinh(rowData) {
+    this.quyetDinhModel.data.formModel = new CrudFormData();
+    this.quyetDinhModel.data.formModel.formState = FormState.VIEW;
+    this.quyetDinhModel.data.formModel.data = { _id: rowData._id };
+    this.quyetDinhModel.showEditForm = true;
   }
 }

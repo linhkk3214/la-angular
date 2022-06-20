@@ -89,12 +89,24 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
       this.newFilter('_id', Operator.in, this.rawValue)
     ])).data;
     this.rawValue = null;
-    lstFile.forEach(file => file.saved = true);
+    lstFile.forEach(file => {
+      file.downloadUrl = `http://localhost:3000/file/download/${file.url}`;
+      file.saved = true
+    });
     this.value = lstFile;
   }
 
   triggerUpload() {
     this.fileUpload.advancedFileInput.nativeElement.click();
+  }
+
+  toggleAvatar() {
+    if (this.control.isAvatar && this.value && this.value.length) {
+      this.removeAvatar();
+    }
+    else {
+      this.triggerUpload();
+    }
   }
 
   handleFileUploaded(evt) {
@@ -117,11 +129,16 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
         _id: this.guid(),
         saved: false,
         name: lstInfo[0],
-        extension: lstInfo[1]
+        extension: lstInfo[1],
+        downloadUrl: this.getDownloadUrlFromUnSavedFile(itemFile)
       });
       this.fireEvent();
     }
     this.checkDisabled();
+  }
+
+  getDownloadUrlFromUnSavedFile(itemFile: any) {
+    return `http://localhost:3000/file/download/temp/${itemFile.filename}`;
   }
 
   fireEvent() {
@@ -144,6 +161,12 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
 
   removeRow(index: number) {
     this.value.splice(index, 1);
+    this.fireEvent();
+    this.checkDisabled();
+  }
+
+  removeAvatar() {
+    this.value = [];
     this.fireEvent();
     this.checkDisabled();
   }

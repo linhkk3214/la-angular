@@ -13,11 +13,23 @@ import { DanhSachQuyetDinhHocTapComponent } from './danhsachquyetdinhhoctap.comp
   ],
   imports: [
     CommonModule,
-    SharedModule,
+    SharedModule
+  ],
+  exports: [
+    DanhSachQuyetDinhHocTapComponent,
+    DanhSachQuyetDinhHocTapFormComponent
+  ]
+})
+export class DanhSachQuyetDinhHocTapWithoutRouteModule { }
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    DanhSachQuyetDinhHocTapWithoutRouteModule,
     DanhSachQuyetDinhHocTapRoutingModule
   ],
   exports: [
-    DanhSachQuyetDinhHocTapComponent
   ]
 })
 export class DanhSachQuyetDinhHocTapModule { }

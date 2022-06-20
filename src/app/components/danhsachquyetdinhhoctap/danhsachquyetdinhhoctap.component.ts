@@ -42,7 +42,7 @@ export class DanhSachQuyetDinhHocTapComponent extends ListBase implements OnInit
   override ngOnInit(): void {
     this.setting.objectName = 'quyết định học tập';
     this.setting.service = this._danhSachQuyetDinhHocTapService;
-    this.setting.popupSize.width = 1100;
+    this.setting.popupSize.width = 1300;
     this.setting.popupSize.height = 700;
     this.setting.cols = [
       new ColumnSchema({

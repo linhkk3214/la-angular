@@ -102,7 +102,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
 
       }),
       new ColumnSchema({
-        field: 'maSV',
+        field: 'maSv',
         label: 'Mã sinh viên',
       }),
       new ColumnSchema({

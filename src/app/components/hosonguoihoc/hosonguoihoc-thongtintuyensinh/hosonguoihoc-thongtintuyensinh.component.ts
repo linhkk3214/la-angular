@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
 import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, MaskControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
@@ -26,15 +26,18 @@ import { DM_DoiTuongUuTienService } from '../../dm-doituonguutien/services/dm-do
 import { DM_HocLucService } from '../../dm-hocluc/services/dm-hocluc.service';
 import { DM_HanhKiemService } from '../../dm-hanhkiem/services/dm-hanhkiem.service';
 import { DataSourceTrangThaiHoSo } from '../../danhsachtrungtuyen/models/const';
+import { ResponseResult } from 'src/app/shared/models/response-result';
 @Component({
   selector: 'hosonguoihoc-thongtintuyensinh',
   templateUrl: './hosonguoihoc-thongtintuyensinh.component.html',
   styleUrls: ['./hosonguoihoc-thongtintuyensinh.component.scss']
 })
 export class HoSoNguoiHoc_ThongTinTuyenSinhComponent extends FormBase implements OnInit {
+  @Input() idNguoiHoc: string;
   constructor(
     injector: Injector,
     private _danhSachTrungTuyenService: DanhSachTrungTuyenService,
+    private _hoSoNguoiHocService: HoSoNguoiHocService,
     private _dm_DotNhapHocService: DotNhapHocService,
     private _dm_QuocTichService: QuocTichService,
     private _dm_DanTocService: DanTocService,
@@ -156,4 +159,22 @@ export class HoSoNguoiHoc_ThongTinTuyenSinhComponent extends FormBase implements
     ];
   }
 
+  override async getDetailCustom(): Promise<ResponseResult> {
+    return new Promise(async (resolve, reject) => {
+      const itemNguoiHoc = (await this._hoSoNguoiHocService.getDetail(this.idNguoiHoc)).data;
+      if (itemNguoiHoc) {
+        const itemTrungTuyen = (await this._danhSachTrungTuyenService.getDetailByFilter([
+          this.newFilter('maSv', Operator.equal, itemNguoiHoc.maSv)
+        ])).data;
+        resolve(<any>{
+          success: true,
+          data: itemTrungTuyen
+        });
+        return;
+      }
+      resolve(<any>{
+        success: false
+      });
+    });
+  }
 }

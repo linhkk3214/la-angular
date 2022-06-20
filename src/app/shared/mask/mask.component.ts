@@ -28,7 +28,6 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   @Output() onBlur = new EventEmitter<any>();
   @Output() onChanged = new EventEmitter<any>();
 
-  model: any;
   value: Number;
   maskFormat: string;
   thousandSeperator = '.';
@@ -46,19 +45,14 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
 
   writeValue(obj: any): void {
     if (obj) {
-      if (this.control.autoFormat) {
-        this.model = this._numberPipe.transform(obj, '', 'vi-VN');
+      this.value = Number(obj);
+      if (this.value == NaN) {
+        this.value = null;
       }
-      else {
-        this.model = obj.toString();
-      }
-      this.value = Number(this.model);
     }
     else if (obj === 0) {
-      this.model = '0';
       this.value = 0;
     } else {
-      this.model = '';
       this.value = null;
     }
   }
@@ -84,17 +78,13 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   }
 
   checkValueInRange() {
-    if (this.model !== null && this.model !== undefined && this.model !== '') {
-      this.value = Number(this.model);
-
+    if (this.value !== null && this.value !== undefined) {
       if (this.control.min && this.value < this.control.min) {
         this.value = this.control.min;
-        this.model = this.numberToStringVN(this.value);
         this.onChange(this.value);
       }
       else if (this.control.max && this.value > this.control.max) {
         this.value = this.control.max;
-        this.model = this.numberToStringVN(this.value);
         this.onChange(this.value);
       }
     }

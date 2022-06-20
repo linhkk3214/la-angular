@@ -29,6 +29,7 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
 
   override ngOnInit(): void {
     this.setting.objectName = 'người học khen thưởng';
+    this.setting.title = 'Thống kê người học khen thưởng';
     this.setting.service = this._DanhSachQuyetDinhKhenThuongService;
     this.setting.hiddenFunctionColumn = true;
     this.setting.popupSize.width = 1100;
@@ -38,50 +39,59 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
       new ColumnSchema({
         field: 'maSv',
         label: 'Mã sinh viên',
-        // sort: false,
-        // allowFilter: false
+        sort: false,
+        allowFilter: false
       }),
       new ColumnSchema({
         field: 'idNguoiHoc',
         label: 'Họ tên',
+        order: 1,
         service: this._dm_HoSoNguoiHocService,
-        fieldPlus: 'masv, idLopHanhChinh, idKhoa',
+        fieldPlus: 'maSv,idLopHanhChinh,idKhoa',
         displayField: 'hoVaTen',
         funcSetValueRow: (rowItem, data) => {
-          rowItem.maSv = data.masv;
+          rowItem.maSv = data.maSv;
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
           rowItem.idKhoa = data.idKhoa;
         },
+        sort: false
       }),
       new ColumnSchema({
         field: 'idLopHanhChinh',
-        label: 'Lớp hành chính',//Chưa xử lý lấy tên lớp hành chính
+        label: 'Lớp hành chính',
+        order: 2,
+        service: this._danhSachLopHanhChinhService,
+        // allowFilter: false,
+        sort: false,
       }),
       new ColumnSchema({
         field: 'idKhoa',
         label: 'Khoa/Viện',
+        order: 3,
+        service: this._dm_KhoaVienService,
+        // allowFilter: false,
+        sort: false
       }),
       new ColumnSchema({
-        field: 'quyetDinhKhenThuongs',
+        field: 'idLoaiKhenThuong',
         label: 'Loại khen thưởng',
-        //multiple: true,
-        // service: this._DanhSachLoaiKhenThuongService,
-        dataType: 'quyetDinhKhenThuongs',
+        service: this._DanhSachLoaiKhenThuongService,
       }),
       new ColumnSchema({
-        field: 'soQd',
+        field: 'soQuyetDinh',
         label: 'Số quyết định',
-        dataType: 'soQd',
       }),
       new ColumnSchema({
-        field: 'ngayQd',
+        field: 'ngayQuyetDinh',
         label: 'Ngày quyết định',
-        dataType: 'ngayQd',
+        dataType: 'date',
       }),
       new ColumnSchema({
         field: 'soTien',
         label: 'Số tiền',
-        dataType: 'soTien',//Không khai báo được kiểu int
+        dataType: 'int',
+        allowFilter: false,
+        sort: false,
       }),
     ];
     super.ngOnInit();
@@ -89,18 +99,16 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
 
   override getPromiseGetData(gridInfo: GridInfo): Promise<ResponseResult> {
     this.defaultSettings = this.getDefaultSetting();
-    let coValueNamHoc = this.defaultSettings.idNamHoc
-    return this._DanhSachQuyetDinhKhenThuongService.thongKe(coValueNamHoc);
+    let idNamHoc = this.defaultSettings.idNamHoc;
+    return this._DanhSachQuyetDinhKhenThuongService.thongKe(idNamHoc, gridInfo);
   }
 
   override async beforeRenderDataSource(datasource: any): Promise<any> {
     const lstIdLoaiKhenThuong = [];
     datasource.forEach(item => {
-      item.quyetDinhKhenThuongs.forEach(qd => {
-        if (lstIdLoaiKhenThuong.indexOf(qd.idLoaiKhenThuong) == -1) {
-          lstIdLoaiKhenThuong.push(qd.idLoaiKhenThuong);
-        }
-      });
+      if (lstIdLoaiKhenThuong.indexOf(item.idLoaiKhenThuong) == -1) {
+        lstIdLoaiKhenThuong.push(item.idLoaiKhenThuong);
+      }
     });
 
     const lstLoaiKhenThuong = (await this._DanhSachLoaiKhenThuongService.getAllByFilter([
@@ -108,18 +116,8 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
     ])).data;
 
     datasource.forEach(item => {
-      item.quyetDinhKhenThuongs.forEach(qd => {
-        const itemLoaiKhenThuong = lstLoaiKhenThuong.find(q => q._id == qd.idLoaiKhenThuong);
-        // const itemLoaiKhenThuong = lstLoaiKhenThuong.find(q => q._id == qd.idLoaiKhenThuong);
-        qd.loaiKhenThuong = itemLoaiKhenThuong.ten;
-        qd.soTien = itemLoaiKhenThuong.soTien;
-
-      });
+      const itemLoaiKhenThuong = lstLoaiKhenThuong.find(q => q._id == item.idLoaiKhenThuong);
+      item.soTien = itemLoaiKhenThuong.soTien;
     });
-  }
-
-  handleClick(rowData) {
-    alert('clicked');
-    console.log(rowData);
   }
 }
