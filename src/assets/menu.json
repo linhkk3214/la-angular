@@ -64,6 +64,10 @@
       {
         "path": "/danhsachquyetdinhhoctap",
         "label": "Danh sách quyết định học tập"
+      },
+      {
+        "path": "/quyetdinhhoctap-thongke",
+        "label": "Thống kê"
       }
     ]
   },
@@ -86,6 +90,10 @@
       {
         "path": "/danhsachquyetdinhhocbong",
         "label": "Danh sách quyết định học bổng"
+      },
+      {
+        "path": "/quyetdinhhocbong-thongke",
+        "label": "Thống kê"
       }
     ]
   },

@@ -160,6 +160,14 @@ const routes: Routes = [
     path: 'quyetdinhkhenthuong-thongke',
     loadChildren: () => import('../app/components/quyetdinhkhenthuong-thongke/quyetdinhkhenthuong-thongke.module').then(m => m.QuyetDinhKhenThuong_ThongKeModule)
   },
+  {
+    path: 'quyetdinhhoctap-thongke',
+    loadChildren: () => import('../app/components/quyetdinhhoctap-thongke/quyetdinhhoctap-thongke.module').then(m => m.QuyetDinhHocTap_ThongKeModule)
+  },
+  {
+    path: 'quyetdinhhocbong-thongke',
+    loadChildren: () => import('../app/components/quyetdinhhocbong-thongke/quyetdinhhocbong-thongke.module').then(m => m.QuyetDinhHocBong_ThongKeModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

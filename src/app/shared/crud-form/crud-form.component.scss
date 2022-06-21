@@ -349,7 +349,7 @@ td>.view-mode {
     grid-template-columns: repeat(12, minmax(0, 1fr));
 
     @for $i from 1 through 12 {
-      .col-#{$i} {
+      .md\:col-#{$i} {
         width: unset;
         grid-column: span #{$i};
       }

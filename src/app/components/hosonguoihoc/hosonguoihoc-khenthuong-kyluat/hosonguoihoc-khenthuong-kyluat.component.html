@@ -1,8 +1,8 @@
 <div style="height: 100%">
-  <tn-tabview [data]="mainTabData" [allowViewAll]="true" [(activeIndex)]="activeIndex">
+  <tn-tabview [data]="mainTabData" [(activeIndex)]="activeIndex">
     <ng-template #thongTinChung>
-      <crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
-      </crud-form>
+      <hosonguoihoc-form [parentSetting]="parentSetting" [model]="model">
+      </hosonguoihoc-form>
     </ng-template>
     <ng-template #khenThuong>
       <hosonguoihoc-khenthuong [idNguoiHoc]="model.data._id"></hosonguoihoc-khenthuong>
@@ -21,6 +21,6 @@
 <ng-template #buttonTemplate>
   <!-- <button *ngIf="!model.data.__disableEdit && !__isFormView" type="button" pButton icon="pi pi-save"
     class="p-button-text" [label]="'Lưu'" (click)="_handleSave($event)"></button> -->
-  <button type="button" pButton icon="pi pi-replay" class="p-button-text p-button-secondary" [label]="'Đóng'" preventTab
-    (click)="_handleCancel($event)"></button>
+  <button type="button" pButton icon="pi pi-replay" class="p-button-text p-button-secondary" [label]="'Đóng'"
+    preventTab></button>
 </ng-template>

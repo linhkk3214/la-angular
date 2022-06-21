@@ -1,9 +1,9 @@
 export enum EnumMqh {
-  Mqh1 = 1,
-  Mqh2 = 2,
-  Mqh3 = 3,
-  Mqh4 = 4,
-  Mqh5 = 4,
-  Mqh6 = 4,
-  Mqh7 = 4,
+  BO_DE = 1,
+  ME_DE = 2,
+  ANH = 3,
+  CHI = 4,
+  EM = 5,
+  BO_DUONG = 6,
+  ME_KE = 7,
 }
