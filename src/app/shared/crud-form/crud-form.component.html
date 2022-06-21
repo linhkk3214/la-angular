@@ -1,6 +1,6 @@
 <div #container class="grid" style="padding: 0.5em">
   <div *ngFor="let schema of setting.schema"
-    [class]="'control-container col-' + schema.width + ' row-span-' + schema.rowSpan">
+    [class]="'control-container md:col-12 col-' + schema.width + ' row-span-' + schema.rowSpan">
     <div class="label">
       <ng-container *ngIf="schema.label">{{schema.label}} <span *ngIf="schema.required" class="rq">*</span>
       </ng-container>
