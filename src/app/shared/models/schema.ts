@@ -525,7 +525,6 @@ export class ControlTreeNode {
     if (!schema) {
       // Là root node
       if (!this.schemaPath) {
-        const nodeChild = {};
         Object.keys(this._crudForm.formControls).forEach(key => {
           const _control = this._crudForm.formControls[key];
           if (_control.uniqueField == _control.field) {
