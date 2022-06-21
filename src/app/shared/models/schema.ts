@@ -14,6 +14,7 @@ export class FormSchema {
   fullLabel?: string;
   showLabel?: boolean = true;
   width?: number | string = 6;
+  rowSpan?: number = 1;
   widthInList?: string;
   disabled?: boolean = false;
   required?: boolean = false;
@@ -84,7 +85,7 @@ export class TextControlSchema extends ControlSchema {
 
 export class CheckBoxControlSchema extends ControlSchema {
   hiddenLabel?= false;
-  override defaultValue? = false;
+  override defaultValue?= false;
   constructor(init?: CheckBoxControlSchema) {
     super();
     for (const key in init) {
@@ -150,9 +151,9 @@ export class DropdownControlSchema extends DataSourceSchema {
   sortField?= '';
   sortDir?: 1 | -1 = 1;
   fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
-  defaultFilters?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  filterWhileProcess?: Filter[] | Promise<Filter[]>; // tungts thêm kiểu dữ liệu defaultFilters là promise
-  bindingFilters?: FilterWithBinding[]; // tungts thêm kiểu dữ liệu defaultFilters là promise
+  defaultFilters?: Filter[] | Promise<Filter[]>; // Filter mặc định của dropdown
+  filterWhileProcess?: Filter[] | Promise<Filter[]>;
+  bindingFilters?: FilterWithBinding[];
   modifyFilter?: Function;
   autoDisplayFirst?: boolean = false;
   callbackDataFinish?: (evt: EventData) => void;
@@ -255,11 +256,15 @@ export class ColumnSchema extends DataSourceSchema {
   dataTypeRefField?: DataType | string;
   disableCheckBox?= true;
   controlType?: ControlType = ControlType.textbox;
+  fieldPlus?= ''; // Danh sách những trường bổ sung cần lấy thêm ngoài id, ten; Ví dụ ,ma
   displayFieldInGrid?: string;
   separator?= ', ';
   override textAlign?: TextAlign = TextAlign.Left;
-  funcGetRefDataRow?: (refItems) => {};
-  funcSetValueRow?: (rowItem, data) => void;
+  funcGetRefDataRow?: (refItems) => {}; // Dùng để modify chuỗi kết quả reference text của cột có service và là multiple
+  funcSetValueRow?: (rowItem, data) => void; // Dùng để gán thêm các thuộc tính cho dòng của table, dựa vào thông tin datasource của bản ghi reference tương ứng
+  // Thứ tự ưu tiên get ref data của crud-list
+  // Nếu có value nghĩa là những cột này cần phải lấy dữ liệu xong rồi mới đến cột khác
+  order?: number;
   constructor(init?: ColumnSchema) {
     super();
     for (const key in init) {
@@ -401,7 +406,7 @@ export class TabViewData {
   label?: string;
   headerStyleClass?: string;
   active?: boolean;
-  useScrollbar?= false; // Config để xác định có sử dụng custom-scrollbar không, nếu không thì dùng scrollbar mặc định của trình duyệt
+  useScrollbar?= true; // Config để xác định có sử dụng custom-scrollbar không, nếu không thì dùng scrollbar mặc định của trình duyệt
 
   constructor(init?: TabViewData) {
     for (const key in init) {

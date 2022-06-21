@@ -30,47 +30,54 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
     this.setting.service = this._DanhSachLopHanhChinhService;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 500;
+    this.setting.widthFunctionColumn = '8.2rem';
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
         label: 'Mã',
-        width: '200px',
+        width: '120px',
         fullTextSearch: true
       }),
       new ColumnSchema({
         field: 'ten',
         label: 'Tên lớp',
-        width: '300px',
         fullTextSearch: true
       }),
       new ColumnSchema({
         field: 'idHeDaoTao',
         label: 'Hệ đào tạo',
-        service: this._dm_HeDaoTaoService
+        service: this._dm_HeDaoTaoService,
+
       }),
       new ColumnSchema({
         field: 'idKhoaHoc',
         label: 'Khóa học',
-        service: this._dm_KhoaHocService
+        service: this._dm_KhoaHocService,
+        width: '170px',
+
       }),
       new ColumnSchema({
         field: 'idKhoaVien',
         label: 'Khoa/Viện',
-        service: this._dm_KhoaVienService
+        service: this._dm_KhoaVienService,
+
       }),
       new ColumnSchema({
         field: 'idChuongTrinhDaoTao',
         label: 'Ngành',
-        service: this._dm_CTĐTService
+        service: this._dm_CTĐTService,
       }),
       new ColumnSchema({
         field: 'idGVCN',
         label: 'Giáo viên chủ nhiệm',
-        service: this._HoSoCanBoService
+        service: this._HoSoCanBoService,
+        funcGetLabel: item => {
+          return `${item.ten} (${item.ma})`;
+        },
       }),
       new ColumnSchema({
         field: 'siSo',
-        width: '150px',
+        width: '100px',
         label: 'Sĩ số'
       }),
     ];

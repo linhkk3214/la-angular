@@ -1,6 +1,6 @@
 import { Component, Injector, OnInit } from '@angular/core';
 import { FormState, Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, MaskControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, MaskControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
 import { DM_DoiTuongDaoTaoService } from '../../dm-doituongdaotao/services/dm-doituongdaotao.service';
@@ -53,18 +53,26 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
 
   override ngOnInit(): void {
     this.setting.service = this._DanhSachTrungTuyenService;
+    const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN CÁ NHÂN',
+        width: 12
+      }),
       new DropdownControlSchema({
         field: 'idDotNhapHoc',
         label: 'Đợt nhập học',
         service: this._dm_DotNhapHocService,
-        required: true
+        required: true,
+        width: 12
       }),
       new TextControlSchema({
         field: 'maNhapHoc',
         label: 'Mã nhập học',
         required: true,
-        width: 6
+        width: 6,
+        disabled: isNotFormAdd
       }),
       new TextControlSchema({
         field: 'maHoSo',
@@ -72,7 +80,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         width: 6
       }),
       new TextControlSchema({
-        field: 'maSV',
+        field: 'maSv',
         label: 'Mã sinh viên',
         width: 6,
         required: true
@@ -122,13 +130,18 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         label: 'Số điện thoại',
         width: 6
       }),
+      new TextControlSchema({
+        field: 'email',
+        label: 'Email',
+      }),
       new DropdownControlSchema({
         field: 'idTinh',
         label: 'Tỉnh / Thành phố',
         service: this._addressService,
         defaultFilters: [
           this.newFilter('level', Operator.equal, 1)
-        ]
+        ],
+        width: 4
       }),
       new DropdownControlSchema({
         field: 'idHuyen',
@@ -139,7 +152,8 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         ],
         bindingFilters: [
           this.newBindingFilter('parentId', Operator.equal, 'idTinh')
-        ]
+        ],
+        width: 4
       }),
       new DropdownControlSchema({
         field: 'idXa',
@@ -151,11 +165,13 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         ],
         bindingFilters: [
           this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
-        ]
+        ],
+        width: 4
       }),
-      new TextControlSchema({
-        field: 'email',
-        label: 'Email',
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN TUYỂN SINH',
+        width: 12
       }),
       new DropdownControlSchema({
         field: 'idNganhDangKy',
@@ -278,7 +294,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
       new TextAreaControlSchema({
         field: 'ghiChu',
         label: 'Ghi chú',
-        width: 12
+        width: 6
       }),
     ];
   }

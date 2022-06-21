@@ -1,6 +1,9 @@
-export enum EnumTrangThaiHS {
-  TT1 = 1,
-  TT2 = 2,
-  TT3 = 3,
-  TT4 = 4
+export enum EnumMqh {
+  Mqh1 = 1,
+  Mqh2 = 2,
+  Mqh3 = 3,
+  Mqh4 = 4,
+  Mqh5 = 4,
+  Mqh6 = 4,
+  Mqh7 = 4,
 }

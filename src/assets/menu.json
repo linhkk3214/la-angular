@@ -24,6 +24,68 @@
       {
         "path": "/danhsachlophanhchinh",
         "label": "Danh mục lớp hành chính"
+      },
+      {
+        "path": "/dotcapnhathosonguoihoc",
+        "label": "Đợt cập nhật hồ sơ người học"
+      },
+      {
+        "path": "/danhsachquyetdinhchuyennganh",
+        "label": "Danh sách quyết định chuyển ngành"
+      }
+    ]
+  },
+  {
+    "path": "",
+    "label": "Quản lý khen thưởng",
+    "children": [
+      {
+        "path": "/danhsachloaikhenthuong",
+        "label": "Danh mục loại khen thưởng"
+      },
+      {
+        "path": "/danhsachquyetdinhkhenthuong",
+        "label": "Danh sách quyết định khen thưởng"
+      },
+      {
+        "path": "/quyetdinhkhenthuong-thongke",
+        "label": "Thống kê"
+      }
+    ]
+  },
+  {
+    "path": "",
+    "label": "Quản lý quyết định học tập",
+    "children": [
+      {
+        "path": "/danhsachloaiquyetdinh",
+        "label": "Danh mục loại quyết định"
+      },
+      {
+        "path": "/danhsachquyetdinhhoctap",
+        "label": "Danh sách quyết định học tập"
+      }
+    ]
+  },
+  {
+    "path": "",
+    "label": "Quản lý học bổng tài trợ",
+    "children": [
+      {
+        "path": "/dm-loaidonvitaitro",
+        "label": "Loại đơn vị tài trợ"
+      },
+      {
+        "path": "/danhmucdonvitaitro",
+        "label": "Danh mục đơn vị tài trợ"
+      },
+      {
+        "path": "/danhmuchocbong",
+        "label": "Danh mục học bổng"
+      },
+      {
+        "path": "/danhsachquyetdinhhocbong",
+        "label": "Danh sách quyết định học bổng"
       }
     ]
   },

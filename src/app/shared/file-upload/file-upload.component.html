@@ -1,4 +1,4 @@
-<div class="file-container">
+<div *ngIf="!control.isAvatar" class="file-container">
   <div class="top-bar-button">
     <button [disabled]="disabled" type="button" pButton icon="pi pi-upload" class="p-button-text" label="Tải lên"
       (click)="triggerUpload()"></button>
@@ -16,6 +16,20 @@
           (click)="removeRow(i)"></button>
       </div>
     </div>
+  </div>
+</div>
+<div *ngIf="control.isAvatar" class="avatar-container">
+  <div class="image-container">
+    <img *ngIf="value && value.length" [src]="value[0].downloadUrl"
+      onerror="this.src='https://icons-for-free.com/download-icon-avatar+human+people+profile+user+icon-1320168139431219590_512.png'" />
+    <img *ngIf="!value || !value.length"
+      src="https://icons-for-free.com/download-icon-avatar+human+people+profile+user+icon-1320168139431219590_512.png" />
+  </div>
+  <div class="function-container" (click)="toggleAvatar()">
+    <span *ngIf="value && value.length" class="pi pi-trash icon-delete" tooltipPosition="top">
+      Xóa</span>
+    <span *ngIf="!value || !value.length" class="pi pi-upload" tooltipPosition="top"> Chọn
+      ảnh</span>
   </div>
 </div>
 <div style="display: none">

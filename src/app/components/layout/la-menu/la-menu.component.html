@@ -1,13 +1,22 @@
-<div style="padding: 0.5em 0">
-  <ul *ngIf="lstMenu.length">
-    <ng-container *ngFor="let menu of lstMenu">
-      <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menu}"></ng-container>
-    </ng-container>
-  </ul>
+<div class="menu-container">
+  <div>
+    <tn-scrollbar>
+      <ul *ngIf="lstMenu.length">
+        <ng-container *ngFor="let menu of lstMenu">
+          <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menu, level: 1}"></ng-container>
+        </ng-container>
+      </ul>
+    </tn-scrollbar>
+  </div>
+  <div class="search-menu">
+    <p-autoComplete placeholder="Tìm kiếm menu" [suggestions]="filteredMenu" field="label" [(ngModel)]="keyword"
+      (completeMethod)="filterMenu($event)" (onSelect)="selectMenu($event)">
+    </p-autoComplete>
+  </div>
 </div>
 
-<ng-template #itemMenu let-item>
-  <li class="menu-item" [class.active]="item.active" [class.expanded]="item.expanded">
+<ng-template #itemMenu let-item let-level="level">
+  <li class="menu-item" [class.active]="item.active" [class.expanded]="item.expanded" [attr.level]="level">
     <ng-container *ngIf="item.children && item.children.length">
       <a class="label" href="#" (click)="handleClickMenu($event, item)">
         <span class="content"><i [class]="item.icon"></i>{{item.label}}</span>
@@ -18,7 +27,7 @@
       </a>
       <ul *ngIf="item.expanded" class="children">
         <ng-container *ngFor="let menuChild of item.children">
-          <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menuChild}">
+          <ng-container *ngTemplateOutlet="itemMenu; context: {$implicit: menuChild, level: level + 1}">
           </ng-container>
         </ng-container>
       </ul>

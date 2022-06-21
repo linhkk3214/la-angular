@@ -70,23 +70,25 @@
             [ngTemplateOutlet]="getTemplate('topGrid')"></ng-container>
         </div>
         <div class="container-table fit-content --table-responsive">
-          <div class="container-table-inner">
-            <tn-scrollbar *ngIf="showScrollBar" #scrollbar>
-              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
-              </ng-container>
-              <ng-container *ngIf="hasTemplate('afterCrudList')">
-                <ng-container [ngTemplateOutlet]="getTemplate('afterCrudList')"></ng-container>
-              </ng-container>
-            </tn-scrollbar>
-            <div *ngIf="!showScrollBar">
-              <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
-              </ng-container>
-            </div>
+          <div>
+            <div class="container-table-inner">
+              <tn-scrollbar *ngIf="showScrollBar" #scrollbar>
+                <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+                </ng-container>
+                <ng-container *ngIf="hasTemplate('afterCrudList')">
+                  <ng-container [ngTemplateOutlet]="getTemplate('afterCrudList')"></ng-container>
+                </ng-container>
+              </tn-scrollbar>
+              <div *ngIf="!showScrollBar">
+                <ng-container *ngTemplateOutlet="tableGetGroupFieldFalse">
+                </ng-container>
+              </div>
 
-            <div class="table-border-line --top"></div>
-            <div class="table-border-line --right"></div>
-            <div class="table-border-line --bottom"></div>
-            <div class="table-border-line --left"></div>
+              <div class="table-border-line --top"></div>
+              <div class="table-border-line --right"></div>
+              <div class="table-border-line --bottom"></div>
+              <div class="table-border-line --left"></div>
+            </div>
           </div>
         </div>
       </div>
@@ -266,6 +268,8 @@
           <button *ngIf="!rowData.hiddenEdit" type="button" pButton pRipple [disabled]="disableEdit(rowData)"
             [pTooltip]="'Sửa'" tooltipPosition="top" class="p-button-rounded p-button-text p-button-info link-or-action"
             icon="pi pi-pencil" (click)="edit(rowData)"></button>
+          <ng-container [ngTemplateOutletContext]="{rowData: rowData, rowIndex: index}"
+            [ngTemplateOutlet]="getTemplate('buttonBetween')"></ng-container>
           <button *ngIf="!rowData.hiddenDelete" type="button" pButton pRipple [disabled]="disableDelete(rowData)"
             [pTooltip]="'Xóa'" tooltipPosition="top"
             class="p-button-rounded p-button-text p-button-danger link-or-action" icon="pi pi-trash"
@@ -308,10 +312,10 @@
         {{rowData[field] | tnDate:col.dataType:col.format}}
       </span>
       <span *ngSwitchCase="'int'">
-        {{rowData[field]}}
+        {{rowData[field] | number}}
       </span>
       <span *ngSwitchCase="'decimal'">
-        {{rowData[field]}}
+        {{rowData[field] | number}}
       </span>
       <span *ngSwitchCase="'boolean'">
         <p-checkbox class="boolean-data-type" [(ngModel)]="rowData[field]" [binary]="true"

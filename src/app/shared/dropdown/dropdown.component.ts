@@ -35,6 +35,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
 
   @Output('onChanged') onChanged = new EventEmitter<any>();
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
+  @Output('onDataSourceLoaded') onDataSourceLoaded = new EventEmitter<any>();
 
   dataSourceInternal: any[] = [];
   extraFields: string[];
@@ -153,7 +154,8 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     }
     if (this.selectedValue != this.selectedValueBefore) {
       this.selectedValueBefore = this.selectedValue;
-      this.fireChange();
+      if (!this.rawValue)
+        this.fireChange();
     }
   }
 
@@ -193,6 +195,19 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     }
 
     return <SelectItem>op;
+  }
+
+  resetControl() {
+    if (this.selectedValue != null) {
+      if (this.control.multiple) {
+        this.selectedValue = [];
+      }
+      else {
+        this.selectedValue = null;
+      }
+      this.dataSourceInternal = [];
+      this.fireChange();
+    }
   }
 
   writeValue(obj: any): void {
@@ -296,10 +311,15 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     // }
 
     // this.control.service.getAllByFilter(filters, this.control.isServerLoad ? 10 : 0, [{ field: this.control.displayField, dir: 1 }])
-    this.control.service.getAllByFilter(filters, 0, [{ field: this.control.displayField, dir: 1 }])
+    const sorts = [{ field: this.control.displayField, dir: 1 }];
+    if (this.control.sortField) {
+      sorts.unshift({ field: this.control.sortField, dir: this.control.sortDir });
+    }
+    this.control.service.getAllByFilter(filters, 0, sorts)
       .then(res => {
         this.loading = false;
         this.setDataSource(res.data);
+        this.onDataSourceLoaded.emit(this.dataSourceInternal);
         this.checkFirstOnChanged();
       });
   }

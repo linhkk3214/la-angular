@@ -133,6 +133,10 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       this.initBindingControlSchema(control);
     }
 
+    this.initRootNode();
+  }
+
+  initRootNode() {
     this._rootNode = new ControlTreeNode(this.data, this);
     this._rootNode.setCrudForm(this);
   }
@@ -707,6 +711,25 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     if (schema.onChanged) {
       try {
         schema.onChanged(eventData);
+      }
+      catch (err) { }
+    }
+  }
+
+  handleDataSourceLoaded(dataSource: any[], schema: DropdownControlSchema, parentPath?: string) {
+    let parentNode = this._rootNode.getNodeByPath(parentPath);
+    let currentNode = parentNode.getChildNode(schema.field);
+    const eventData = new EventData({
+      currentNode,
+      sourceEvent: null,
+      sourceNode: currentNode,
+      crudForm: this,
+      eventType: 'dataSourceLoaded',
+      data: dataSource
+    });
+    if (schema.callbackDataFinish) {
+      try {
+        schema.callbackDataFinish(eventData);
       }
       catch (err) { }
     }

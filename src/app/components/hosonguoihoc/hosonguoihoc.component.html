@@ -2,12 +2,32 @@
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-secondary"
+        label="Xuất tất cả">
+      </button>
+    </ng-template>
+    <ng-template #buttonBefore let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-info"
+        pTooltip="Xem hồ sơ người học" tooltipPosition="top" (click)="viewKhenThuongKyLuat(rowData)"></button>
+        <button type="button" pButton icon="pi pi-print" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="In hồ sơ lý lịch" tooltipPosition="top" ></button>
+    </ng-template>
   </crud-list>
 </div>
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
-  [popupSize]="setting.popupSize" [useDefaultScrollBar]="true" (onHide)="showDetailForm = false">
+  [popupSize]="setting.popupSize" (onHide)="showDetailForm = false">
   <hosonguoihoc-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
   </hosonguoihoc-form>
+</tn-dialog>
+
+<tn-dialog *ngIf="khenThuongKyLuatDialogModel.showEditForm" #dialog [header]="khenThuongKyLuatDialogModel.header"
+  [popupSize]="khenThuongKyLuatDialogModel.popupSize" [useDefaultScrollBar]="true"
+  (onHide)="khenThuongKyLuatDialogModel.showEditForm = false">
+  <hosonguoihoc-khenthuong-kyluat #formBase [parentSetting]="setting"
+    [model]="khenThuongKyLuatDialogModel.data.formModel" (onSaved)="khenThuongKyLuatDialogModel.showEditForm = false;"
+    (onCancel)="khenThuongKyLuatDialogModel.showEditForm = false">
+  </hosonguoihoc-khenthuong-kyluat>
 </tn-dialog>

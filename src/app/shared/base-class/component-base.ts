@@ -87,6 +87,7 @@ export abstract class ComponentBase {
     return uuidv4();
   }
 
+  // Lấy cấu hình mặc định của hệ thống
   getDefaultSetting() {
     const jsonDefaultSetting = localStorage.getItem(KeyStorageDefaultSetting);
     if (!jsonDefaultSetting) return {};

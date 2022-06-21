@@ -1,0 +1,19 @@
+<div style="width: 100%">
+  <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
+    (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
+    (onReloaded)="_unmarkLoading()">
+
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-success"
+        label="Xuất báo cáo">
+      </button>
+    </ng-template>
+    <!-- <ng-template #buttonBetween>
+      123
+    </ng-template>
+
+    <ng-template #function>
+      Xóa sạch tự vẽ lại hết
+    </ng-template> -->
+  </crud-list>
+</div>

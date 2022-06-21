@@ -5,6 +5,7 @@ import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { NgxMaskModule } from 'ngx-mask';
 import { PerfectScrollbarConfigInterface, PerfectScrollbarModule, PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { CalendarModule } from 'primeng/calendar';
 import { CheckboxModule } from 'primeng/checkbox';
@@ -91,6 +92,7 @@ const declarations: any = [
     TableModule,
     TooltipModule,
     PerfectScrollbarModule,
+    AutoCompleteModule,
     SplitButtonModule,
     SelectButtonModule,
     ButtonModule,
@@ -106,7 +108,8 @@ const declarations: any = [
     InputTextModule,
     TooltipModule,
     CheckboxModule,
-    TabViewModule
+    TabViewModule,
+    AutoCompleteModule
   ],
   providers: [
     {

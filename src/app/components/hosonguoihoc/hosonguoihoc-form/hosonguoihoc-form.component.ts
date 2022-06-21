@@ -1,29 +1,20 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { FormState, Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, MaskControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { Component, getNgModuleById, Injector, OnInit } from '@angular/core';
+import { Operator } from 'src/app/shared/models/enums';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
-import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
+import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_DoiTuongDaoTaoService } from '../../dm-doituongdaotao/services/dm-doituongdaotao.service';
-import { DM_DoiTuongTuyenSinhService } from '../../dm-doituongtuyensinh/services/dm-doituongtuyensinh.service';
-import { DM_DoiTuongUuTienService } from '../../dm-doituonguutien/services/dm-doituonguutien.service';
-import { DM_DonViLienKetService } from '../../dm-donvilienket/services/dm-donvilienket.service';
 import { DM_GioiTinhService } from '../../dm-gioitinh/services/dm-gioitinh.service';
-import { DM_HanhKiemService } from '../../dm-hanhkiem/services/dm-hanhkiem.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
-import { DM_HocLucService } from '../../dm-hocluc/services/dm-hocluc.service';
-import { DM_HtTuyenSinhService } from '../../dm-httuyensinh/services/dm-httuyensinh.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
 import { DM_KhoaVienService } from '../../dm-khoavien/services/dm-khoavien.service';
-import { DM_KhuVucService } from '../../dm-khuvuc/services/dm-khuvuc.service';
-import { DM_NganhService } from '../../dm-nganh/services/dm-nganh.service';
 import { DM_TrangThaiNguoiHocService } from '../../dm-trangthainguoihoc/services/dm-trangthainguoihoc.service';
-import { DotNhapHocService } from '../../dotnhaphoc/services/dotnhaphoc.service';
 import { AddressService } from '../../user/services/address.service';
 import { DanTocService } from '../../user/services/dantoc.service';
 import { QuocTichService } from '../../user/services/quoctich.service';
 import { ReligionService } from '../../user/services/religion.service';
-import { DataSourceTrangThaiHoSo } from '../models/const';
+import { DataSourceMoiQuanHe } from '../models/const';
 import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 
 @Component({
@@ -36,20 +27,13 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
   constructor(
     injector: Injector,
     private _HoSoNguoiHocService: HoSoNguoiHocService,
-    private _dm_DotNhapHocService: DotNhapHocService,
     private _dm_QuocTichService: QuocTichService,
     private _dm_DanTocService: DanTocService,
     private _dm_GioiTinhService: DM_GioiTinhService,
     private _dm_TonGiaoService: ReligionService,
     private _addressService: AddressService,
-    private _DM_NganhService: DM_NganhService,
-    private _DM_KhuVucService: DM_KhuVucService,
-    private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
-    private _DM_DoiTuongTuyenSinhService: DM_DoiTuongTuyenSinhService,
-    private _DM_DoiTuongUuTienService: DM_DoiTuongUuTienService,
+    private _dm_ChuongTrinhDaoTaoService: DM_ChuongTrinhDaoTaoService,
     private _DM_DoiTuongDaoTaoService: DM_DoiTuongDaoTaoService,
-    private _DM_HocLucService: DM_HocLucService,
-    private _DM_HanhKiemService: DM_HanhKiemService,
     private _DM_TrangThaiNguoiHocService: DM_TrangThaiNguoiHocService,
     private _DM_KhoaVienService: DM_KhoaVienService,
     private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
@@ -62,142 +46,144 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
 
   override ngOnInit(): void {
     this.setting.service = this._HoSoNguoiHocService;
+    const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN CHUNG',
+        width: 12
+      }),
+      new FileControlSchema({
+        field: 'anh',
+        label: 'Ảnh',
+        multiple: false,
+        isAvatar: true,
+        rowSpan: 3,
+        width: 2
+      }),
       new TextControlSchema({
-        field: 'masv',
+        field: 'maSv',
         label: 'Mã sinh viên',
         required: true,
-        width: 6
+        disabled: isNotFormAdd,
+        width: 4
       }),
       new TextControlSchema({
-        field: 'Ho',
+        field: 'ho',
         label: 'Họ',
         required: true,
-        width: 6,
+        width: 3,
       }),
       new TextControlSchema({
-        field: 'Ten',
+        field: 'ten',
         label: 'Tên',
-        width: 6,
+        width: 3,
         required: true
       }),
       new DateTimeControlSchema({
         field: 'ngaySinh',
         label: 'Ngày sinh',
         required: true,
-        width: 6
+        width: 2
       }),
       new DropdownControlSchema({
-        field: 'GioiTinh',
+        field: 'gioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
-        required: true
+        required: true,
+        width: 2
       }),
       new DropdownControlSchema({
-        field: 'quocTich',
+        field: 'idQuocTich',
         label: 'Quốc tịch',
         service: this._dm_QuocTichService,
         required: true,
+        width: 3,
       }),
       new DropdownControlSchema({
-        field: 'danToc',
+        field: 'idDanToc',
         label: 'Dân tộc',
-        service: this._dm_DanTocService
+        service: this._dm_DanTocService,
+        width: 3
       }),
       new DropdownControlSchema({
         field: 'idTonGiao',
         label: 'Tôn giáo',
         service: this._dm_TonGiaoService,
+        width: 2,
       }),
       new TextControlSchema({
-        field: 'CmndSo',
+        field: 'cmndSo',
         label: 'Số CMND/CCCD',
-        width: 6
+        width: 2
       }),
       new DateTimeControlSchema({
-        field: 'CmndNgayCap',
+        field: 'cmndNgayCap',
         label: 'Ngày cấp',
-        width: 6
+        width: 3
       }),
       new TextControlSchema({
-        field: 'CmndNoiCap',
+        field: 'cmndNoiCap',
         label: 'Nơi cấp',
-        width: 6
-      }),
-      new FileControlSchema({
-        field: 'Anh',
-        label: 'Ảnh',
-        multiple: false,
-        isAvatar: true
+        width: 3
       }),
       new TextControlSchema({
-        field: 'sdt',
+        field: 'dienThoai',
         label: 'Số điện thoại',
-        width: 6
-      }),
-      new DropdownControlSchema({
-        field: 'idTinh',
-        label: 'Tỉnh / Thành phố',
-        service: this._addressService,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 1)
-        ]
-      }),
-      new DropdownControlSchema({
-        field: 'idHuyen',
-        label: 'Quận / Huyện',
-        service: this._addressService,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 2)
-        ],
-        bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idTinh')
-        ]
-      }),
-      new DropdownControlSchema({
-        field: 'idXa',
-        label: 'Phường / Xã',
-        service: this._addressService,
-        // isServerLoad: true,
-        defaultFilters: [
-          this.newFilter('level', Operator.equal, 3)
-        ],
-        bindingFilters: [
-          this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
-        ]
+        width: 3
       }),
       new TextControlSchema({
         field: 'email',
         label: 'Email',
+        width: 3
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN NGÀNH CHÍNH',
+        width: 12
       }),
       new DropdownControlSchema({
         field: 'idHe',
         label: 'Hệ',
         service: this._DM_HeDaoTaoService,
-        required: true
+        required: true,
+        disabled: isNotFormAdd,
       }),
       new DropdownControlSchema({
         field: 'idKhoaHoc',
         label: 'Khóa học',
         service: this._DM_KhoaHocService,
-        required: true
+        required: true,
+        disabled: isNotFormAdd
       }),
       new DropdownControlSchema({
         field: 'idKhoa',
         label: 'Khoa/Viện',
         service: this._DM_KhoaVienService,
-        required: true
+        required: true,
+        disabled: isNotFormAdd
       }),
       new DropdownControlSchema({
         field: 'idNganh',
         label: 'Ngành',
-        service: this._DM_NganhService,
-        required: true
+        required: true,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        bindingFilters: [
+          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
+        ],
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        },
+        disabled: isNotFormAdd
       }),
       new DropdownControlSchema({
         field: 'idLopHanhChinh',
         label: 'Lớp hành chính',
         service: this._DanhSachLopHanhChinhService,
+        bindingFilters: [
+          this.newBindingFilter('idChuongTrinhDaoTao', Operator.equal, 'idNganh')
+        ],
         required: true
       }),
       new DropdownControlSchema({
@@ -211,11 +197,160 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         label: 'Đối tượng đào tạo',
         service: this._DM_DoiTuongDaoTaoService
       }),
-      new TextAreaControlSchema({
-        field: 'ghiChu',
-        label: 'Ghi chú',
+      new TitleSchema({
+        field: 'abc',
+        text: 'THÔNG TIN QUÊ QUÁN',
         width: 12
-      })
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhqq',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyenqq',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhqq')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXaqq',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyenqq')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'HỘ KHẨU THƯỜNG TRÚ',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhtt',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyentt',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhtt')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXatt',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idHuyentt')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'ĐỊA CHỈ HIỆN NAY',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'idTinhhn',
+        label: 'Tỉnh / Thành phố',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 1),
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idHuyenhn',
+        label: 'Quận / Huyện',
+        service: this._addressService,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 2)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idTinhhn')
+        ],
+        width: 4
+      }),
+      new DropdownControlSchema({
+        field: 'idXahn',
+        label: 'Phường / Xã',
+        service: this._addressService,
+        // isServerLoad: true,
+        defaultFilters: [
+          this.newFilter('level', Operator.equal, 3)
+        ],
+        bindingFilters: [
+          this.newBindingFilter('parentId', Operator.equal, 'idXahn')
+        ],
+        width: 4
+      }),
+      new TitleSchema({
+        field: 'abc',
+        text: 'QUAN HỆ NHÂN THÂN',
+        width: 12
+      }),
+      new DropdownControlSchema({
+        field: 'moiQuanHe',
+        label: 'Mối quan hệ',
+        width: 2,
+        dataSource: DataSourceMoiQuanHe
+      }),
+      new TextControlSchema({
+        field: 'tenNhanThan',
+        label: 'Họ và tên',
+        width: 2
+      }),
+      new DateTimeControlSchema({
+        field: 'ngaySinhNhanThan',
+        label: 'Ngày sinh',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'ngheNghiepNhanThan',
+        label: 'Nghề nghiệp',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'noiONhanThan',
+        label: 'Nơi ở nhân thân',
+        width: 2
+      }),
+      new TextControlSchema({
+        field: 'sdtNhanThan',
+        label: 'Số điện thoại',
+        width: 2
+      }),
+
     ];
   }
 

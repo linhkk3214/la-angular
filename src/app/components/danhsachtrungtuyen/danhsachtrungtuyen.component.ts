@@ -50,6 +50,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
     this.setting.objectName = 'trúng tuyển';
     this.setting.service = this._DanhSachTrungTuyenService;
     this.setting.popupSize.maximize = true;
+    this.setting.widthFunctionColumn = '8.2rem';
     this.setting.cols = [
       new ColumnSchema({
         field: 'maNhapHoc',
@@ -57,17 +58,20 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'hoVaTen',
-        label: 'Họ và tên'
+        label: 'Họ và tên',
+        width: '180px'
       }),
       new ColumnSchema({
         field: 'ngaySinh',
         label: 'Ngày sinh',
-        dataType: DataType.date
+        dataType: DataType.date,
+        width: '107px'
       }),
       new ColumnSchema({
         field: 'gioiTinh',
         label: 'Giới tính',
         service: this._dm_GioiTinhService,
+        width: '100px'
       }),
       new ColumnSchema({
         field: 'idNganhTrungTuyen',
@@ -76,7 +80,8 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'tongDiem',
-        label: 'Tổng điểm'
+        label: 'Tổng điểm',
+        width: '107px'
       }),
       new ColumnSchema({
         field: 'idHtTuyenSinh',
@@ -88,6 +93,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
         field: 'idDotNhapHoc',
         label: 'Đợt nhập học',
         service: this._dm_DotNhapHocService,
+        width: '150px'
       }),
       new ColumnSchema({
         field: 'idDoiTuongDaoTao',
@@ -96,11 +102,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
 
       }),
       new ColumnSchema({
-        field: 'soQD',
-        label: 'Số quyết định'
-      }),
-      new ColumnSchema({
-        field: 'maSV',
+        field: 'maSv',
         label: 'Mã sinh viên',
       }),
       new ColumnSchema({
