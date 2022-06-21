@@ -5,6 +5,7 @@ import { EnumGetRefType, FormState, Operator } from "../models/enums";
 import { GridInfo } from "../models/grid-info";
 import { ResponseResult } from "../models/response-result";
 import { ColumnSchema, CrudFormData, ListData, ListSetting } from "../models/schema";
+import { multipleSort } from "../utils/array";
 import { ComponentBase } from "./component-base";
 
 @Directive()
@@ -143,7 +144,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
       if (this.setting.advanceData.fieldNeedGetRef) {
         const arrPromiseDontNeedWait = [];
         const arrSchemaDontNeedWait = [];
-        for (const schema of this.setting.advanceData.fieldNeedGetRef) {
+        for (const schema of this.setting.advanceData.fieldNeedGetRef.sort(multipleSort('order'))) {
           const field = schema.field;
           if (schema[KeyFieldGetRefType] == EnumGetRefType.SERVER) {
             if (schema.forceGetData
@@ -174,6 +175,10 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
                 let promise = schema.service.getAllByFilter(
                   [this.newFilter(schema.valueField, Operator.in, arrValue)]
                 );
+                // Thì trong thông tin của dòng, làm gì có thông tin idLopHanhChinh đúng hem
+                // Sau khi lấy xong dữ liệu của cột người học
+                // A ms set dữ liệu idLopHanhChinh cho hàng đó mà
+                // Rùi sau đó lấy dữ liệu cột lớp hành chính thì ms có dữ liệu nè
                 if (schema.order != null) {
                   const result = (await promise).data;
                   if (schema.callbackDataFinish) {

@@ -37,6 +37,24 @@
   },
   {
     "path": "",
+    "label": "Quản lý học ngành 2",
+    "children": [
+      {
+        "path": "/dotdangkyhocnganh2",
+        "label": "Đợt đăng ký học ngành 2"
+      },
+      {
+        "path": "/danhsachdangkyhocnganh2",
+        "label": "Danh sách đăng ký học ngành 2"
+      },
+      {
+        "path": "/dotcapnhathosonguoihoc",
+        "label": "Thống kê"
+      }
+    ]
+  },
+  {
+    "path": "",
     "label": "Quản lý khen thưởng",
     "children": [
       {

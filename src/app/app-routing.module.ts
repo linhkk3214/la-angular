@@ -168,6 +168,14 @@ const routes: Routes = [
     path: 'quyetdinhhocbong-thongke',
     loadChildren: () => import('../app/components/quyetdinhhocbong-thongke/quyetdinhhocbong-thongke.module').then(m => m.QuyetDinhHocBong_ThongKeModule)
   },
+  {
+    path: 'dotdangkyhocnganh2',
+    loadChildren: () => import('../app/components/dotdangkyhocnganh2/dotdangkyhocnganh2.module').then(m => m.DotDangKyHocNganh2Module)
+  },
+  {
+    path: 'danhsachdangkyhocnganh2',
+    loadChildren: () => import('../app/components/danhsachdangkyhocnganh2/danhsachdangkyhocnganh2.module').then(m => m.DanhSachDangKyHocNganh2Module)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 
