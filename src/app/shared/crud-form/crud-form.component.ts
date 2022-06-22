@@ -41,8 +41,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
   @Output() onAfterTrinhKy = new EventEmitter<any>();
 
   _rootNode: ControlTreeNode;
-  _minimizedData: any;
   _errors: any = {};
+  _hiddens: any = {};
   _inValidForm = false;
 
   formControls: { [key: string]: FormSchema } = {};
@@ -802,21 +802,9 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     return data._status[control.field].disabled === true || (data._status[control.field].disabled === undefined && control.disabled);
   }
 
-  checkHidden(control: ControlSchema, parentModel: any, path: string) {
-    let currentNode = null;
-    if (path && control['nodes']) {
-      currentNode = control['nodes'][path];
-    }
-    if (currentNode == null) {
-      control['_hidden'] = true;
-      return true;
-    }
-    const result = parentModel._status[control.field].hidden === true
-      || (parentModel._status[control.field].hidden === undefined
-        && (control.hidden
-          || (control.hiddenCheck && control.hiddenCheck(this._minimizedData, currentNode))
-        )
-      );
+  checkHidden(control: ControlSchema, parentModel: any) {
+    const result = control.hidden
+      || (control.hiddenCheck && control.hiddenCheck(parentModel, null));
     control['_hidden'] = !!result;
     return result;
   }

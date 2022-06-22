@@ -1,22 +1,21 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { ColumnSchema, DropdownControlSchema } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
-import { DanhSachDangKyHocNganh2Service } from './services/danhsachdangkyhocnganh2.service';
-import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
-import { R3FactoryDelegateType } from '@angular/compiler/src/render3/r3_factory';
-import { DataType } from 'src/app/shared/models/enums';
-import { DM_NamHocService } from '../dm-namhoc/services/dm-namhoc.service';
-import { DM_HocKyService } from '../dm-hocky/services/dm-hocky.service';
-import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.service';
-import { DotDangKyHocNganh2Service } from '../dotdangkyhocnganh2/services/dotdangkyhocnganh2.service';
-import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
+import { ColumnSchema } from '../../shared/models/schema';
 import { DanhSachLopHanhChinhService } from '../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
+import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
+import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
+import { DotDangKyHocNganh2Service } from '../dotdangkyhocnganh2/services/dotdangkyhocnganh2.service';
+import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.service';
+import { DataSourceTrangThaiNganh2 } from './models/const';
+import { EnumTrangThaiNganh2 } from './models/enums';
+import { DanhSachDangKyHocNganh2Service } from './services/danhsachdangkyhocnganh2.service';
 @Component({
   selector: 'danhsachdangkyhocnganh2',
   templateUrl: './danhsachdangkyhocnganh2.component.html',
   styleUrls: ['./danhsachdangkyhocnganh2.component.scss']
 })
 export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit {
+  enumTrangThaiNganh2 = EnumTrangThaiNganh2;
   constructor(
     injector: Injector,
     private _DanhSachDangKyHocNganh2Service: DanhSachDangKyHocNganh2Service,
@@ -24,6 +23,7 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
     private _dotDangKyHocNganh2Service: DotDangKyHocNganh2Service,
     private _dm_CTĐTService: DM_ChuongTrinhDaoTaoService,
     private _danhSachLopHanhChinhService: DanhSachLopHanhChinhService,
+    private _dmKhoaVienService: DM_KhoaVienService
   ) {
     super(injector);
   }
@@ -32,6 +32,7 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
     this.setting.objectName = 'sinh viên đăng ký học ngành 2';
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 650;
+    this.setting.widthFunctionColumn = '9.5rem'
     this.setting.service = this._DanhSachDangKyHocNganh2Service;
     this.setting.cols = [
       new ColumnSchema({
@@ -41,16 +42,36 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
         funcGetLabel: item => {
           return `${item.hoVaTen} (${item.maSv})`;
         },
-        fieldPlus: 'maSv'
-
+        fieldPlus: 'maSv, idKhoa, idNganh, idLopHanhChinh',
+        order: 1,
+        funcSetValueRow: (rowItem, data) => {
+          rowItem.maSv = data.maSv;
+          rowItem.idKhoa = data.idKhoa;
+          rowItem.idNganhChinh = data.idNganh;
+          rowItem.idLopHanhChinh = data.idLopHanhChinh;
+        },
       }),
       new ColumnSchema({
-        field: 'idNamHoc',
+        field: 'idKhoa',
+        label: 'Khoa/Viện',
+        order: 2,
+        service: this._dmKhoaVienService,
+      }),
+      new ColumnSchema({
+        field: 'idNganhChinh',
         label: 'Ngành chính',
+        order: 3,
+        service: this._dm_CTĐTService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        }
       }),
       new ColumnSchema({
-        field: 'idHocKy',
+        field: 'idLopHanhChinh',
         label: 'Lớp hành chính',
+        order: 4,
+        service: this._danhSachLopHanhChinhService,
       }),
       new ColumnSchema({
         field: 'idNganhDangKy',
@@ -62,11 +83,29 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
         }
       }),
       new ColumnSchema({
+        field: 'idDotDangKy',
+        label: 'Đợt đăng ký',
+        service: this._dotDangKyHocNganh2Service,
+      }),
+      new ColumnSchema({
         field: 'trangThai',
         label: 'Trạng thái',
-        // dataSource: DataSourceTrangThai
+        dataSource: DataSourceTrangThaiNganh2
       }),
     ];
     super.ngOnInit();
+  }
+
+  pheDuyetDangKy(rowData) {
+    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.DA_DUYET);
+  }
+
+  tuChoiDangKy(rowData) {
+    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.TU_CHOI);
+  }
+
+  private thayDoiTrangThai(id: string, trangThai: number) {
+    this._DanhSachDangKyHocNganh2Service.thayDoiTrangThai(id, trangThai)
+      .then(res => { });
   }
 }

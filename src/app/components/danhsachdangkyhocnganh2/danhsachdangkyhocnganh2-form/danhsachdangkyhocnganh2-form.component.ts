@@ -38,7 +38,7 @@ export class DanhSachDangKyHocNganh2FormComponent extends FormBase implements On
     this.setting.schema = [
       new DropdownControlSchema({
         field: 'idDotDangKy',
-        label: 'Tên đợt đăng ký học',
+        label: 'Đợt đăng ký học',
         service: this._dotDangKyHocNganh2Service,
         required: true,
         width: 12

@@ -1,15 +1,9 @@
 <div #container class="grid" style="padding: 0.5em">
   <div *ngFor="let schema of setting.schema"
     [class]="'control-container sm:col-12 md:col-' + schema.width + ' row-span-' + schema.rowSpan">
-    <div class="label">
-      <ng-container *ngIf="schema.label">{{schema.label}} <span *ngIf="schema.required" class="rq">*</span>
-      </ng-container>
-    </div>
-    <div class="control" [class.error]="_errors[schema.field].length > 0">
-      <ng-container
-        *ngTemplateOutlet="control; context: {$implicit: schema, data: data, parentPath: '', fullPath: schema.field}">
-      </ng-container>
-    </div>
+    <ng-container
+      *ngTemplateOutlet="controlWithLabel; context: {$implicit: schema, data: data, parentPath: '', fullPath: schema.field}">
+    </ng-container>
   </div>
 </div>
 
@@ -22,6 +16,21 @@
     (onSaved)="handleSavedTableRow($event)" (onCancel)="tableFormShow = false">
   </table-detail-form>
 </tn-dialog>
+
+<ng-template #controlWithLabel let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath"
+  let-index="index">
+  <ng-container *ngIf="!checkHidden(schema, data)">
+    <div class="label">
+      <ng-container *ngIf="schema.label">{{schema.label}} <span *ngIf="schema.required" class="rq">*</span>
+      </ng-container>
+    </div>
+    <div class="control" [class.error]="_errors[schema.field].length > 0">
+      <ng-container
+        *ngTemplateOutlet="control; context: {$implicit: schema, data: data, parentPath: parentPath, fullPath: fullPath}">
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-template>
 
 <ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index">
   <ng-container [ngSwitch]="schema.nameType">

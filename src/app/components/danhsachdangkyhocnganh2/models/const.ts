@@ -1,7 +1,8 @@
-import { EnumTrangThai } from "./enums";
+import { EnumTrangThaiNganh2 } from "./enums";
 
-export const DataSourceTrangThai = [
-  { _id: EnumTrangThai.TT1, ten: 'Chưa thực hiện' },
-  { _id: EnumTrangThai.TT2, ten: 'Đang thực hiện' },
-  { _id: EnumTrangThai.TT3, ten: 'Kết Thúc' }
+export const DataSourceTrangThaiNganh2 = [
+  { _id: EnumTrangThaiNganh2.CHO_DUYET, ten: 'Chờ duyệt' },
+  { _id: EnumTrangThaiNganh2.DA_DUYET, ten: 'Đã duyệt' },
+  { _id: EnumTrangThaiNganh2.TU_CHOI, ten: 'Từ chối' },
+  { _id: EnumTrangThaiNganh2.DA_NHAP_HOC, ten: 'Đã nhập học' },
 ];

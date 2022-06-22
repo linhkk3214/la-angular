@@ -9,4 +9,8 @@ export class DanhSachDangKyHocNganh2Service extends BaseService {
   constructor(httpClient: HttpClient) {
     super(httpClient, 'DanhSachDangKyHocNganh2');
   }
+
+  thayDoiTrangThai(id: string, trangThai: number) {
+    return this.defaultPost(`${this.serviceUri}/ThayDoiTrangThai/${id}/${trangThai}`, {});
+  }
 }

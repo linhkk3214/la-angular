@@ -1,6 +1,6 @@
 import { Component, getNgModuleById, Injector, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, ListData, MaskControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
@@ -198,6 +198,91 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         service: this._DM_DoiTuongDaoTaoService
       }),
       new TitleSchema({
+        field: '12',
+        text: 'THÔNG TIN NGÀNH 2',
+        width: 12,
+        hiddenCheck: () => {
+          // Nếu k có ngành 2 thì ẩn field này đi,
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new DropdownControlSchema({
+        field: 'idHe2',
+        label: 'Hệ',
+        service: this._DM_HeDaoTaoService,
+        required: true,
+        disabled: isNotFormAdd,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        },
+      }),
+      new DropdownControlSchema({
+        field: 'idKhoaHoc2',
+        label: 'Khóa học',
+        service: this._DM_KhoaHocService,
+        required: true,
+        disabled: isNotFormAdd,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new DropdownControlSchema({
+        field: 'idKhoa2',
+        label: 'Khoa/Viện',
+        service: this._DM_KhoaVienService,
+        required: true,
+        disabled: isNotFormAdd,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new DropdownControlSchema({
+        field: 'idNganh2',
+        label: 'Ngành',
+        required: true,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        },
+        disabled: isNotFormAdd,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new MaskControlSchema({
+        field: 'soNamDT2',
+        required: true,
+        label: 'Số năm đào tạo',
+        width: 3,
+        suffix: 'Năm',
+        disabled: true,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new MaskControlSchema({
+        field: 'soNamDTmax2',
+        required: true,
+        label: 'Số năm đào tạo tối đa',
+        width: 3,
+        suffix: 'Năm',
+        disabled: true,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new DropdownControlSchema({
+        field: 'idTrangThaiNganh2',
+        label: 'Trạng thái',
+        service: this._DM_TrangThaiNguoiHocService,
+        required: true,
+        disabled: true,
+        hiddenCheck: () => {
+          return !this.model.data.idNganh2;
+        }
+      }),
+      new TitleSchema({
         field: 'abc',
         text: 'THÔNG TIN QUÊ QUÁN',
         width: 12
@@ -354,5 +439,17 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
     ];
   }
 
-
+  override async modifyDetailData(data: any): Promise<void> {
+    if (data.idNganh2) {
+      const itemNganh2 = (await this._dm_ChuongTrinhDaoTaoService.getDetail(data.idNganh2)).data;
+      if (itemNganh2) {
+        data.idHe2 = itemNganh2.idHeDaoTao;
+        data.idKhoa2 = itemNganh2.idKhoaVien;
+        data.idKhoaHoc2 = itemNganh2.idKhoaHoc;
+        data.soNamDT2 = itemNganh2.soNamDT;
+        data.soNamDTmax2 = itemNganh2.soNamDTmax;
+      }
+    }
+  }
 }
+

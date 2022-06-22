@@ -4,6 +4,7 @@ import { KeyStorageDefaultSetting, PrefixFieldObjectDropdown } from "src/app/mod
 import { v4 as uuidv4 } from 'uuid';
 import { Operator } from "../models/enums";
 import { Filter, FilterWithBinding } from "../models/grid-info";
+import { ResponseResult } from "../models/response-result";
 
 @Directive({
   providers: [MessageService, ConfirmationService]
@@ -106,5 +107,31 @@ export abstract class ComponentBase {
 
   trackByFuncId(index, item) {
     return item._id;
+  }
+
+  handleResponse(res: ResponseResult, message?: string, callBack?: Function, callBackError?: Function) {
+    if (!res.success) { // Nếu k thành công thì kiểm tra response có message trả về thì hiển thị message
+      if (res.message != null && res.message != '') {
+        this.toastWarning(res.message);
+      }
+      else {
+        this.toastWarning(res.error);
+      }
+      return;
+    }
+
+    // Nếu đã chạy đến đây thì nghĩa là response trả về báo thành công
+    if (callBackError) {
+      callBackError(res);
+    }
+    // nếu có message khai báo thì hiển thị message
+    if (message) {
+      this.toastSuccess(message);
+    }
+
+    // Callback nếu thực hiện thành công
+    if (callBack) {
+      callBack(res);
+    }
   }
 }

@@ -2,7 +2,23 @@
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-success"
+        label=" In danh sách">
+      </button>
+    </ng-template>
+    <ng-template #buttonBefore let-rowData="rowData">
+      <button
+        *ngIf="rowData.trangThai == enumTrangThaiNganh2.CHO_DUYET || rowData.trangThai == enumTrangThaiNganh2.TU_CHOI"
+        type="button" pButton icon="pi pi-check" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="Phê duyệt" tooltipPosition="top" (click)="pheDuyetDangKy(rowData)"></button>
+      <button
+        *ngIf="rowData.trangThai == enumTrangThaiNganh2.CHO_DUYET || rowData.trangThai == enumTrangThaiNganh2.DA_DUYET"
+        type="button" pButton icon="pi pi-times" class="p-button-text p-button-rounded p-button-danger"
+        pTooltip="Từ chối" tooltipPosition="top" (click)="tuChoiDangKy(rowData)"></button>
+    </ng-template>
   </crud-list>
+
 </div>
 
 <tn-dialog *ngIf="showDetailForm" #dialog [styleClass]="'address-form'" [header]="setting.popupHeader"
