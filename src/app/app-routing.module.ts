@@ -176,6 +176,10 @@ const routes: Routes = [
     path: 'danhsachdangkyhocnganh2',
     loadChildren: () => import('../app/components/danhsachdangkyhocnganh2/danhsachdangkyhocnganh2.module').then(m => m.DanhSachDangKyHocNganh2Module)
   },
+  {
+    path: 'thongbao',
+    loadChildren: () => import('../app/components/thongbao/thongbao.module').then(m => m.ThongBaoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

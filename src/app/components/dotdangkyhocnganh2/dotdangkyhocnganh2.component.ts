@@ -28,7 +28,7 @@ export class DotDangKyHocNganh2Component extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'đợt đăng ký học ngành 2';
     this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 650;
+    this.setting.popupSize.height = 700;
     this.setting.service = this._DotDangKyHocNganh2Service;
     this.setting.cols = [
       new ColumnSchema({

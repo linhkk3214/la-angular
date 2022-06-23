@@ -192,6 +192,22 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         service: this._DM_TrangThaiNguoiHocService,
         required: true
       }),
+      new MaskControlSchema({
+        field: 'soNamDT',
+        required: true,
+        label: 'Số năm đào tạo tối đa',
+        width: 3,
+        suffix: 'Năm',
+        disabled: true,
+      }),
+      new MaskControlSchema({
+        field: 'soNamDTmax',
+        required: true,
+        label: 'Số năm đào tạo tối đa',
+        width: 3,
+        suffix: 'Năm',
+        disabled: true,
+      }),
       new DropdownControlSchema({
         field: 'idDoiTuongDaoTao',
         label: 'Đối tượng đào tạo',
@@ -440,6 +456,13 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
   }
 
   override async modifyDetailData(data: any): Promise<void> {
+    if (data.idNganh) {
+      const itemNganh = (await this._dm_ChuongTrinhDaoTaoService.getDetail(data.idNganh)).data;
+      if (itemNganh) {
+        data.soNamDT = itemNganh.soNamDT;
+        data.soNamDTmax = itemNganh.soNamDTmax;
+      }
+    }
     if (data.idNganh2) {
       const itemNganh2 = (await this._dm_ChuongTrinhDaoTaoService.getDetail(data.idNganh2)).data;
       if (itemNganh2) {

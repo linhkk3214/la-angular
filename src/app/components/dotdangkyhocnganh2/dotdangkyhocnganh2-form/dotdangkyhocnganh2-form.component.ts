@@ -114,7 +114,11 @@ export class DotDangKyHocNganh2FormComponent extends FormBase implements OnInit 
         field: 'idNganh',
         label: 'Ngành',
         service: this._dm_CTĐTService,
-        multiple: true
+        multiple: true,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        },
       }),
     ];
   }

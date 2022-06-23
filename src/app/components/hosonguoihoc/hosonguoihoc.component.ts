@@ -56,7 +56,6 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'ngaySinh',
         label: 'Ngày sinh',
-
         dataType: DataType.date
       }),
       new ColumnSchema({

@@ -109,6 +109,19 @@ export abstract class ComponentBase {
     return item._id;
   }
 
+  upperFirstLetter(val: string) {
+    if (!val) return val;
+    return val[0].toUpperCase() + val.substring(1);
+  }
+
+  /**
+   *
+   * @param res Xử lý response trả về từ nodejs
+   * @param message Message hiển thị nếu reponse success (Thực hiện thành công hành đồng)
+   * @param callBack Callback nếu thực hiện thành công hành động
+   * @param callBackError Callback nếu thực hiện hành động không thành công
+   * @returns
+   */
   handleResponse(res: ResponseResult, message?: string, callBack?: Function, callBackError?: Function) {
     if (!res.success) { // Nếu k thành công thì kiểm tra response có message trả về thì hiển thị message
       if (res.message != null && res.message != '') {

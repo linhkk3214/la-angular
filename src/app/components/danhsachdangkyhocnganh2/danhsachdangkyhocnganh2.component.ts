@@ -97,15 +97,23 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
   }
 
   pheDuyetDangKy(rowData) {
-    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.DA_DUYET);
+    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.DA_DUYET, 'phê duyệt');
   }
 
   tuChoiDangKy(rowData) {
-    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.TU_CHOI);
+    this.thayDoiTrangThai(rowData._id, EnumTrangThaiNganh2.TU_CHOI, 'từ chối');
   }
 
-  private thayDoiTrangThai(id: string, trangThai: number) {
-    this._DanhSachDangKyHocNganh2Service.thayDoiTrangThai(id, trangThai)
-      .then(res => { });
+  private thayDoiTrangThai(id: string, trangThai: number, actionName: string) {
+    this.confirm(`Bạn có chắc chắn muốn ${actionName} bản ghi`)
+      .then(res => {
+        if (!res) return;
+        this._DanhSachDangKyHocNganh2Service.thayDoiTrangThai(id, trangThai)
+          .then(res => {
+            this.handleResponse(res, `${this.upperFirstLetter(actionName)} thành công`, f => {
+              this._triggerProcessData();
+            });
+          });
+      });
   }
 }
