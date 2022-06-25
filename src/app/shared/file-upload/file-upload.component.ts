@@ -24,6 +24,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
   onTouched?: Function;
   @ViewChild(FileUpload) fileUpload: FileUpload;
   @Input() control?: FileControlSchema;
+  @Output() onInit = new EventEmitter<any>();
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
 
   disabled = false;
@@ -41,6 +42,7 @@ export class FileUploadComponent extends ComponentBase implements OnInit {
     if (this.control) {
       this.control._component = this;
     }
+    this.onInit.emit(this);
   }
 
   // Hàm write value này là 1 hàm mặc định của angular

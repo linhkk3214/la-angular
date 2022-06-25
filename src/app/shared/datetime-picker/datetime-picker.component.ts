@@ -22,6 +22,7 @@ export class DateTimePickerComponent implements OnInit {
   @Input() control: DateTimeControlSchema = new DateTimeControlSchema();
   @Input() disabled: boolean = false;
 
+  @Output() onInit = new EventEmitter<any>();
   @Output() onSelect: EventEmitter<any> = new EventEmitter<any>();
   @Output() onChanged: EventEmitter<any> = new EventEmitter<any>();
   @Output() onFocus: EventEmitter<any> = new EventEmitter<any>();
@@ -88,6 +89,7 @@ export class DateTimePickerComponent implements OnInit {
     if (this.control) {
       this.control._component = this;
     }
+    this.onInit.emit(this);
   }
 
   writeValue(obj: any): void {

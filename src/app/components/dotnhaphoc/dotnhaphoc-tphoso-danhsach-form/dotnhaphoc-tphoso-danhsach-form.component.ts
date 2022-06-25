@@ -6,7 +6,7 @@ import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
 import { DotNhapHoc_TpHoSoService } from '../services/dotnhaphoc-tphoso.service';
 
 @Component({
-  selector: 'dotnhaphoc-tphoso-danhsach-form',
+  selector: 'dotnhaphoc-tphoso-danhsach-form', // Đây là selector của component nè
   templateUrl: './dotnhaphoc-tphoso-danhsach-form.component.html',
   styleUrls: ['./dotnhaphoc-tphoso-danhsach-form.component.scss']
 })
@@ -37,6 +37,15 @@ export class DotNhapHoc_TpHoSo_DanhSachFormComponent extends FormBase implements
             service: this._dm_TpHoSoService,
             fieldPlus: 'ma',
             required: true,
+            onChanged: (evt: EventData) => {
+              const rowModel = evt.currentNode.parentModel;
+              // Tìm bản ghi thành phần hồ sơ được chọn
+              const itemSelected = evt.currentNode._component.dataSourceInternal.find(q => q.value == rowModel.idTpHoSo);
+              if (itemSelected) {
+                // Set mã hồ sơ theo thông tin lấy được từ bản ghi thành phần hồ sơ được chọn
+                rowModel.maHoSo = itemSelected.ma;
+              }
+            },
             // Hàm sẽ chạy sau khi dataSource của dropdown được load
             callbackDataFinish: (evt: EventData) => {
               const rowModel = evt.currentNode.parentModel;

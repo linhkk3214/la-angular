@@ -48,6 +48,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
       <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
+        (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFirstChanged(null, schema, parentPath)"
         (onFirstChanged)="handleFirstChanged($event, schema, parentPath)"
         (onDataSourceLoaded)="handleDataSourceLoaded($event, schema, parentPath)">
@@ -55,6 +56,7 @@
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
       <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"
+        (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></datetime-picker>
     </ng-container>
     <ng-container *ngSwitchCase="'CheckBoxControlSchema'">
@@ -63,11 +65,13 @@
     </ng-container>
     <ng-container *ngSwitchCase="'MaskControlSchema'">
       <tn-mask [control]="schema" [(ngModel)]="data[schema.field]"
+        (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)">
       </tn-mask>
     </ng-container>
     <ng-container *ngSwitchCase="'FileControlSchema'">
       <file-upload [control]="schema" [(ngModel)]="data[schema.field]"
+        (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></file-upload>
     </ng-container>
     <ng-container *ngSwitchCase="'TableControlSchema'">

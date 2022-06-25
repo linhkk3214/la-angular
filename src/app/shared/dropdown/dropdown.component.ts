@@ -33,6 +33,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     this.setDataSource(value);
   }
 
+  @Output() onInit = new EventEmitter<any>();
   @Output('onChanged') onChanged = new EventEmitter<any>();
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
   @Output('onDataSourceLoaded') onDataSourceLoaded = new EventEmitter<any>();
@@ -88,6 +89,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
     else if (this.control.dataSource) {
       this.setDataSource(this.control.dataSource);
     }
+    this.onInit.emit(this);
   }
 
   private createFilterFunction() {

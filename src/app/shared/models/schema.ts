@@ -481,6 +481,7 @@ export class ControlTreeNode {
   rootNode: ControlTreeNode;
   childNodes: ControlTreeNode[] = [];
   control: ControlSchema;
+  _component: any;
   keysPlus: string[];
   private _crudForm: CrudFormComponent;
   private childNodeDic = {};

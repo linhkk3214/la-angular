@@ -122,15 +122,16 @@ export class ThongBaoFormComponent extends FormBase implements OnInit {
         field: 'ngayPhatHanh',
         label: 'Ngày phát hành',
       }),
+      new FileControlSchema({
+        field: 'lstFileDinhKem',
+        label: 'Đính kèm'
+      }),
       new TextAreaControlSchema({
         field: 'moTaNgan',
         label: 'Mô tả ngắn',
         width: 12
       }),
-      new FileControlSchema({
-        field: 'lstFileDinhKem',
-        label: 'Đính kèm'
-      }),
+
     ];
   }
 }

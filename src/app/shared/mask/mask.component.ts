@@ -24,6 +24,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
   @Input() control: MaskControlSchema;
   @Input() inputStyleClass = '';
 
+  @Output() onInit = new EventEmitter<any>();
   @Output() onFocus = new EventEmitter<any>();
   @Output() onBlur = new EventEmitter<any>();
   @Output() onChanged = new EventEmitter<any>();
@@ -41,6 +42,7 @@ export class MaskComponent implements OnInit, ControlValueAccessor {
     if (!this.control.autoFormat) {
       this.thousandSeperator = '';
     }
+    this.onInit.emit(this);
   }
 
   writeValue(obj: any): void {

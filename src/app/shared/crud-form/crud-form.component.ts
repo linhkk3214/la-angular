@@ -658,6 +658,14 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     return true;
   }
 
+  handleLoadedControl(_component: any, control: ControlSchema, parentPath?) {
+    const parentNode = this._rootNode.getNodeByPath(parentPath);
+    const currentNode = parentNode.getChildNode(control.field);
+    if (_component && currentNode) {
+      currentNode._component = _component;
+    }
+  }
+
   async handleChangeDropdown(control: DropdownControlSchema, event?, eventType?, parentPath?: string) {
     if (control.multiple) {
       if (eventType == 'hide') {

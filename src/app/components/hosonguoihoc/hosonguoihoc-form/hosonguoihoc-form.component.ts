@@ -1,6 +1,6 @@
 import { Component, getNgModuleById, Injector, OnInit } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, ListData, MaskControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, EventData, FileControlSchema, ListData, MaskControlSchema, TableControlSchema, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
@@ -15,6 +15,7 @@ import { DanTocService } from '../../user/services/dantoc.service';
 import { QuocTichService } from '../../user/services/quoctich.service';
 import { ReligionService } from '../../user/services/religion.service';
 import { DataSourceMoiQuanHe } from '../models/const';
+import { HoSoNguoiHoc_NhanThanService } from '../services/hosonguoihoc-nhanthan.service';
 import { HoSoNguoiHocService } from '../services/hosonguoihoc.service';
 
 @Component({
@@ -38,7 +39,8 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
     private _DM_KhoaVienService: DM_KhoaVienService,
     private _DanhSachLopHanhChinhService: DanhSachLopHanhChinhService,
     private _DM_HeDaoTaoService: DM_HeDaoTaoService,
-    private _DM_KhoaHocService: DM_KhoaHocService
+    private _DM_KhoaHocService: DM_KhoaHocService,
+    private _hoSoNguoiHoc_NhanThanService: HoSoNguoiHoc_NhanThanService
 
   ) {
     super(injector);
@@ -417,42 +419,65 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new TitleSchema({
         field: 'abc',
-        text: 'QUAN HỆ NHÂN THÂN',
+        text: 'QUAN HỆ THÂN NHÂN',
         width: 12
       }),
-      new DropdownControlSchema({
-        field: 'moiQuanHe',
-        label: 'Mối quan hệ',
-        width: 2,
-        dataSource: DataSourceMoiQuanHe
-      }),
-      new TextControlSchema({
-        field: 'tenNhanThan',
-        label: 'Họ và tên',
-        width: 2
-      }),
-      new DateTimeControlSchema({
-        field: 'ngaySinhNhanThan',
-        label: 'Ngày sinh',
-        width: 2
-      }),
-      new TextControlSchema({
-        field: 'ngheNghiepNhanThan',
-        label: 'Nghề nghiệp',
-        width: 2
-      }),
-      new TextControlSchema({
-        field: 'noiONhanThan',
-        label: 'Nơi ở nhân thân',
-        width: 2
-      }),
-      new TextControlSchema({
-        field: 'sdtNhanThan',
-        label: 'Số điện thoại',
-        width: 2
-      }),
-
+      new TableControlSchema({
+        field: 'danhSachNhanThan',
+        label: '',
+        width: 12,
+        rowTemplate: [
+          new DropdownControlSchema({
+            field: 'idMoiQuanHe',
+            label: 'Mối quan hệ',
+            width: 2,
+            dataSource: DataSourceMoiQuanHe,
+            required: true
+          }),
+          new TextControlSchema({
+            field: 'tenNhanThan',
+            label: 'Họ và tên',
+            width: 2,
+            required: true
+          }),
+          new DateTimeControlSchema({
+            field: 'ngaySinhNhanThan',
+            label: 'Ngày sinh',
+            width: 2,
+          }),
+          new TextControlSchema({
+            field: 'ngheNghiepNhanThan',
+            label: 'Nghề nghiệp',
+            width: 2
+          }),
+          new TextControlSchema({
+            field: 'noiONhanThan',
+            label: 'Nơi ở',
+            width: 2,
+          }),
+          new TextControlSchema({
+            field: 'sdtNhanThan',
+            label: 'Số điện thoại',
+            width: 2,
+          }),
+          new TextControlSchema({
+            field: 'emailNhanThan',
+            label: 'Email',
+            width: 2
+          }),
+        ]
+      })
     ];
+  }
+
+  override async onFormInitialized(data: EventData) {
+    if (this._isFormAddNew()) return;
+    // Lấy thêm thông tin nhân thân của sinh viên
+    const lstNhanThan = (await this._hoSoNguoiHoc_NhanThanService.getAllByFilter([
+      this.newFilter('idNguoiHoc', Operator.equal, this.model.data._id)
+    ])).data;
+    // data.danhSachNhanThan = lstNhanThan;
+    this.crudForm.setTableNodeDataSource('danhSachNhanThan', lstNhanThan);
   }
 
   override async modifyDetailData(data: any): Promise<void> {

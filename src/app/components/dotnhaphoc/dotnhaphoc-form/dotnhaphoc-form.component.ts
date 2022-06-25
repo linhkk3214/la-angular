@@ -1,14 +1,15 @@
 import { Component, Injector, OnInit, ViewChild } from '@angular/core';
-import { FormState, Operator } from 'src/app/shared/models/enums';
-import { DateTimeControlSchema, DropdownControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { FormState, Operator, TextAlign } from 'src/app/shared/models/enums';
+import { CheckBoxControlSchema, DateTimeControlSchema, DropdownControlSchema, EventData, MaskControlSchema, TableControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
 import { DM_DonViLienKetService } from '../../dm-donvilienket/services/dm-donvilienket.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_KhoaHocService } from '../../dm-khoahoc/services/dm-khoahoc.service';
-import { DotNhapHoc_TpHoSo_DanhSachFormComponent } from '../../dotnhaphoc-tphoso/dotnhaphoc-tphoso-danhsach-form/dotnhaphoc-tphoso-danhsach-form.component';
-import { DotNhapHoc_TpHoSoService } from '../../dotnhaphoc-tphoso/services/dotnhaphoc-tphoso.service';
+import { DM_TpHoSoService } from '../../dm-tphoso/services/dm-tphoso.service';
+import { DotNhapHoc_TpHoSo_DanhSachFormComponent } from '../dotnhaphoc-tphoso-danhsach-form/dotnhaphoc-tphoso-danhsach-form.component';
 import { DataSourceTrangThai } from '../models/const';
+import { DotNhapHoc_TpHoSoService } from '../services/dotnhaphoc-tphoso.service';
 import { DotNhapHocService } from '../services/dotnhaphoc.service';
 
 @Component({
@@ -35,7 +36,6 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
       useScrollbar: true,
     })
   ];
-  danhSachTpHoSo: any[] = [];
   constructor(
     injector: Injector,
     private _dotNhapHocService: DotNhapHocService,
@@ -44,6 +44,7 @@ export class DotNhapHocFormComponent extends FormBase implements OnInit {
     private _dm_KhoaHocService: DM_KhoaHocService,
     private _dm_CoSoDaoTaoService: DM_CoSoDaoTaoService,
     private _dm_DonViLienKetService: DM_DonViLienKetService,
+    private _dm_TpHoSoService: DM_TpHoSoService
   ) {
     super(injector);
   }

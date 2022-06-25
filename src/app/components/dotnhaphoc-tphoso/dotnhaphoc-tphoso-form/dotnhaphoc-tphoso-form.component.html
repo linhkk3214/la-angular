@@ -1,8 +1,0 @@
-<crud-form #crudForm [data]="model.data" [setting]="setting" (onFormReady)="_handleFormReady($event)">
-</crud-form>
-<ng-template #buttonTemplate>
-  <button *ngIf="!model.data.__disableEdit && !__isFormView" type="button" pButton icon="pi pi-save"
-    class="p-button-text" [label]="'Lưu'" (click)="_handleSave($event)"></button>
-  <button type="button" pButton icon="pi pi-replay" class="p-button-text p-button-secondary" [label]="'Đóng'" preventTab
-    (click)="_handleCancel($event)"></button>
-</ng-template>
