@@ -11,6 +11,9 @@ export class DanhSachQuyetDinhHocBongService extends BaseService {
     super(httpClient, 'DanhSachQuyetDinhHocBong');
   }
 
+  thayDoiTrangThai(id: string, trangThai: number) {
+    return this.defaultPost(`${this.serviceUri}/ThayDoiTrangThai/${id}/${trangThai}`, {});
+  }
   thongKe(idNamHoc: string, gridInfo: GridInfo) {
     return this.defaultPost(`${this.serviceUri}/ThongKe/${idNamHoc}`, gridInfo);
   }

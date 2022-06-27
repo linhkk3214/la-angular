@@ -32,7 +32,7 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
     this.setting.objectName = 'sinh viên đăng ký học ngành 2';
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 650;
-    this.setting.widthFunctionColumn = '9.5rem'
+    this.setting.widthFunctionColumn = '10.5rem'
     this.setting.service = this._DanhSachDangKyHocNganh2Service;
     this.setting.cols = [
       new ColumnSchema({
@@ -94,6 +94,19 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
       }),
     ];
     super.ngOnInit();
+  }
+
+  override async beforeRenderDataSource(datasource: any): Promise<any> {
+    // Trước khi render ra datasource, cần modify nó để set ẩn hiện các nút sửa/xóa trong base
+    datasource.forEach(rowData => {
+      if (rowData.trangThai != EnumTrangThaiNganh2.CHO_DUYET) {
+        rowData.hiddenEdit = true;
+        rowData.hiddenDelete = true;
+      }
+      if (rowData.trangThai == EnumTrangThaiNganh2.CHO_DUYET) {
+        rowData.hiddenEdit = true;
+      }
+    });
   }
 
   pheDuyetDangKy(rowData) {

@@ -16,6 +16,8 @@
         *ngIf="rowData.trangThai == enumTrangThaiNganh2.CHO_DUYET || rowData.trangThai == enumTrangThaiNganh2.DA_DUYET"
         type="button" pButton icon="pi pi-times" class="p-button-text p-button-rounded p-button-danger"
         pTooltip="Từ chối" tooltipPosition="top" (click)="tuChoiDangKy(rowData)"></button>
+      <button type="button" pButton icon="pi pi-history" class="p-button-text p-button-rounded p-button-secondary"
+        pTooltip="Xem quá trình xử lý" tooltipPosition="top"></button>
     </ng-template>
   </crud-list>
 

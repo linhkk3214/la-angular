@@ -28,7 +28,6 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'người học khen thưởng';
     this.setting.title = 'Thống kê người học có quyết định học tập';
     this.setting.service = this._DanhSachQuyetDinhHocTapService;
     this.setting.hiddenFunctionColumn = true;
