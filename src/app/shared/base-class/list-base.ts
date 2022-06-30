@@ -175,10 +175,6 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
                 let promise = schema.service.getAllByFilter(
                   [this.newFilter(schema.valueField, Operator.in, arrValue)]
                 );
-                // Thì trong thông tin của dòng, làm gì có thông tin idLopHanhChinh đúng hem
-                // Sau khi lấy xong dữ liệu của cột người học
-                // A ms set dữ liệu idLopHanhChinh cho hàng đó mà
-                // Rùi sau đó lấy dữ liệu cột lớp hành chính thì ms có dữ liệu nè
                 if (schema.order != null) {
                   const result = (await promise).data;
                   if (schema.callbackDataFinish) {
@@ -251,6 +247,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
           if (!Array.isArray(ids)) {
             ids = ids.split(',');
           }
+
           const refItems = data.filter(i => ids.some(q => schema.funcCompare(i, q)));
           if (refItems.length > 0) {
             itemData['str' + field] = funcGetRefDataRow(refItems);
@@ -262,6 +259,7 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
     else {
       dataSource.forEach(itemData => {
         if (itemData[field] != null) {
+
           const refItem = data.find(i => schema.funcCompare(i, itemData[field]));
           if (refItem != null) {
             itemData['str' + field] = funcGetLabel(refItem);

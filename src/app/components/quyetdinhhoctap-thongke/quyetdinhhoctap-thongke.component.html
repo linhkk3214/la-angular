@@ -8,12 +8,10 @@
         label="Xuất báo cáo">
       </button>
     </ng-template>
-    <!-- <ng-template #buttonBetween>
-      123
-    </ng-template>
-
-    <ng-template #function>
-      Xóa sạch tự vẽ lại hết
-    </ng-template> -->
   </crud-list>
 </div>
+
+<ng-template #templateFilterSinhVien let-col="col" let-filterTextTemplate="filterTextTemplate">
+  <ng-container [ngTemplateOutlet]="filterTextTemplate" [ngTemplateOutletContext]="{col: col}">
+  </ng-container>
+</ng-template>

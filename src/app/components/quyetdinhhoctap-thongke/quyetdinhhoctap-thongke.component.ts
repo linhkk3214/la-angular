@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ResponseResult } from 'src/app/shared/models/response-result';
@@ -6,6 +6,7 @@ import { ListBase } from '../../shared/base-class/list-base';
 import { ColumnSchema } from '../../shared/models/schema';
 import { DanhSachLoaiQuyetDinhService } from '../danhsachloaiquyetdinh/services/danhsachloaiquyetdinh.service';
 import { DanhSachLopHanhChinhService } from '../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
+import { EnumTrangThaiQuyetDinh } from '../danhsachquyetdinhhoctap/models/enums';
 import { DanhSachQuyetDinhHocTapService } from '../danhsachquyetdinhhoctap/services/danhsachquyetdinhhoctap.service';
 import { DM_KhoaVienService } from '../dm-khoavien/services/dm-khoavien.service';
 import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.service';
@@ -15,6 +16,7 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
   styleUrls: ['./quyetdinhhoctap-thongke.component.scss']
 })
 export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit {
+  @ViewChild('templateFilterSinhVien', { static: true }) templateFilterSinhVien: TemplateRef<any>;
   defaultSettings: any = {};
   constructor(
     injector: Injector,
@@ -38,8 +40,7 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
       new ColumnSchema({
         field: 'maSv',
         label: 'Mã sinh viên',
-        sort: false,
-        allowFilter: false
+        sort: false
       }),
       new ColumnSchema({
         field: 'idNguoiHoc',
@@ -53,7 +54,14 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
           rowItem.idKhoa = data.idKhoa;
         },
-        sort: false
+        // Override filter mặc định của base thành filter theo templateFilterSinhVien
+        // Mặc định là column này sẽ filter theo dạng dropdown
+        templateFilter: this.templateFilterSinhVien,
+        // Override lại field filter của base
+        fieldFilter: 'hoVaTen',
+        // Override lại operator filter của base
+        operatorFilter: Operator.contain,
+        sort: false,
       }),
       new ColumnSchema({
         field: 'idLopHanhChinh',
@@ -93,23 +101,5 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
     this.defaultSettings = this.getDefaultSetting();
     let idNamHoc = this.defaultSettings.idNamHoc;
     return this._DanhSachQuyetDinhHocTapService.thongKe(idNamHoc, gridInfo);
-  }
-
-  override async beforeRenderDataSource(datasource: any): Promise<any> {
-    const lstIdLoaiQuyetDinh = [];
-    datasource.forEach(item => {
-      if (lstIdLoaiQuyetDinh.indexOf(item.idLoaiQuyetDinh) == -1) {
-        lstIdLoaiQuyetDinh.push(item.idLoaiQuyetDinh);
-      }
-    });
-
-    const lstLoaiQuyetDinh = (await this._DanhSachLoaiQuyetDinhService.getAllByFilter([
-      this.newFilter('_id', Operator.in, lstIdLoaiQuyetDinh)
-    ])).data;
-
-    datasource.forEach(item => {
-      const itemLoaiHocTap = lstLoaiQuyetDinh.find(q => q._id == item.idLoaiQuyetDinh);
-
-    });
   }
 }

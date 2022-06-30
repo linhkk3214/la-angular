@@ -5,6 +5,7 @@ import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ColumnSchema, CrudFormData, DialogModel, PopupSize } from 'src/app/shared/models/schema';
 import { DanhMucHocBongService } from '../../danhmuchocbong/services/danhmuchocbong.service';
 import { DanhSachQuyetDinhHocBongService } from '../../danhsachquyetdinhhocbong/services/danhsachquyetdinhhocbong.service';
+import { EnumTrangThaiQuyetDinh } from '../../danhsachquyetdinhhoctap/models/enums';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
 import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
 @Component({
@@ -78,7 +79,8 @@ export class HoSoNguoiHoc_HocBongComponent extends ListBase implements OnInit {
 
   override async modifyGridInfo(gridInfo: GridInfo): Promise<boolean | void> {
     gridInfo.filters.push(
-      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
+      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc),
+      this.newFilter('idTrangThai', Operator.in, EnumTrangThaiQuyetDinh.DA_DUYET)
     );
   }
 

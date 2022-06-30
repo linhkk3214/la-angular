@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ResponseResult } from 'src/app/shared/models/response-result';
@@ -15,6 +15,7 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
   styleUrls: ['./quyetdinhhocbong-thongke.component.scss']
 })
 export class QuyetDinhHocBong_ThongKeComponent extends ListBase implements OnInit {
+  @ViewChild('templateFilterSinhVien', { static: true }) templateFilterSinhVien: TemplateRef<any>;
   defaultSettings: any = {};
   constructor(
     injector: Injector,
@@ -39,7 +40,6 @@ export class QuyetDinhHocBong_ThongKeComponent extends ListBase implements OnIni
         field: 'maSv',
         label: 'Mã sinh viên',
         sort: false,
-        allowFilter: false
       }),
       new ColumnSchema({
         field: 'idNguoiHoc',
@@ -53,6 +53,9 @@ export class QuyetDinhHocBong_ThongKeComponent extends ListBase implements OnIni
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
           rowItem.idKhoa = data.idKhoa;
         },
+        templateFilter: this.templateFilterSinhVien,
+        fieldFilter: 'hoVaTen',
+        operatorFilter: Operator.contain,
         sort: false
       }),
       new ColumnSchema({
@@ -75,6 +78,11 @@ export class QuyetDinhHocBong_ThongKeComponent extends ListBase implements OnIni
         field: 'idHocBong',
         label: 'Học bổng',
         service: this._DanhMucHocBongService,
+        fieldPlus: 'soTienMoiSuat',
+        funcSetValueRow: (rowItem, data) => {
+          rowItem.soTien = data.soTienMoiSuat;
+        },
+
       }),
       new ColumnSchema({
         field: 'soQuyetDinh',
@@ -100,23 +108,5 @@ export class QuyetDinhHocBong_ThongKeComponent extends ListBase implements OnIni
     this.defaultSettings = this.getDefaultSetting();
     let idNamHoc = this.defaultSettings.idNamHoc;
     return this._DanhSachQuyetDinhHocBongService.thongKe(idNamHoc, gridInfo);
-  }
-
-  override async beforeRenderDataSource(datasource: any): Promise<any> {
-    const lstIdHocBong = [];
-    datasource.forEach(item => {
-      if (lstIdHocBong.indexOf(item.idHocBong) == -1) {
-        lstIdHocBong.push(item.idHocBong);
-      }
-    });
-
-    const lstHocBong = (await this._DanhMucHocBongService.getAllByFilter([
-      this.newFilter('_id', Operator.in, lstIdHocBong)
-    ])).data;
-
-    datasource.forEach(item => {
-      const itemHocBong = lstHocBong.find(q => q._id == item.idHocBong);
-      item.soTien = itemHocBong.soTienMoiSuat;
-    });
   }
 }

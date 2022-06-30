@@ -4,7 +4,7 @@ import { IValidator } from "../base-class/validators";
 import { CrudFormComponent } from "../crud-form/crud-form.component";
 import { BaseService } from "../services/base.service";
 import { isArray, isLiteralObject } from "../utils/common";
-import { ControlType, DataType, FormState, HeightType, TextAlign } from "./enums";
+import { ControlType, DataType, FormState, HeightType, Operator, TextAlign } from "./enums";
 import { Filter, FilterWithBinding, Sort } from "./grid-info";
 
 export class FormSchema {
@@ -246,6 +246,9 @@ export class TableControlSchema extends ControlSchema {
 
 export class ColumnSchema extends DataSourceSchema {
   override width?: string;
+  templateFilter?: TemplateRef<any>;
+  fieldFilter?: string;
+  operatorFilter?: Operator;
   visible?: boolean = true;
   title?: string;
   allowFilter?: boolean = true;

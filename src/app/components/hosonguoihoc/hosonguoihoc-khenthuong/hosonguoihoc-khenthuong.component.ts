@@ -6,6 +6,7 @@ import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ColumnSchema, CrudFormData, DialogModel, PopupSize } from 'src/app/shared/models/schema';
 import { DanhSachLoaiKhenThuongService } from '../../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
+import { EnumTrangThaiQuyetDinh } from '../../danhsachquyetdinhhoctap/models/enums';
 import { DanhSachQuyetDinhKhenThuongService } from '../../danhsachquyetdinhkhenthuong/services/danhsachquyetdinhkhenthuong.service';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
@@ -92,7 +93,8 @@ export class HoSoNguoiHoc_KhenThuongComponent extends ListBase implements OnInit
 
   override async modifyGridInfo(gridInfo: GridInfo): Promise<boolean | void> {
     gridInfo.filters.push(
-      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
+      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc),
+      this.newFilter('idTrangThai', Operator.in, EnumTrangThaiQuyetDinh.DA_DUYET)
     );
   }
 

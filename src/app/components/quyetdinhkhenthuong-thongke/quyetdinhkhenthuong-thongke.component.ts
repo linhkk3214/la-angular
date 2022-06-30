@@ -1,4 +1,4 @@
-import { Component, Injector, OnInit } from '@angular/core';
+import { Component, Injector, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ResponseResult } from 'src/app/shared/models/response-result';
@@ -15,6 +15,7 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
   styleUrls: ['./quyetdinhkhenthuong-thongke.component.scss']
 })
 export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements OnInit {
+  @ViewChild('templateFilterSinhVien', { static: true }) templateFilterSinhVien: TemplateRef<any>;
   defaultSettings: any = {};
   constructor(
     injector: Injector,
@@ -40,7 +41,6 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
         field: 'maSv',
         label: 'Mã sinh viên',
         sort: false,
-        allowFilter: false
       }),
       new ColumnSchema({
         field: 'idNguoiHoc',
@@ -54,6 +54,9 @@ export class QuyetDinhKhenThuong_ThongKeComponent extends ListBase implements On
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
           rowItem.idKhoa = data.idKhoa;
         },
+        templateFilter: this.templateFilterSinhVien,
+        fieldFilter: 'hoVaTen',
+        operatorFilter: Operator.contain,
         sort: false
       }),
       new ColumnSchema({

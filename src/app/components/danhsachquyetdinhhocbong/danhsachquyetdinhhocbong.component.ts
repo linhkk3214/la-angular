@@ -16,6 +16,7 @@ import { DataType, FormState } from 'src/app/shared/models/enums';
 import { DanhSachLoaiKhenThuongService } from '../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 import { DanhMucHocBongService } from '../danhmuchocbong/services/danhmuchocbong.service';
 import { EnumTrangThaiQuyetDinh } from '../danhsachquyetdinhhoctap/models/enums';
+import { DataSourceTrangThaiQuyetDinh } from '../danhsachquyetdinhhoctap/models/const';
 @Component({
   selector: 'danhsachquyetdinhhocbong',
   templateUrl: './danhsachquyetdinhhocbong.component.html',
@@ -47,6 +48,7 @@ export class DanhSachQuyetDinhHocBongComponent extends ListBase implements OnIni
     this.setting.service = this._danhSachQuyetDinhHocBongService;
     this.setting.popupSize.width = 1300;
     this.setting.popupSize.height = 700;
+    this.setting.widthFunctionColumn = '9.5rem'
     this.setting.cols = [
       new ColumnSchema({
         field: 'soQd',
@@ -79,7 +81,12 @@ export class DanhSachQuyetDinhHocBongComponent extends ListBase implements OnIni
         funcGetLabel: item => {
           return `${item.ten} (${item.ma})`;
         },
-      })
+      }),
+      new ColumnSchema({
+        field: 'idTrangThai',
+        label: 'Trạng thái',
+        dataSource: DataSourceTrangThaiQuyetDinh
+      }),
     ];
     super.ngOnInit();
   }

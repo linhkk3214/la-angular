@@ -5,6 +5,7 @@ import { DataType, FormState, Operator } from 'src/app/shared/models/enums';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ColumnSchema, CrudFormData, DialogModel, PopupSize, TitleSchema } from 'src/app/shared/models/schema';
 import { DanhSachLoaiQuyetDinhService } from '../../danhsachloaiquyetdinh/services/danhsachloaiquyetdinh.service';
+import { EnumTrangThaiQuyetDinh } from '../../danhsachquyetdinhhoctap/models/enums';
 import { DanhSachQuyetDinhHocTapService } from '../../danhsachquyetdinhhoctap/services/danhsachquyetdinhhoctap.service';
 import { DanhSachTrungTuyenService } from '../../danhsachtrungtuyen/services/danhsachtrungtuyen.service';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
@@ -90,7 +91,8 @@ export class HoSoNguoiHoc_QuyetDinhHocTapComponent extends ListBase implements O
 
   override async modifyGridInfo(gridInfo: GridInfo): Promise<boolean | void> {
     gridInfo.filters.push(
-      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc)
+      this.newFilter('lstIdNguoiHoc', Operator.in, this.idNguoiHoc),
+      this.newFilter('idTrangThai', Operator.in, EnumTrangThaiQuyetDinh.DA_DUYET)
     );
   }
   viewQuyetDinh(rowData) {

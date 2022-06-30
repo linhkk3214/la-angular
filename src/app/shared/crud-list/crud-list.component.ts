@@ -489,7 +489,7 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
           templateFilter.push(
             new FilterWithBinding({
               field: this.getFieldFilter(col),
-              operator: Operator.in,
+              operator: this.getOperatorFilter(col, Operator.in),
               sourceField: col.field,
               sourceValueField: col.field
             })
@@ -556,7 +556,7 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
           templateFilter.push(
             new FilterWithBinding({
               field: this.getFieldFilter(col),
-              operator: Operator.in,
+              operator: this.getOperatorFilter(col, Operator.in),
               sourceValueField: col.field,
               sourceField: col.field
             })
@@ -566,7 +566,7 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
           templateFilter.push(
             new FilterWithBinding({
               field: this.getFieldFilter(col),
-              operator: Operator.contain,
+              operator: this.getOperatorFilter(col, Operator.contain),
               sourceField: col.field,
               sourceValueField: col.field
             })
@@ -578,6 +578,10 @@ export class CrudListComponent extends ComponentBase implements OnInit, AfterCon
 
   private getFieldFilter(col) {
     return col.fieldFilter ? col.fieldFilter : col.field;
+  }
+
+  private getOperatorFilter(col: ColumnSchema, defaultOperator: Operator) {
+    return col.operatorFilter ? col.operatorFilter : defaultOperator;
   }
 
   public getContextCustomFilter() {

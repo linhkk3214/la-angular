@@ -168,8 +168,15 @@
       <th *ngIf="col.visible && col.field != 'function'" class="cell-header-filter center">
         <ng-container *ngIf="col.allowFilter">
           <ng-container *ngIf="col.templateFilter">
-            <ng-container [ngTemplateOutlet]="col.templateFilter"
-              [ngTemplateOutletContext]="{col: col, filterData: filterData, onSearch: onSearch, onShowFilterDropdownPanel: onShowFilterDropdownPanel, onHideFilterDropdownPanel: onHideFilterDropdownPanel}">
+            <ng-container [ngTemplateOutlet]="col.templateFilter" [ngTemplateOutletContext]="{
+                col: col,
+                filterData: filterData,
+                onSearch: onSearch,
+                onShowFilterDropdownPanel: onShowFilterDropdownPanel,
+                onHideFilterDropdownPanel: onHideFilterDropdownPanel,
+                initFilterBoxFocus: initFilterBoxFocus,
+                filterTextTemplate: filterText
+              }">
             </ng-container>
           </ng-container>
           <ng-container *ngIf="!col.templateFilter" [ngSwitch]="col.controlType">
