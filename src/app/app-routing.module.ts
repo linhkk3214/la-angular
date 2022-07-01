@@ -180,6 +180,10 @@ const routes: Routes = [
     path: 'thongbao',
     loadChildren: () => import('../app/components/thongbao/thongbao.module').then(m => m.ThongBaoModule)
   },
+  {
+    path: 'danhsachsinhviencapnhathoso',
+    loadChildren: () => import('../app/components/danhsachsinhviencapnhathoso/danhsachsinhviencapnhathoso.module').then(m => m.DanhSachSinhVienCapNhatHoSoModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

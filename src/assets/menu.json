@@ -30,6 +30,10 @@
         "label": "Đợt cập nhật hồ sơ người học"
       },
       {
+        "path": "/danhsachsinhviencapnhathoso",
+        "label": "Danh sách sinh viên cập nhật hồ sơ"
+      },
+      {
         "path": "/danhsachquyetdinhchuyennganh",
         "label": "Danh sách quyết định chuyển ngành"
       }
