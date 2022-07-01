@@ -1,6 +1,6 @@
 export enum EnumTrangThaiHS {
-  TT1 = 1,
-  TT2 = 2,
-  TT3 = 3,
-  TT4 = 4
+  NOP_DU = 1,
+  NOP_THIEU = 2,
+  CHUA_NOP = 3,
+  DA_RUT = 4
 }
