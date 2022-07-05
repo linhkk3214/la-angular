@@ -24,7 +24,7 @@ export class DotNhapHocComponent extends ListBase implements OnInit {
     this.setting.objectName = 'đợt nhập học';
     this.setting.service = this._dotnhaphocService;
     this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 650;
+    this.setting.popupSize.height = 700;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',

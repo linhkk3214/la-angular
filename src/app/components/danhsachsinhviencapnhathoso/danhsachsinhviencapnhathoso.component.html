@@ -2,6 +2,11 @@
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-secondary"
+        label="Xuất danh sách">
+      </button>
+    </ng-template>
     <ng-template #buttonBefore let-rowData="rowData">
       <button type="button" pButton icon="pi pi-bars" class="p-button-text p-button-rounded p-button-info"
         pTooltip="Xem thông tin đã sửa" tooltipPosition="top"></button>
@@ -24,4 +29,11 @@
   <danhsachsinhviencapnhathoso-form #formBase [parentSetting]="setting" [model]="formModel"
     (onSaved)="showDetailForm = false;crudList.reload()" (onCancel)="_handleCancel($event)">
   </danhsachsinhviencapnhathoso-form>
+</tn-dialog>
+
+<tn-dialog *ngIf="hoSoModel.showEditForm" #dialog [header]="hoSoModel.header" [popupSize]="hoSoModel.popupSize"
+  (onHide)="hoSoModel.showEditForm = false">
+  <hosonguoihoc-form #formBase [parentSetting]="setting" [model]="hoSoModel.data.formModel"
+    (onSaved)="hoSoModel.showEditForm = false;" (onCancel)="hoSoModel.showEditForm = false">
+  </hosonguoihoc-form>
 </tn-dialog>

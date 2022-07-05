@@ -60,7 +60,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         label: 'Ảnh',
         multiple: false,
         isAvatar: true,
-        rowSpan: 3,
+        rowSpan: 4,
         width: 2
       }),
       new TextControlSchema({
@@ -132,12 +132,12 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       new TextControlSchema({
         field: 'dienThoai',
         label: 'Số điện thoại',
-        width: 3
+        width: 2
       }),
       new TextControlSchema({
         field: 'email',
         label: 'Email',
-        width: 3
+        width: 2
       }),
       new TitleSchema({
         field: 'abc',

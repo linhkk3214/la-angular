@@ -1,5 +1,5 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { ColumnSchema, DropdownControlSchema } from '../../shared/models/schema';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { ColumnSchema, CrudFormData, DialogModel, DropdownControlSchema, PopupSize } from '../../shared/models/schema';
 import { ListBase } from '../../shared/base-class/list-base';
 import { DanhSachSinhVienCapNhatHoSoService } from './services/danhsachsinhviencapnhathoso.service';
 import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
@@ -23,6 +23,13 @@ import { EnumTrangThaiQuyetDinh } from '../danhsachquyetdinhhoctap/models/enums'
 })
 export class DanhSachSinhVienCapNhatHoSoComponent extends ListBase implements OnInit {
   enumTrangThaiQuyetDinh = EnumTrangThaiQuyetDinh;
+  @Input() idNguoiHoc: string;
+  hoSoModel = new DialogModel({
+    header: 'Cập nhật thông tin hồ sơ',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   constructor(
     injector: Injector,
     private _danhSachSinhVienCapNhatHoSoService: DanhSachSinhVienCapNhatHoSoService,
@@ -147,9 +154,9 @@ export class DanhSachSinhVienCapNhatHoSoComponent extends ListBase implements On
   }
 
   view(rowData: any) {
-    this.formModel.formState = FormState.VIEW;
-    this.setting.popupHeader = `Chi tiết ${this.setting.objectName} `;
-    this.formModel.data = { _id: rowData._id };
-    this.showDetailForm = true;
+    this.hoSoModel.data.formModel = new CrudFormData();
+    this.hoSoModel.data.formModel.formState = FormState.VIEW;
+    this.hoSoModel.data.formModel.data = { _id: rowData.idNguoiHoc };
+    this.hoSoModel.showEditForm = true;
   }
 }

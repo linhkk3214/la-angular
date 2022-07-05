@@ -28,13 +28,25 @@ import { HoSoNguoiHocComponent } from './hosonguoihoc.component';
   imports: [
     CommonModule,
     SharedModule,
-    HoSoNguoiHocRoutingModule,
     DanhSachQuyetDinhKhenThuongWithoutRouteModule,
     DanhSachQuyetDinhHocTapWithoutRouteModule,
     DanhSachQuyetDinhHocBongWithoutRouteModule
   ],
   exports: [
-    HoSoNguoiHocComponent
+    HoSoNguoiHocComponent,
+    HoSoNguoiHocFormComponent
+  ]
+})
+export class HoSoNguoiHocWithoutRouteModule { }
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    HoSoNguoiHocWithoutRouteModule,
+    HoSoNguoiHocRoutingModule,
+  ],
+  exports: [
   ]
 })
 export class HoSoNguoiHocModule { }
