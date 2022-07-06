@@ -28,6 +28,7 @@ $background-disable: #e9ecef;
 }
 
 .card {
+
   h1,
   h2,
   h3,
@@ -260,6 +261,7 @@ $background-disable: #e9ecef;
 .p-datepicker {
   .p-datepicker-header {
     .p-datepicker-title {
+
       .p-datepicker-month,
       .p-datepicker-year {
         padding: 3px 5px;
@@ -289,8 +291,8 @@ $background-disable: #e9ecef;
 }
 
 @mixin tn--table-head {
-  > tr {
-    > th {
+  >tr {
+    >th {
       color: $table-thead-text;
       border-color: $border-table-color;
       border-width: 1px;
@@ -393,8 +395,8 @@ $background-disable: #e9ecef;
 }
 
 @mixin tn--table-body {
-  > tr {
-    > td {
+  >tr {
+    >td {
       border-width: 1px;
     }
 
@@ -405,35 +407,6 @@ $background-disable: #e9ecef;
   }
 
   tr {
-    &.is-child-group:nth-child(even):not(:hover):not(.row-selected):not(.row-error):not(.single-selected),
-    &.is-child-group:nth-child(odd):not(:hover):not(.row-selected):not(.row-error):not(.single-selected) {
-      background-color: $color-main;
-    }
-
-    &:hover {
-      background-color: #ffffeb;
-    }
-
-    &.row-selected {
-      background-color: #dbedfd;
-
-      &:nth-child(2n + 1) {
-        background-color: #eaf5ff;
-      }
-
-      &.is-child-group {
-        border-color: #dce6ec !important;
-      }
-    }
-
-    &.row-error {
-      border-left: 5px solid red;
-    }
-
-    &.single-selected {
-      background-color: #fff8c8 !important;
-    }
-
     td {
       border-color: $border-table-color;
       outline: none;
@@ -457,7 +430,7 @@ $background-disable: #e9ecef;
       }
 
       crud-list {
-        > .card {
+        >.card {
           background: #f8f8f8;
           box-shadow: none;
         }
@@ -592,9 +565,42 @@ $background-disable: #e9ecef;
         }
       }
     }
+
+    &.is-child-group:nth-child(even):not(:hover):not(.row-selected):not(.row-error):not(.single-selected),
+    &.is-child-group:nth-child(odd):not(:hover):not(.row-selected):not(.row-error):not(.single-selected) {
+      background-color: $color-main;
+    }
+
+    &:hover {
+      background-color: #ffffeb;
+    }
+
+    &.row-selected {
+      background-color: #dbedfd;
+
+      &:nth-child(2n + 1) {
+        background-color: #eaf5ff;
+      }
+
+      &.is-child-group {
+        border-color: #dce6ec !important;
+      }
+    }
+
+    &.row-error {
+      border-left: 5px solid red;
+    }
+
+    &.single-selected {
+      background-color: #fff8c8 !important;
+    }
+
+    &.generated {
+      background: #f1f1f1;
+    }
   }
 
-  > tr.group-row {
+  >tr.group-row {
     background: $color-background-table-group-row;
     height: 50px;
 
@@ -611,7 +617,7 @@ $background-disable: #e9ecef;
       padding: 0;
 
       .container-row-group {
-        > a {
+        >a {
           padding: 0.5em 0 0 0.5em;
         }
 
@@ -725,11 +731,9 @@ $background-disable: #e9ecef;
     }
   }
 
-  // .filter-box {
-  //   .p-inputtext {
-  //     font-size: 14px;
-  //   }
-  // }
+  .p-datatable-footer {
+    padding: 0;
+  }
 }
 
 p-table.sticky-columns-active {
@@ -918,7 +922,7 @@ p-table.sticky-columns-active {
     flex-direction: column;
     height: 100%;
 
-    > div.p-tabview-panels {
+    >div.p-tabview-panels {
       height: 100%;
       padding: 0.5em;
       overflow: auto;
@@ -985,7 +989,7 @@ p-table.sticky-columns-active {
           .p-tabview-nav-link {
             justify-content: center;
 
-            > span {
+            >span {
               margin-right: 0;
             }
           }
@@ -996,12 +1000,12 @@ p-table.sticky-columns-active {
 }
 
 .tabview-beauty {
-  > div {
+  >div {
     display: flex;
     flex-direction: column;
     height: 100%;
 
-    > div.p-tabview-panels {
+    >div.p-tabview-panels {
       height: 100%;
       flex-grow: 1;
       flex-shrink: 1;
@@ -1085,6 +1089,7 @@ p-table.sticky-columns-active {
   &.max-width-300 {
     max-width: 300px;
   }
+
   &.wrap {
     .p-tooltip-text {
       white-space: normal;
@@ -1109,7 +1114,7 @@ p-table.sticky-columns-active {
 
 .tn-scroll-bar {
   &.fit-content {
-    > .ps > .ps-content {
+    >.ps>.ps-content {
       height: 100%;
     }
   }
@@ -1118,13 +1123,13 @@ p-table.sticky-columns-active {
 .container-control {
   display: flex;
 
-  > span.label {
+  >span.label {
     flex: 0 0 auto;
     padding-top: 0.5em;
     padding-right: 0.5em;
   }
 
-  > span.label + * {
+  >span.label+* {
     flex-grow: 1;
     flex-shrink: 1;
     position: relative;
@@ -1153,7 +1158,7 @@ p-table.sticky-columns-active {
       }
     }
 
-    > div {
+    >div {
       position: absolute;
       left: 0;
       top: 0;
@@ -1162,7 +1167,7 @@ p-table.sticky-columns-active {
   }
 
   &.no-label {
-    > span.label {
+    >span.label {
       display: none;
     }
   }

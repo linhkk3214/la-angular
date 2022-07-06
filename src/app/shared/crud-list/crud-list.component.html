@@ -124,6 +124,13 @@
         (loaded)="handleTableRendered()">
       </after-view-checked>
     </ng-template>
+    <ng-template *ngIf="hasTemplate('summary')" pTemplate="summary" let-columns>
+      <p-table>
+        <ng-container
+          *ngTemplateOutlet="getTemplate('summary'), context: {$implicit: columns, crudList: this, containerSticky: containerSticky}">
+        </ng-container>
+      </p-table>
+    </ng-template>
   </p-table>
 </ng-template>
 <ng-template #colGroup let-columns>
@@ -249,8 +256,8 @@
 <ng-template #trBody let-rowData let-columns="columns" let-index="index" let-expanded="expanded"
   let-eventChecked="eventChecked">
   <tr [tnReorderableRow]="index" [attr.rowIndex]="index" [ngClass]="rowData.objStyleClass"
-    [class.ui-state-highlight]="rowData._checked" [pTooltip]="rowData.tooltip" tooltipPosition="top"
-    [tooltipStyleClass]="rowData.tooltipClass" [escape]="true">
+    [class.ui-state-highlight]="rowData._checked" [class.generated]="rowData.generated" [pTooltip]="rowData.tooltip"
+    tooltipPosition="top" [tooltipStyleClass]="rowData.tooltipClass" [escape]="true">
     <td *ngIf="!setting.hiddenOrderColumn && (!rowData.hidden || !rowData.hidden[fieldOrder])"
       [style.width]="setting.widthOrderColumn" class="stt" style="text-align: center;"
       [attr.colSpan]="rowData.colSpan && rowData.colSpan[fieldOrder]"

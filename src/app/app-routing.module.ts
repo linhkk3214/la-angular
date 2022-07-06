@@ -184,6 +184,10 @@ const routes: Routes = [
     path: 'danhsachsinhviencapnhathoso',
     loadChildren: () => import('../app/components/danhsachsinhviencapnhathoso/danhsachsinhviencapnhathoso.module').then(m => m.DanhSachSinhVienCapNhatHoSoModule)
   },
+  {
+    path: 'thongke-nhaphoc',
+    loadChildren: () => import('../app/components/thongke-nhaphoc/thongke-nhaphoc.module').then(m => m.ThongKe_NhapHocModule)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

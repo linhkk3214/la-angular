@@ -20,6 +20,7 @@ import { DM_DoiTuongDaoTaoService } from '../dm-doituongdaotao/services/dm-doitu
 import { DM_HocLucService } from '../dm-hocluc/services/dm-hocluc.service';
 import { DM_HanhKiemService } from '../dm-hanhkiem/services/dm-hanhkiem.service';
 import { DotNhapHocService } from '../dotnhaphoc/services/dotnhaphoc.service';
+import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 @Component({
   selector: 'danhsachtrungtuyen',
   templateUrl: './danhsachtrungtuyen.component.html',
@@ -34,7 +35,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
     private _dm_DanTocService: DanTocService,
     private _dm_GioiTinhService: DM_GioiTinhService,
     private _addressService: AddressService,
-    private _DM_NganhService: DM_NganhService,
+    private _dm_ChuongTrinhDaoTaoService: DM_ChuongTrinhDaoTaoService,
     private _DM_KhuVucService: DM_KhuVucService,
     private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
     private _DM_DoiTuongTuyenSinhService: DM_DoiTuongTuyenSinhService,
@@ -59,7 +60,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'hoVaTen',
         label: 'Họ và tên',
-        width: '180px'
+        width: '170px'
       }),
       new ColumnSchema({
         field: 'ngaySinh',
@@ -76,7 +77,10 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'idNganhTrungTuyen',
         label: 'Ngành trúng tuyển',
-        service: this._DM_NganhService,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
+        width: '200px'
       }),
       new ColumnSchema({
         field: 'tongDiem',

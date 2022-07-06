@@ -2,6 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { FormState, Operator } from 'src/app/shared/models/enums';
 import { DateTimeControlSchema, DropdownControlSchema, MaskControlSchema, TabViewData, TextAreaControlSchema, TextControlSchema, TitleSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
+import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_CoSoDaoTaoService } from '../../dm-cosodaotao/services/dm-cosodaotao.service';
 import { DM_DoiTuongDaoTaoService } from '../../dm-doituongdaotao/services/dm-doituongdaotao.service';
 import { DM_DoiTuongTuyenSinhService } from '../../dm-doituongtuyensinh/services/dm-doituongtuyensinh.service';
@@ -39,6 +40,7 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
     private _dm_GioiTinhService: DM_GioiTinhService,
     private _addressService: AddressService,
     private _DM_NganhService: DM_NganhService,
+    private _dm_ChuongTrinhDaoTaoService: DM_ChuongTrinhDaoTaoService,
     private _DM_KhuVucService: DM_KhuVucService,
     private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
     private _DM_DoiTuongTuyenSinhService: DM_DoiTuongTuyenSinhService,
@@ -176,13 +178,17 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
       new DropdownControlSchema({
         field: 'idNganhDangKy',
         label: 'Ngành đăng ký',
-        service: this._DM_NganhService,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
         required: true
       }),
       new DropdownControlSchema({
         field: 'idNganhTrungTuyen',
         label: 'Ngành trúng tuyển',
-        service: this._DM_NganhService,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
         required: true
       }),
       new MaskControlSchema({

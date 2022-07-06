@@ -4,14 +4,14 @@
     (onReloaded)="_unmarkLoading()">
     <ng-template #buttonAfterToolbar let-rowData="rowData">
       <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-secondary"
-        label="Xuất tất cả">
+        label="Xuất danh sách">
       </button>
     </ng-template>
     <ng-template #buttonBefore let-rowData="rowData">
       <button type="button" pButton icon="pi pi-eye" class="p-button-text p-button-rounded p-button-info"
         pTooltip="Xem hồ sơ người học" tooltipPosition="top" (click)="viewKhenThuongKyLuat(rowData)"></button>
-        <button type="button" pButton icon="pi pi-print" class="p-button-text p-button-rounded p-button-success"
-        pTooltip="In hồ sơ lý lịch" tooltipPosition="top" ></button>
+      <button type="button" pButton icon="pi pi-print" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="In hồ sơ lý lịch" tooltipPosition="top"></button>
     </ng-template>
   </crud-list>
 </div>

@@ -112,8 +112,13 @@ export abstract class ListBase extends ComponentBase implements OnInit, AfterVie
       await this.beforeRenderDataSource(response.data);
     }
     const dataSource = response.data;
+    let totalRowGenerate = 0;
     dataSource.forEach((item, index) => {
-      item[FieldOrderCrudList] = (this.setting.pageSetting.page - 1) * this.setting.pageSetting.pageSize + 1 + index;
+      if (item.generated) {
+        totalRowGenerate++;
+        return;
+      }
+      item[FieldOrderCrudList] = (this.setting.pageSetting.page - 1) * this.setting.pageSetting.pageSize + 1 + index - totalRowGenerate;
     });
     await this.afterProcessDataInBase(dataSource);
     this.model.dataSource = dataSource;

@@ -10,6 +10,10 @@
       {
         "path": "/danhsachtrungtuyen",
         "label": "Danh sách trúng tuyển"
+      },
+      {
+        "path": "/thongke-nhaphoc",
+        "label": "Thống kê nhập học"
       }
     ]
   },
