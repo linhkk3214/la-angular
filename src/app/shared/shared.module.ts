@@ -18,6 +18,7 @@ import { InputTextModule } from 'primeng/inputtext';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { RadioButtonModule } from 'primeng/radiobutton';
 import { SelectButtonModule } from 'primeng/selectbutton';
 import { SplitButtonModule } from 'primeng/splitbutton';
 import { TableModule } from 'primeng/table';
@@ -100,16 +101,19 @@ const declarations: any = [
     ConfirmDialogModule,
     DialogModule,
     TabViewModule,
-    ContextMenuModule
+    ContextMenuModule,
+    RadioButtonModule
   ],
   exports: [
     ...declarations,
+    FormsModule,
     ButtonModule,
     InputTextModule,
     TooltipModule,
     CheckboxModule,
     TabViewModule,
-    AutoCompleteModule
+    AutoCompleteModule,
+    RadioButtonModule
   ],
   providers: [
     {

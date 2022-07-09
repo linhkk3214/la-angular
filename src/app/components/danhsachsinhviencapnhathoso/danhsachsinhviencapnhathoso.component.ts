@@ -66,12 +66,12 @@ export class DanhSachSinhVienCapNhatHoSoComponent extends ListBase implements On
         label: 'Họ tên',
         order: 1,
         service: this._hoSoNguoiHocService,
-        fieldPlus: 'maSv,idLopHanhChinh,idKhoa',
+        fieldPlus: 'maSv,idLopHanhChinh,idKhoaVien',
         displayField: 'hoVaTen',
         funcSetValueRow: (rowItem, data) => {
           rowItem.maSv = data.maSv;
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
-          rowItem.idKhoa = data.idKhoa;
+          rowItem.idKhoaVien = data.idKhoaVien;
           rowItem.idKhoaHoc = data.idKhoaHoc;
           rowItem.idNganh = data.idNganh;
         },
@@ -86,7 +86,7 @@ export class DanhSachSinhVienCapNhatHoSoComponent extends ListBase implements On
         sort: false,
       }),
       new ColumnSchema({
-        field: 'idKhoa',
+        field: 'idKhoaVien',
         label: 'Khoa/Viện',
         order: 3,
         service: this._dm_KhoaVienService,

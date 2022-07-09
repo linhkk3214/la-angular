@@ -7,11 +7,21 @@
     [config]="scrollConfig" [style]="scrollStyle" class="tn-dialog-scrollbar">
     <ng-content></ng-content>
   </tn-scrollbar>
-  <p-footer *ngIf="showFooter && formBase && formBase.buttonTemplate">
-    <ng-container *ngTemplateOutlet="formBase.buttonTemplate">
-    </ng-container>
-  </p-footer>
-  <p-footer *ngIf="showFooter && footer">
-    <ng-container *ngTemplateOutlet="footer"></ng-container>
-  </p-footer>
+  <ng-container *ngIf="showFooter">
+    <ng-template pTemplate="footer">
+      <ng-container *ngIf="formBase && formBase.buttonTemplate">
+        <ng-container *ngTemplateOutlet="formBase.buttonTemplate">
+        </ng-container>
+      </ng-container>
+      <ng-container *ngIf="!formBase || !formBase.buttonTemplate">
+        <ng-container *ngIf="footer">
+          <ng-container *ngTemplateOutlet="footer"></ng-container>
+        </ng-container>
+        <ng-container *ngIf="!footer">
+          <button pButton preventTab type="button" icon="pi pi-replay" class="p-button-text p-button-secondary"
+            label="Đóng" (click)="handleHideDialog($event)"></button>
+        </ng-container>
+      </ng-container>
+    </ng-template>
+  </ng-container>
 </p-dialog>

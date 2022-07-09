@@ -42,17 +42,17 @@ export class DanhSachDangKyHocNganh2Component extends ListBase implements OnInit
         funcGetLabel: item => {
           return `${item.hoVaTen} (${item.maSv})`;
         },
-        fieldPlus: 'maSv, idKhoa, idNganh, idLopHanhChinh',
+        fieldPlus: 'maSv, idKhoaVien, idNganh, idLopHanhChinh',
         order: 1,
         funcSetValueRow: (rowItem, data) => {
           rowItem.maSv = data.maSv;
-          rowItem.idKhoa = data.idKhoa;
+          rowItem.idKhoaVien = data.idKhoaVien;
           rowItem.idNganhChinh = data.idNganh;
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
         },
       }),
       new ColumnSchema({
-        field: 'idKhoa',
+        field: 'idKhoaVien',
         label: 'Khoa/Viện',
         order: 2,
         service: this._dmKhoaVienService,

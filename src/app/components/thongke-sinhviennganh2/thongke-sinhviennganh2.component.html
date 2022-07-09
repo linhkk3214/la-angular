@@ -1,0 +1,38 @@
+<div style="width: 100%; height: 100%">
+  <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
+    (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
+    (onReloaded)="_unmarkLoading()">
+    <ng-template #customTitle>
+      <h1>
+        <span>Thống kê sinh viên đăng ký học ngành 2</span>
+        <p-radioButton name="type" [value]="enumTypeGetData.THEO_DON_VI_QL_NGANH_1" label="Đơn vị quản lý ngành 1"
+          [(ngModel)]="type" (onClick)="handleChangeTypeView(enumTypeGetData.THEO_DON_VI_QL_NGANH_1)">
+        </p-radioButton>
+        <p-radioButton name="type" [value]="enumTypeGetData.THEO_DON_VI_QL_NGANH_2" label="Đơn vị quản lý ngành 2"
+          [(ngModel)]="type" (onClick)="handleChangeTypeView(enumTypeGetData.THEO_DON_VI_QL_NGANH_2)">
+        </p-radioButton>
+      </h1>
+    </ng-template>
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-success"
+        label="Xuất thống kê">
+      </button>
+    </ng-template>
+    <ng-template #function let-LAHam="rowData">
+      <button type="button" pButton icon="pi pi-bars" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="Xem chi tiết" (click)="viewChiTiet(LAHam)"></button>
+    </ng-template>
+  </crud-list>
+</div>
+
+<ng-template #templateFilterSinhVien let-col="col" let-filterTextTemplate="filterTextTemplate">
+  <ng-container [ngTemplateOutlet]="filterTextTemplate" [ngTemplateOutletContext]="{col: col}">
+  </ng-container>
+</ng-template>
+
+<tn-dialog *ngIf="xemChiTietDialogModel.showEditForm" #dialog [header]="xemChiTietDialogModel.header"
+  [popupSize]="xemChiTietDialogModel.popupSize" [useDefaultScrollBar]="true"
+  (onHide)="xemChiTietDialogModel.showEditForm = false">
+  <thongke-sinhviennganh2-xemchitiet [lstIdNguoiHoc]="xemChiTietDialogModel.data.lstIdNguoiHoc">
+  </thongke-sinhviennganh2-xemchitiet>
+</tn-dialog>

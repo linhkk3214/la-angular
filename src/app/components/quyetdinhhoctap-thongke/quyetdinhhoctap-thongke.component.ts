@@ -47,12 +47,12 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
         label: 'Họ tên',
         order: 1,
         service: this._dm_HoSoNguoiHocService,
-        fieldPlus: 'maSv,idLopHanhChinh,idKhoa',
+        fieldPlus: 'maSv,idLopHanhChinh,idKhoaVien',
         displayField: 'hoVaTen',
         funcSetValueRow: (rowItem, data) => {
           rowItem.maSv = data.maSv;
           rowItem.idLopHanhChinh = data.idLopHanhChinh;
-          rowItem.idKhoa = data.idKhoa;
+          rowItem.idKhoaVien = data.idKhoaVien;
         },
         // Override filter mặc định của base thành filter theo templateFilterSinhVien
         // Mặc định là column này sẽ filter theo dạng dropdown
@@ -72,7 +72,7 @@ export class QuyetDinhHocTap_ThongKeComponent extends ListBase implements OnInit
         sort: false,
       }),
       new ColumnSchema({
-        field: 'idKhoa',
+        field: 'idKhoaVien',
         label: 'Khoa/Viện',
         order: 3,
         service: this._dm_KhoaVienService,

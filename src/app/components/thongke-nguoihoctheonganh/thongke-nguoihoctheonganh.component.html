@@ -1,0 +1,20 @@
+<div style="width: 100%; height: 100%">
+  <crud-list *ngIf="ready" #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource"
+    (onAdd)="_add($event)" (onEdit)="_edit($event)" (onDelete)="_delete($event)"
+    (onReload)="_triggerProcessData($event)" (onReloaded)="_unmarkLoading()">
+    <ng-template #buttonAfterToolbar let-rowData="rowData">
+      <button type="button" pButton icon="pi pi-file-excel" class="p-button-text p-button p-comment p-button-success"
+        label="Xuất báo cáo">
+      </button>
+    </ng-template>
+    <ng-template #function let-b="rowData">
+      <button type="button" pButton icon="pi pi-bars" class="p-button-text p-button-rounded p-button-success"
+        pTooltip="Xem chi tiết"></button>
+    </ng-template>
+  </crud-list>
+</div>
+
+<ng-template #templateFilterSinhVien let-col="col" let-filterTextTemplate="filterTextTemplate">
+  <ng-container [ngTemplateOutlet]="filterTextTemplate" [ngTemplateOutletContext]="{col: col}">
+  </ng-container>
+</ng-template>

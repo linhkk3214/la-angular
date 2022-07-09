@@ -74,7 +74,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
         service: this._DM_KhoaHocService,
       }),
       new ColumnSchema({
-        field: 'idKhoa',
+        field: 'idKhoaVien',
         label: 'Khoa/Viện',
         service: this._DM_KhoaVienService,
       }),

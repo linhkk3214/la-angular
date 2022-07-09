@@ -20,7 +20,6 @@ export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.title = 'Danh sách thống kê nhập học';
     this.setting.service = this._DanhSachTrungTuyenService;
-    this.setting.hiddenFunctionColumn = true;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
     this.setting.hiddenAdd = true

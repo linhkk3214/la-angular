@@ -1,0 +1,13 @@
+::ng-deep thongke-nguoihoctheonganh {
+  tr.row-summary {
+    font-weight: bold;
+
+    td {
+      color: red;
+
+      &:nth-child(2) {
+        color: inherit;
+      }
+    }
+  }
+}

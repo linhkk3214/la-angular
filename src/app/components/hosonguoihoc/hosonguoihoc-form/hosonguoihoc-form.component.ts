@@ -159,7 +159,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         disabled: isNotFormAdd
       }),
       new DropdownControlSchema({
-        field: 'idKhoa',
+        field: 'idKhoaVien',
         label: 'Khoa/Viện',
         service: this._DM_KhoaVienService,
         required: true,
@@ -245,7 +245,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         }
       }),
       new DropdownControlSchema({
-        field: 'idKhoa2',
+        field: 'idKhoaVien2',
         label: 'Khoa/Viện',
         service: this._DM_KhoaVienService,
         required: true,
@@ -492,7 +492,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       const itemNganh2 = (await this._dm_ChuongTrinhDaoTaoService.getDetail(data.idNganh2)).data;
       if (itemNganh2) {
         data.idHe2 = itemNganh2.idHeDaoTao;
-        data.idKhoa2 = itemNganh2.idKhoaVien;
+        data.idKhoaVien2 = itemNganh2.idKhoaVien;
         data.idKhoaHoc2 = itemNganh2.idKhoaHoc;
         data.soNamDT2 = itemNganh2.soNamDT;
         data.soNamDTmax2 = itemNganh2.soNamDTmax;

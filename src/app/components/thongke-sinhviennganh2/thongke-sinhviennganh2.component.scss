@@ -1,0 +1,17 @@
+::ng-deep thongke-sinhviennganh2 {
+  tr.row-summary {
+    font-weight: bold;
+
+    td {
+      color: red;
+
+      &:nth-child(2) {
+        color: inherit;
+      }
+    }
+  }
+
+  p-radiobutton {
+    margin-left: 6px;
+  }
+}

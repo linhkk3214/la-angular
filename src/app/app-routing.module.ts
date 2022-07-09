@@ -188,6 +188,18 @@ const routes: Routes = [
     path: 'thongke-nhaphoc',
     loadChildren: () => import('../app/components/thongke-nhaphoc/thongke-nhaphoc.module').then(m => m.ThongKe_NhapHocModule)
   },
+  {
+    path: 'thongke-nguoihoctheonganh',
+    loadChildren: () => import('../app/components/thongke-nguoihoctheonganh/thongke-nguoihoctheonganh.module').then(m => m.ThongKe_NguoiHocTheoNganhModule)
+  },
+  {
+    path: 'thongke-nguoihoctheokhoa',
+    loadChildren: () => import('../app/components/thongke-nguoihoctheokhoa/thongke-nguoihoctheokhoa.module').then(m => m.ThongKe_NguoiHocTheoKhoaModule)
+  },
+  {
+    path: 'thongke-sinhviennganh2',
+    loadChildren: () => import('../app/components/thongke-sinhviennganh2/thongke-sinhviennganh2.module').then(m => m.ThongKe_SinhVienNganh2Module)
+  },
   { path: '**', component: NotFoundComponent }
 ];
 

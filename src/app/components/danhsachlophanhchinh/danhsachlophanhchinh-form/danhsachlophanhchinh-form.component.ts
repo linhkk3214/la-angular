@@ -59,7 +59,8 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
         required: true,
         service: this._dm_CTĐTService,
         bindingFilters: [
-          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
+          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc'),
+          this.newBindingFilter('idKhoaVien', Operator.equal, 'idKhoaVien')
         ],
         fieldPlus: 'soCTDT',
         funcGetLabel: item => {

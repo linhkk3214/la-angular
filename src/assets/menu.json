@@ -40,6 +40,20 @@
       {
         "path": "/danhsachquyetdinhchuyennganh",
         "label": "Danh sách quyết định chuyển ngành"
+      },
+      {
+        "path": "",
+        "label": "Báo cáo thống kê",
+        "children": [
+          {
+            "path": "/thongke-nguoihoctheonganh",
+            "label": "Thống kê người học theo ngành"
+          },
+          {
+            "path": "/thongke-nguoihoctheokhoa",
+            "label": "Thống kê người học theo khóa"
+          }
+        ]
       }
     ]
   },
@@ -56,8 +70,8 @@
         "label": "Danh sách đăng ký học ngành 2"
       },
       {
-        "path": "/dotcapnhathosonguoihoc",
-        "label": "Thống kê"
+        "path": "/thongke-sinhviennganh2",
+        "label": "Thống kê đăng ký học ngành 2"
       }
     ]
   },

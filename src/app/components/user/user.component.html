@@ -1,9 +1,10 @@
-<div style="width: 100%">
+<div style="width: 100%; height: 100%">
   <crud-list #crudList [model]="model" [setting]="setting" [dataSource]="model.dataSource" (onAdd)="_add($event)"
     (onEdit)="_edit($event)" (onDelete)="_delete($event)" (onReload)="_triggerProcessData($event)"
     (onReloaded)="_unmarkLoading()">
     <ng-template #buttonAfterToolbar>
-      <button type="button" pButton icon="pi pi-sync" label="Đồng bộ địa chỉ" class="p-button-text" (click)="syncAddress()"></button>
+      <button type="button" pButton icon="pi pi-sync" label="Đồng bộ địa chỉ" class="p-button-text"
+        (click)="syncAddress()"></button>
     </ng-template>
   </crud-list>
 </div>
