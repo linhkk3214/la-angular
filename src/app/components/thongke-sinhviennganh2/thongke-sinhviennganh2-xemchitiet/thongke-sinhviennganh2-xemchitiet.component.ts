@@ -29,7 +29,6 @@ export class ThongKe_SinhVienNganh2_XemChiTietComponent extends ListBase impleme
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'thông tin tuyển sinh';
     this.setting.service = this._hoSoNguoiHocService;
     // this.setting.hiddenPageTitle = true;
     this.setting.hiddenAdd = true;

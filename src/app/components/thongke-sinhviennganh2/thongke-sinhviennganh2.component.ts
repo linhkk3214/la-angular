@@ -14,7 +14,7 @@ import { EnumTypeGetData } from './models/enums';
 })
 export class ThongKe_SinhVienNganh2Component extends ListBase implements OnInit {
   xemChiTietDialogModel = new DialogModel({
-    header: 'Danh sách người học',
+    header: 'Danh sách sinh viên đăng ký học ngành 2',
     popupSize: new PopupSize({
       maximize: true
     })
