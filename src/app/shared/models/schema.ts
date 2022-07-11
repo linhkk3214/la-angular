@@ -245,6 +245,7 @@ export class TableControlSchema extends ControlSchema {
 }
 
 export class ColumnSchema extends DataSourceSchema {
+  customData?: any = {};
   override width?: string;
   templateFilter?: TemplateRef<any>;
   fieldFilter?: string;

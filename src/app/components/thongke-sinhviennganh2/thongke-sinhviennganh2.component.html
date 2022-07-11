@@ -33,6 +33,5 @@
 <tn-dialog *ngIf="xemChiTietDialogModel.showEditForm" #dialog [header]="xemChiTietDialogModel.header"
   [popupSize]="xemChiTietDialogModel.popupSize" [useDefaultScrollBar]="true"
   (onHide)="xemChiTietDialogModel.showEditForm = false">
-  <thongke-sinhviennganh2-xemchitiet [lstIdNguoiHoc]="xemChiTietDialogModel.data.lstIdNguoiHoc">
-  </thongke-sinhviennganh2-xemchitiet>
+  <hosonguoihoc [lstIdNguoiHoc]="xemChiTietDialogModel.data.lstIdNguoiHoc" [viewNganh2]="true"></hosonguoihoc>
 </tn-dialog>

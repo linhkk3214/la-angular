@@ -1,5 +1,6 @@
-import { Component, Injector, OnInit } from '@angular/core';
-import { DataType, FormState } from 'src/app/shared/models/enums';
+import { Component, Injector, Input, OnInit } from '@angular/core';
+import { DataType, FormState, HeightType, Operator } from 'src/app/shared/models/enums';
+import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ListBase } from '../../shared/base-class/list-base';
 import { ColumnSchema, CrudFormData, DialogModel, PopupSize } from '../../shared/models/schema';
 import { DanhSachLopHanhChinhService } from '../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
@@ -17,6 +18,8 @@ import { HoSoNguoiHocService } from './services/hosonguoihoc.service';
   styleUrls: ['./hosonguoihoc.component.scss']
 })
 export class HoSoNguoiHocComponent extends ListBase implements OnInit {
+  @Input() lstIdNguoiHoc: string[];
+  @Input() viewNganh2 = false;
   khenThuongKyLuatDialogModel = new DialogModel({
     header: 'Xem hồ sơ người học',
     popupSize: new PopupSize({
@@ -80,7 +83,7 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'idNganh',
-        label: 'Ngành',
+        label: 'Ngành chính',
         service: this._dm_CTĐTService,
       }),
       new ColumnSchema({
@@ -100,7 +103,33 @@ export class HoSoNguoiHocComponent extends ListBase implements OnInit {
       }),
 
     ];
+    this.settingForCustomList();
     super.ngOnInit();
+  }
+
+  settingForCustomList() {
+    if (this.lstIdNguoiHoc) {
+      this.setting.hiddenFunctionColumn = true;
+      this.setting.hiddenButtons = true;
+      this.setting.hiddenPageTitle = true;
+      this.setting.heightType = HeightType.custom;
+    }
+    if (this.viewNganh2) {
+      const indexColNganh1 = this.setting.cols.findIndex(q => q.field == 'idNganh');
+      this.setting.cols.splice(indexColNganh1 + 1, 0, new ColumnSchema({
+        field: 'idNganh2',
+        label: 'Ngành 2',
+        service: this._dm_CTĐTService,
+      }));
+    }
+  }
+
+  override async modifyGridInfo(gridInfo: GridInfo): Promise<boolean | void> {
+    if (this.lstIdNguoiHoc) {
+      // Return false để khỏi phải gửi request lấy dữ liệu
+      if (!this.lstIdNguoiHoc.length) return false;
+      gridInfo.filters.push(this.newFilter('_id', Operator.in, this.lstIdNguoiHoc));
+    }
   }
 
   viewKhenThuongKyLuat(rowData) {

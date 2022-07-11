@@ -1,9 +1,22 @@
+.view-sinhvien {
+  &.has-value {
+    cursor: pointer;
+    color: #285f8f;
+  }
+}
+
 ::ng-deep thongke-nguoihoctheonganh {
   tr.row-summary {
     font-weight: bold;
 
     td {
       color: red;
+
+      .view-sinhvien {
+        &.has-value {
+          color: red;
+        }
+      }
 
       &:nth-child(2) {
         color: inherit;

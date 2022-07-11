@@ -19,7 +19,7 @@ export class ThongKe_SinhVienNganh2Component extends ListBase implements OnInit 
       maximize: true
     })
   })
-  type: EnumTypeGetData = EnumTypeGetData.THEO_DON_VI_QL_NGANH_2;
+  type: EnumTypeGetData = EnumTypeGetData.THEO_DON_VI_QL_NGANH_1;
   enumTypeGetData = EnumTypeGetData;
   constructor(
     injector: Injector,

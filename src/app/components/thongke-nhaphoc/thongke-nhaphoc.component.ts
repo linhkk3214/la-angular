@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ResponseResult } from 'src/app/shared/models/response-result';
 import { ListBase } from '../../shared/base-class/list-base';
-import { ColumnSchema } from '../../shared/models/schema';
+import { ColumnSchema, DialogModel, PopupSize } from '../../shared/models/schema';
 import { DanhSachTrungTuyenService } from '../danhsachtrungtuyen/services/danhsachtrungtuyen.service';
 @Component({
   selector: 'thongke-nhaphoc',
@@ -10,6 +10,12 @@ import { DanhSachTrungTuyenService } from '../danhsachtrungtuyen/services/danhsa
   styleUrls: ['./thongke-nhaphoc.component.scss']
 })
 export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
+  xemChiTietDialogModel = new DialogModel({
+    header: 'Danh sách sinh viên trúng tuyển',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   constructor(
     injector: Injector,
     private _DanhSachTrungTuyenService: DanhSachTrungTuyenService
@@ -38,26 +44,38 @@ export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'soSinhVienNopDu',
+        dataType: 'viewSinhVien',
+        customData: {
+          fieldList: 'lstIdSinhVienNopDu'
+        },
         label: 'Nộp đủ',
-        dataType: 'int',
         allowFilter: false
       }),
       new ColumnSchema({
         field: 'soSinhVienNopThieu',
         label: 'Nộp thiếu',
-        dataType: 'int',
+        dataType: 'viewSinhVien',
+        customData: {
+          fieldList: 'lstIdSinhVienNopThieu'
+        },
         allowFilter: false
       }),
       new ColumnSchema({
         field: 'soSinhVienChuaNop',
         label: 'Chưa nộp',
-        dataType: 'int',
+        dataType: 'viewSinhVien',
+        customData: {
+          fieldList: 'lstIdSinhVienChuaNop'
+        },
         allowFilter: false
       }),
       new ColumnSchema({
         field: 'soSinhVienDaRut',
         label: 'Đã rút',
-        dataType: 'int',
+        dataType: 'viewSinhVien',
+        customData: {
+          fieldList: 'lstIdSinhVienDaRut'
+        },
         allowFilter: false
       }),
     ];
@@ -83,14 +101,49 @@ export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
       soSinhVienChuaNop: 0,
       soSinhVienDaRut: 0,
       soSinhVienNopDu: 0,
-      soSinhVienNopThieu: 0
+      soSinhVienNopThieu: 0,
+      lstIdNganhTrungTuyen: [],
+      lstIdNguoiHoc: [],
+      lstIdSinhVienNopDu: [],
+      lstIdSinhVienNopThieu: [],
+      lstIdSinhVienChuaNop: [],
+      lstIdSinhVienDaRut: []
+
     };
     datasource.forEach(item => {
+      item.soSinhVienChuaNop = item.lstIdSinhVienChuaNop.length;
+      item.soSinhVienDaRut = item.lstIdSinhVienDaRut.length;
+      item.soSinhVienNopDu = item.lstIdSinhVienNopDu.length;
+      item.soSinhVienNopThieu = item.lstIdSinhVienNopThieu.length;
+
+      item.lstIdNguoiHoc = [
+        ...item.lstIdSinhVienChuaNop,
+        ...item.lstIdSinhVienDaRut,
+        ...item.lstIdSinhVienNopDu,
+        ...item.lstIdSinhVienNopThieu
+      ];
+
       rowDataSummary.soSinhVienChuaNop += item.soSinhVienChuaNop;
       rowDataSummary.soSinhVienDaRut += item.soSinhVienDaRut;
       rowDataSummary.soSinhVienNopDu += item.soSinhVienNopDu;
       rowDataSummary.soSinhVienNopThieu += item.soSinhVienNopThieu;
+      rowDataSummary.lstIdNganhTrungTuyen.push(item.id);
+      rowDataSummary.lstIdSinhVienNopDu.push(...item.lstIdSinhVienNopDu);
+      rowDataSummary.lstIdSinhVienNopThieu.push(...item.lstIdSinhVienNopThieu);
+      rowDataSummary.lstIdSinhVienChuaNop.push(...item.lstIdSinhVienChuaNop);
+      rowDataSummary.lstIdSinhVienDaRut.push(...item.lstIdSinhVienDaRut);
+      rowDataSummary.lstIdNguoiHoc.push(...item.lstIdNguoiHoc);
     });
     datasource.unshift(rowDataSummary);
+  }
+
+  viewChiTiet(rowData) {
+    this.xemChiTietDialogModel.data.lstIdNguoiHoc = rowData.lstIdNguoiHoc;
+    this.xemChiTietDialogModel.showEditForm = true;
+  }
+
+  viewChiTietSinhVien(lstIdNguoiHoc) {
+    this.xemChiTietDialogModel.data.lstIdNguoiHoc = lstIdNguoiHoc;
+    this.xemChiTietDialogModel.showEditForm = true;
   }
 }
