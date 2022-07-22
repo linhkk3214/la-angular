@@ -87,7 +87,6 @@ export class ThongKe_NguoiHocTheoNganhComponent extends ListBase implements OnIn
         ten: true
       },
       soCTDT: 'Tổng số',
-      lstIdNganh: [],
       lstIdNguoiHoc: []
     };
     if (datasource.length) {

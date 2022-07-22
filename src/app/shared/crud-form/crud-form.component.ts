@@ -471,7 +471,7 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
     return this.templates[templateName];
   }
 
-  getContextTd(schema, data, index: number, parentPath: string) {
+  getContextTd(schema, data, index: number, parentPath: string, parentDisabled: boolean) {
     return {
       $implicit: schema,
       data,
@@ -479,7 +479,8 @@ export class CrudFormComponent extends ComponentBase implements OnInit, AfterVie
       showLabel: false,
       mdWidth: 12,
       parentPath: `${parentPath}[${index}]`,
-      fullPath: `${parentPath}[${index}].${schema.field}`
+      fullPath: `${parentPath}[${index}].${schema.field}`,
+      parentDisabled
     };
   }
 

@@ -2,7 +2,7 @@ import { Component, Injector, OnInit } from '@angular/core';
 import { GridInfo } from 'src/app/shared/models/grid-info';
 import { ResponseResult } from 'src/app/shared/models/response-result';
 import { ListBase } from '../../shared/base-class/list-base';
-import { ColumnSchema } from '../../shared/models/schema';
+import { ColumnSchema, DialogModel, PopupSize } from '../../shared/models/schema';
 import { DM_TrangThaiNguoiHocService } from '../dm-trangthainguoihoc/services/dm-trangthainguoihoc.service';
 import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.service';
 @Component({
@@ -11,6 +11,12 @@ import { HoSoNguoiHocService } from '../hosonguoihoc/services/hosonguoihoc.servi
   styleUrls: ['./thongke-nguoihoctheokhoa.component.scss']
 })
 export class ThongKe_NguoiHocTheoKhoaComponent extends ListBase implements OnInit {
+  xemChiTietDialogModel = new DialogModel({
+    header: 'Danh sách sinh viên',
+    popupSize: new PopupSize({
+      maximize: true
+    })
+  })
   ready = false;
   lstTrangThai: any[];
   constructor(
@@ -43,14 +49,20 @@ export class ThongKe_NguoiHocTheoKhoaComponent extends ListBase implements OnIni
     this.lstTrangThai = (await this._dm_TrangThaiNguoiHocService.getAll()).data;
     this.lstTrangThai.forEach(itemTrangThai => {
       this.setting.cols.push(new ColumnSchema({
-        field: itemTrangThai._id,
+        field: this.getFieldCount(itemTrangThai._id),
         label: itemTrangThai.ten,
-        dataType: 'int',
+        dataType: 'countTrangThai',
+        customData: {
+          fieldList: itemTrangThai._id
+        },
         allowFilter: false
       }))
     });
     this.ready = true;
     super.ngOnInit();
+  }
+  private getFieldCount(idTrangThai: string) {
+    return `count_${idTrangThai}`;
   }
 
   override getPromiseGetData(gridInfo: GridInfo): Promise<ResponseResult> {
@@ -61,18 +73,37 @@ export class ThongKe_NguoiHocTheoKhoaComponent extends ListBase implements OnIni
     const rowDataSummary = {
       generated: true, // Đánh dấu bằng true để ngăn base đánh index cho dòng này
       class: 'row-summary',
-      ten: 'Tổng số'
+      ten: 'Tổng số',
+      lstIdNguoiHoc: []
     };
     if (datasource.length) {
       this.lstTrangThai.forEach(itemTrangThai => {
-        rowDataSummary[itemTrangThai._id] = 0;
+        rowDataSummary[this.getFieldCount(itemTrangThai._id)] = 0;
+        rowDataSummary[itemTrangThai._id] = [];
       });
     }
     datasource.forEach(item => {
+      item.lstIdNguoiHoc = [];
       this.lstTrangThai.forEach(itemTrangThai => {
-        rowDataSummary[itemTrangThai._id] += item[itemTrangThai._id] ?? 0;
+        const fieldCount = this.getFieldCount(itemTrangThai._id);
+        item[fieldCount] = item[itemTrangThai._id].length;
+        item.lstIdNguoiHoc.push(...item[itemTrangThai._id]);
+
+        rowDataSummary[fieldCount] += item[fieldCount];
+        rowDataSummary[itemTrangThai._id].push(...item[itemTrangThai._id]);
+        rowDataSummary.lstIdNguoiHoc.push(...item[itemTrangThai._id]);
       });
     });
     datasource.unshift(rowDataSummary);
+  }
+
+  viewChiTiet(rowData) {
+    this.xemChiTietDialogModel.data.lstIdNguoiHoc = rowData.lstIdNguoiHoc;
+    this.xemChiTietDialogModel.showEditForm = true;
+  }
+
+  viewChiTietSinhVien(lstIdNguoiHoc) {
+    this.xemChiTietDialogModel.data.lstIdNguoiHoc = lstIdNguoiHoc;
+    this.xemChiTietDialogModel.showEditForm = true;
   }
 }

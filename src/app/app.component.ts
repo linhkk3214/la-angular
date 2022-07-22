@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { KeyStorageDefaultSetting, KeyStorageUserInfo, KeySubscribeLogon, PrefixFieldObjectDropdown } from './models/const';
+import { FormState } from './shared/models/enums';
 import { CrudFormData, DialogModel, PopupSize } from './shared/models/schema';
 import { ContextService } from './shared/services/context.service';
 import { FileService } from './shared/services/file.service';
@@ -19,6 +20,15 @@ export class AppComponent implements OnInit, OnDestroy {
   showContext = false;
   clickedContextMenuUser = false;
   textSetting = '';
+  thongTinCaNhanModel = new DialogModel({
+    header: 'Thông tin cá nhân',
+    popupSize: new PopupSize({
+      height: 700,
+      width: 1200
+
+      // maximize: true
+    })
+  })
   settingDialogModel = new DialogModel({
     header: 'Cấu hình mặc định',
     popupSize: new PopupSize({
@@ -102,5 +112,12 @@ export class AppComponent implements OnInit, OnDestroy {
 
   showDefaultSetting() {
     this.settingDialogModel.showEditForm = true;
+  }
+
+  viewThongTinCaNhan() {
+    this.thongTinCaNhanModel.data.formModel = new CrudFormData();
+    this.thongTinCaNhanModel.data.formModel.formState = FormState.EDIT;
+    this.thongTinCaNhanModel.data.formModel.data = { _id: this.user._id };
+    this.thongTinCaNhanModel.showEditForm = true;
   }
 }

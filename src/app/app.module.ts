@@ -14,7 +14,7 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DefaultSettingComponent } from './components/default-setting/default-setting.component';
 import { LAMenuComponent } from './components/layout/la-menu/la-menu.component';
 import { LoginComponent } from './components/login/login.component';
-import { UserModule } from './components/user/user.module';
+import { UserModule, UserWithoutRouteModule } from './components/user/user.module';
 import { SharedModule } from './shared/shared.module';
 
 
@@ -36,7 +36,8 @@ import { SharedModule } from './shared/shared.module';
     ToastModule,
     ConfirmDialogModule,
     NgxMaskModule.forRoot(),
-    UserModule
+    UserModule,
+    UserWithoutRouteModule
   ],
   providers: [
     { provide: LOCALE_ID, useValue: 'vi-VN' },

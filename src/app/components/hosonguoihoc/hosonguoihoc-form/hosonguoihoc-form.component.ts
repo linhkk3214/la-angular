@@ -58,6 +58,7 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       new FileControlSchema({
         field: 'anh',
         label: 'Ảnh',
+        centerLabel: true,
         multiple: false,
         isAvatar: true,
         rowSpan: 4,

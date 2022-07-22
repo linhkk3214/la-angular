@@ -29,7 +29,7 @@ export class ThongKe_SinhVienNganh2Component extends ListBase implements OnInit 
   }
 
   override ngOnInit(): void {
-    this.setting.title = 'Thống kê sinh viên đăng ký học ngành 2';
+    this.setting.title = 'Thống kê đăng ký học ngành 2';
     this.setting.service = this._danhSachDangKyHocNganh2;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;

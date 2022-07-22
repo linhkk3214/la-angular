@@ -5,6 +5,7 @@ import { FormBase } from '../../../shared/base-class/form-base';
 import { DanhMucHocBongService } from '../../danhmuchocbong/services/danhmuchocbong.service';
 import { DanhSachLoaiKhenThuongService } from '../../danhsachloaikhenthuong/services/danhsachloaikhenthuong.service';
 import { DanhSachLopHanhChinhService } from '../../danhsachlophanhchinh/services/danhsachlophanhchinh.service';
+import { EnumTrangThaiQuyetDinh } from '../../danhsachquyetdinhhoctap/models/enums';
 import { DM_ChuongTrinhDaoTaoService } from '../../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
 import { DM_HeDaoTaoService } from '../../dm-hedaotao/services/dm-hedaotao.service';
 import { DM_HocKyService } from '../../dm-hocky/services/dm-hocky.service';
@@ -23,6 +24,7 @@ import { DanhSachQuyetDinhHocBongService } from '../services/danhsachquyetdinhho
 })
 export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements OnInit {
   defaultSetting: any = {};
+  isDaDuyet = true;
   constructor(
     injector: Injector,
     private _danhSachQuyetDinhHocBongService: DanhSachQuyetDinhHocBongService,
@@ -49,7 +51,6 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
       new TextControlSchema({
         field: 'soQd',
         label: 'Số quyết định',
-        required: true,
       }),
       new DateTimeControlSchema({
         field: 'ngayQd',
@@ -62,6 +63,7 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
         required: true,
         sortField: 'nam',
         sortDir: -1,
+        disabled: true,
       }),
       new DropdownControlSchema({
         field: 'idHocKy',
@@ -74,12 +76,14 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
         bindingFilters: [
           this.newBindingFilter('idNamHoc', Operator.equal, 'idNamHoc')
         ],
+        disabled: true,
       }),
       new DropdownControlSchema({
         field: 'idHocBong',
         label: 'Học bổng',
         required: true,
         service: this._danhMucHocBongService,
+        disabled: true,
       }),
       new DropdownControlSchema({
         field: 'idNguoiKy',
@@ -103,6 +107,7 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
         field: 'danhSachNguoiHoc',
         label: 'Danh sách sinh viên',
         width: 12,
+        disabled: true,
         rowTemplate: [
           new DropdownControlSchema({
             field: 'idNguoiHoc',
@@ -153,7 +158,15 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
     model.ngaySinh = itemNguoiHoc.ngaySinh ? new Date(itemNguoiHoc.ngaySinh) : null;
   }
 
+  override async initDataAdd(evt: EventData): Promise<void> {
+    this.isDaDuyet = false;
+    this.disabledFormQuyetDinh();
+  }
+
   override async modifyDetailData(data: any): Promise<void> {
+    this.isDaDuyet = data.idTrangThai == EnumTrangThaiQuyetDinh.DA_DUYET;
+    this.disabledFormQuyetDinh();
+
     // Lấy danh sách người học
     if (data.lstIdNguoiHoc) {
       const lstNguoiHoc = (await this._hoSoNguoiHocService.getAllByFilter([
@@ -167,6 +180,13 @@ export class DanhSachQuyetDinhHocBongFormComponent extends FormBase implements O
         return result;
       });
     }
+  }
+
+  private disabledFormQuyetDinh() {
+    this.formControls.idHocBong.disabled = this.isDaDuyet;
+    this.formControls.idNamHoc.disabled = this.isDaDuyet;
+    this.formControls.idHocKy.disabled = this.isDaDuyet;
+    this.formControls.danhSachNguoiHoc.disabled = this.isDaDuyet;
   }
 
   override onBeforeSave(): void | Promise<boolean> {

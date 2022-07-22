@@ -20,7 +20,7 @@
 <ng-template #controlWithLabel let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath"
   let-index="index">
   <ng-container *ngIf="!checkHidden(schema, data)">
-    <div class="label">
+    <div class="label" [class.center]="schema.centerLabel">
       <ng-container *ngIf="schema.label">{{schema.label}} <span *ngIf="schema.required" class="rq">*</span>
       </ng-container>
     </div>
@@ -32,22 +32,24 @@
   </ng-container>
 </ng-template>
 
-<ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index">
+<ng-template #control let-schema let-data="data" let-parentPath="parentPath" let-fullPath="fullPath" let-index="index"
+  let-parentDisabled="parentDisabled">
   <ng-container [ngSwitch]="schema.nameType">
     <ng-container *ngSwitchCase="'TitleSchema'">
       <div class="title-schema">{{schema.text}}</div>
     </ng-container>
     <ng-container *ngSwitchCase="'TextControlSchema'">
-      <input [type]="schema.dataFormat" pInputText [disabled]="schema.disabled" [placeholder]="schema.placeholder"
-        [(ngModel)]="data[schema.field]" (change)="handleFieldValueChange(schema, $event, 'change', parentPath)" />
+      <input [type]="schema.dataFormat" pInputText [disabled]="schema.disabled || parentDisabled"
+        [placeholder]="schema.placeholder" [(ngModel)]="data[schema.field]"
+        (change)="handleFieldValueChange(schema, $event, 'change', parentPath)" />
     </ng-container>
     <ng-container *ngSwitchCase="'TextAreaControlSchema'">
-      <textarea pInputTextarea [disabled]="schema.disabled" [placeholder]="schema.placeholder"
+      <textarea pInputTextarea [disabled]="schema.disabled || parentDisabled" [placeholder]="schema.placeholder"
         [style.height]="schema.height" [(ngModel)]="data[schema.field]"
         (change)="handleFieldValueChange(schema, $event, 'change', parentPath)"></textarea>
     </ng-container>
     <ng-container *ngSwitchCase="'DropdownControlSchema'">
-      <dropdown [control]="schema" [(ngModel)]="data[schema.field]"
+      <dropdown [control]="schema" [disabled]="schema.disabled || parentDisabled" [(ngModel)]="data[schema.field]"
         (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFirstChanged(null, schema, parentPath)"
         (onFirstChanged)="handleFirstChanged($event, schema, parentPath)"
@@ -55,22 +57,23 @@
       </dropdown>
     </ng-container>
     <ng-container *ngSwitchCase="'DateTimeControlSchema'">
-      <datetime-picker [control]="schema" [(ngModel)]="data[schema.field]"
-        (onInit)="handleLoadedControl($event, schema, parentPath)"
+      <datetime-picker [control]="schema" [disabled]="schema.disabled || parentDisabled"
+        [(ngModel)]="data[schema.field]" (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></datetime-picker>
     </ng-container>
     <ng-container *ngSwitchCase="'CheckBoxControlSchema'">
-      <p-checkbox [binary]="true" [(ngModel)]="data[schema.field]" [label]="!schema.hiddenLabel ? schema.label : null">
+      <p-checkbox [binary]="true" [disabled]="schema.disabled || parentDisabled" [(ngModel)]="data[schema.field]"
+        [label]="!schema.hiddenLabel ? schema.label : null">
       </p-checkbox>
     </ng-container>
     <ng-container *ngSwitchCase="'MaskControlSchema'">
-      <tn-mask [control]="schema" [(ngModel)]="data[schema.field]"
+      <tn-mask [control]="schema" [disabled]="schema.disabled || parentDisabled" [(ngModel)]="data[schema.field]"
         (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)">
       </tn-mask>
     </ng-container>
     <ng-container *ngSwitchCase="'FileControlSchema'">
-      <file-upload [control]="schema" [(ngModel)]="data[schema.field]"
+      <file-upload [control]="schema" [disabled]="schema.disabled || parentDisabled" [(ngModel)]="data[schema.field]"
         (onInit)="handleLoadedControl($event, schema, parentPath)"
         (onChanged)="handleFieldValueChange(schema, $event, 'change', parentPath)"></file-upload>
     </ng-container>
@@ -85,7 +88,8 @@
                 <ng-container *ngFor="let subControl of schema.rowTemplate">
                   <col [style.width]="subControl.widthInList" />
                 </ng-container>
-                <col *ngIf="schema.showFunction" [style.width]="schema.widthFunctionColumn" />
+                <col *ngIf="schema.showFunction && !schema.disabled && !parentDisabled"
+                  [style.width]="schema.widthFunctionColumn" />
               </colgroup>
             </ng-template>
             <ng-template *ngIf="getComponentByType(prefixCustomHeader + schema.field)" pTemplate="header" let-columns>
@@ -109,7 +113,8 @@
                     <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
                   </th>
                 </ng-container>
-                <th *ngIf="schema.showFunction" class="table-function column-function">
+                <th *ngIf="schema.showFunction && !schema.disabled && !parentDisabled"
+                  class="table-function column-function">
                   <div class="cell-header-function"><span>Chức năng</span></div>
                   <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
                 </th>
@@ -128,12 +133,21 @@
                     [class]="subControl.class" [class.center]="subControl.textAlign == textAlign.Center"
                     [class.right]="subControl.textAlign == textAlign.Right" style="vertical-align: top">
                     <span class="p-column-title">{{subControl.label}}</span>
-                    <ng-container *ngTemplateOutlet="control; context: getContextTd(subControl, rowData, ri, fullPath)">
-                    </ng-container>
+                    <ng-container *ngTemplateOutlet="control; context: {
+                      $implicit: subControl,
+                      data: rowData,
+                      index: ri,
+                      showLabel: false,
+                      mdWidth: 12,
+                      parentPath: fullPath + '[' + ri + ']',
+						          fullPath: fullPath + '[' + ri + '].' + subControl.field,
+                      parentDisabled: schema.disabled
+                    }"></ng-container>
                     <ng-container *ngTemplateOutlet="containerSticky"></ng-container>
                   </td>
                 </ng-container>
-                <td *ngIf="schema.showFunction" style="text-align: center" class="column-function text-center">
+                <td *ngIf="schema.showFunction && !schema.disabled && !parentDisabled" style="text-align: center"
+                  class="column-function text-center">
                   <div *ngIf="!schema.rowButtonTemplate" class="p-toolbar-group-center button-group">
                     <button *ngIf="schema.showSave" [disabled]="rowData._disableSave" type="button" pButton
                       class="p-button-text p-button-rounded" icon="pi pi-save" [pTooltip]="'Lưu'" tooltipPosition="top"
@@ -160,7 +174,7 @@
             </ng-template>
           </p-table>
         </tn-scrollbar>
-        <div *ngIf="schema.showFooter" class="--table-schema-footer">
+        <div *ngIf="schema.showFooter && !schema.disabled && !parentDisabled" class="--table-schema-footer">
           <button *ngIf="schema.showAdd" type="button" pButton style="width:auto" label="Thêm mới" icon="pi pi-plus"
             class="p-button-text" (click)="addNewRow(data, schema)"></button>
           <span *ngIf="schema.showDialog" style="font-weight: normal;">

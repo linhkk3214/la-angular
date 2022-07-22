@@ -93,8 +93,10 @@ export class DanhSachQuyetDinhKhenThuongComponent extends ListBase implements On
     // Trước khi render ra datasource, cần modify nó để set ẩn hiện các nút sửa/xóa trong base
     datasource.forEach(rowData => {
       if (rowData.idTrangThai != EnumTrangThaiQuyetDinh.MOI_TAO) {
-        rowData.hiddenEdit = true;
         rowData.hiddenDelete = true;
+      }
+      if (rowData.idTrangThai != EnumTrangThaiQuyetDinh.DA_DUYET && rowData.idTrangThai != EnumTrangThaiQuyetDinh.MOI_TAO) {
+        rowData.hiddenEdit = true;
       }
     });
   }

@@ -1,12 +1,13 @@
 import { Component, Injector, Input, OnInit } from '@angular/core';
 import { Operator } from '../../../shared/models/enums';
-import { DropdownControlSchema, FileControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
+import { DateTimeControlSchema, DropdownControlSchema, FileControlSchema, TextAreaControlSchema, TextControlSchema } from 'src/app/shared/models/schema';
 import { FormBase } from '../../../shared/base-class/form-base';
 import { UserService } from '../services/user.service';
 import { AddressService } from '../services/address.service';
 import { DanTocService } from '../services/dantoc.service';
 import { ReligionService } from '../services/religion.service';
 import { QuocTichService } from '../services/quoctich.service';
+import { DM_GioiTinhService } from '../../dm-gioitinh/services/dm-gioitinh.service';
 
 @Component({
   selector: 'user-form',
@@ -20,7 +21,8 @@ export class UserFormComponent extends FormBase implements OnInit {
     private _addressService: AddressService,
     private _dantocService: DanTocService,
     private _tongiaoService: ReligionService,
-    private _quoctichService: QuocTichService
+    private _quoctichService: QuocTichService,
+    private _dm_GioiTinhService: DM_GioiTinhService
   ) {
     super(injector);
   }
@@ -31,20 +33,23 @@ export class UserFormComponent extends FormBase implements OnInit {
       new FileControlSchema({
         field: 'avatar',
         label: 'Ảnh đại diện',
+        centerLabel: true,
         multiple: false,
-        isAvatar: true
+        isAvatar: true,
+        width: 3,
+        rowSpan: 5
       }),
       new TextControlSchema({
         field: 'ho',
         label: 'Họ',
         required: true,
-        width: 4
+        width: 3
       }),
       new TextControlSchema({
         field: 'ten',
         label: 'Tên',
         required: true,
-        width: 2
+        width: 6
       }),
       new TextControlSchema({
         field: 'username',
@@ -60,8 +65,30 @@ export class UserFormComponent extends FormBase implements OnInit {
         width: 3
       }),
       new DropdownControlSchema({
+        field: 'gioiTinh',
+        label: 'Giới tính',
+        service: this._dm_GioiTinhService,
+        width: 3
+      }),
+      new DateTimeControlSchema({
+        field: 'ngaySinh',
+        label: 'Ngày sinh',
+        width: 3
+      }),
+      new TextControlSchema({
+        field: 'sdt',
+        label: 'Số điện thoại',
+        width: 3
+      }),
+      new TextControlSchema({
+        field: 'email',
+        label: 'Thư điện tử',
+        width: 3
+      }),
+      new DropdownControlSchema({
         field: 'idTinh',
         label: 'Tỉnh / Thành phố',
+        width: 3,
         service: this._addressService,
         defaultFilters: [
           this.newFilter('level', Operator.equal, 1)
@@ -69,6 +96,7 @@ export class UserFormComponent extends FormBase implements OnInit {
       }),
       new DropdownControlSchema({
         field: 'idHuyen',
+        width: 3,
         label: 'Quận / Huyện',
         service: this._addressService,
         defaultFilters: [
@@ -81,6 +109,7 @@ export class UserFormComponent extends FormBase implements OnInit {
       new DropdownControlSchema({
         field: 'idXa',
         label: 'Phường / Xã',
+        width: 3,
         service: this._addressService,
         // isServerLoad: true,
         defaultFilters: [
@@ -90,22 +119,11 @@ export class UserFormComponent extends FormBase implements OnInit {
           this.newBindingFilter('parentId', Operator.equal, 'idHuyen')
         ]
       }),
-      new DropdownControlSchema({
-        field: 'idDanToc',
-        label: 'Dân tộc',
-        service: this._dantocService
+      new TextAreaControlSchema({
+        field: 'ghiChu',
+        label: 'Ghi chú',
+        width: 9
       }),
-      new DropdownControlSchema({
-        field: 'idTonGiao',
-        label: 'Tôn giáo',
-        service: this._tongiaoService
-      }),
-      new DropdownControlSchema({
-        field: 'idQuocTich',
-        label: 'Quốc tịch',
-        service: this._quoctichService
-      }),
-
     ];
   }
 }

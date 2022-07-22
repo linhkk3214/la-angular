@@ -353,7 +353,9 @@ td>.view-mode {
         width: unset;
         grid-column: span #{$i};
       }
+    }
 
+    @for $i from 1 through 50 {
       .row-span-#{$i} {
         grid-row: span #{$i};
       }

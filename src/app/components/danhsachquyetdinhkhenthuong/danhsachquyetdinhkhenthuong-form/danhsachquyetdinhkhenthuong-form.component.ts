@@ -48,7 +48,6 @@ export class DanhSachQuyetDinhKhenThuongFormComponent extends FormBase implement
       new TextControlSchema({
         field: 'soQd',
         label: 'Số quyết định',
-        required: true,
       }),
       new DateTimeControlSchema({
         field: 'ngayQd',

@@ -5,8 +5,7 @@ $border-color: #ced4da;
   border: 1px solid $border-color;
   border-radius: 3px;
 
-  .top-bar-button {
-  }
+  .top-bar-button {}
 
   .file-list {
     box-sizing: border-box;
@@ -16,6 +15,7 @@ $border-color: #ced4da;
       align-items: center;
       padding: 0 0 0 0.5em;
       border-top: 1px solid $border-color;
+      min-height: 39px;
 
       .stt {
         flex: 0 0 20px;
@@ -34,7 +34,7 @@ $border-color: #ced4da;
         cursor: pointer;
         display: flex;
 
-        > span {
+        >span {
           &:first-child {
             max-width: 100%;
             overflow: hidden;
@@ -55,7 +55,7 @@ $border-color: #ced4da;
 }
 
 .avatar-container {
-  > div {
+  >div {
     position: relative;
     max-width: 200px;
     margin: auto;

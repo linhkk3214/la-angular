@@ -24,6 +24,8 @@ export class UserComponent extends ListBase implements OnInit {
   override ngOnInit(): void {
     this.setting.objectName = 'người dùng';
     this.setting.service = this._userService;
+    this.setting.popupSize.width = 1000;
+    this.setting.popupSize.height = 700;
     this.setting.cols = [
       new ColumnSchema({
         field: 'hoVaTen',

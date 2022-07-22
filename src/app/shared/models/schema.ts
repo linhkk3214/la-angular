@@ -13,6 +13,7 @@ export class FormSchema {
   label?: string;
   fullLabel?: string;
   showLabel?: boolean = true;
+  centerLabel?: boolean = false;
   width?: number | string = 6;
   rowSpan?: number = 1;
   widthInList?: string;

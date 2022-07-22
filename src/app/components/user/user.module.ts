@@ -14,10 +14,22 @@ import { UserComponent } from './user.component';
   imports: [
     CommonModule,
     SharedModule,
+  ],
+  exports: [
+    UserComponent,
+    UserFormComponent
+  ]
+})
+export class UserWithoutRouteModule { }
+
+@NgModule({
+  declarations: [
+  ],
+  imports: [
+    UserWithoutRouteModule,
     UserRoutingModule
   ],
   exports: [
-    UserComponent
   ]
 })
 export class UserModule { }

@@ -38,6 +38,8 @@ export class DropdownComponent extends ComponentBase implements OnInit {
   @Output('onFirstChanged') onFirstChanged = new EventEmitter<any>();
   @Output('onDataSourceLoaded') onDataSourceLoaded = new EventEmitter<any>();
 
+  disabled = false;
+
   dataSourceInternal: any[] = [];
   extraFields: string[];
   changedDataSource = false;
@@ -259,7 +261,7 @@ export class DropdownComponent extends ComponentBase implements OnInit {
   }
 
   setDisabledState?(isDisabled: boolean): void {
-    this.control.disabled = isDisabled;
+    this.disabled = isDisabled;
   }
 
   getData(filterParents?: Filter[]) {

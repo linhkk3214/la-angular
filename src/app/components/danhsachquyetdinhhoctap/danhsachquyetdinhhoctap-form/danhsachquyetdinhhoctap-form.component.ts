@@ -14,6 +14,7 @@ import { DM_NamHocService } from '../../dm-namhoc/services/dm-namhoc.service';
 import { DM_NganhService } from '../../dm-nganh/services/dm-nganh.service';
 import { HoSoNguoiHocService } from '../../hosonguoihoc/services/hosonguoihoc.service';
 import { HoSoCanBoService } from '../../user/services/hosocanbo';
+import { EnumTrangThaiQuyetDinh } from '../models/enums';
 import { DanhSachQuyetDinhHocTapService } from '../services/danhsachquyetdinhhoctap.service';
 
 @Component({
@@ -23,6 +24,7 @@ import { DanhSachQuyetDinhHocTapService } from '../services/danhsachquyetdinhhoc
 })
 export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements OnInit {
   defaultSetting: any = {};
+  isDaDuyet = true;
   constructor(
     injector: Injector,
     private _danhSachQuyetDinhHocTapService: DanhSachQuyetDinhHocTapService,
@@ -44,23 +46,21 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
     this.setting.service = this._danhSachQuyetDinhHocTapService;
     // Lấy setting mặc định được cấu hình
     this.defaultSetting = this.getDefaultSetting();
-    const isNotFormAdd = !this._isFormAddNew();
     this.setting.schema = [
       new TextControlSchema({
         field: 'soQd',
         label: 'Số quyết định',
-        required: true,
       }),
       new DateTimeControlSchema({
         field: 'ngayBanHanh',
-        label: 'Ngày ban hành',
-        required: true
+        label: 'Ngày ban hành'
       }),
       new DropdownControlSchema({
         field: 'idLoaiQuyetDinh',
         label: 'Loại quyết định',
         required: true,
         service: this._danhSachLoaiQuyetDinhService,
+        disabled: true,
       }),
       new DropdownControlSchema({
         field: 'idNamHoc',
@@ -69,7 +69,8 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
         required: true,
         sortField: 'nam',
         sortDir: -1,
-        width: 3
+        width: 3,
+        disabled: true
       }),
       new DropdownControlSchema({
         field: 'idHocKy',
@@ -82,14 +83,14 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
         bindingFilters: [
           this.newBindingFilter('idNamHoc', Operator.equal, 'idNamHoc')
         ],
-        width: 3
+        width: 3,
+        disabled: true
       }),
 
       new DropdownControlSchema({
         field: 'idNguoiKy',
         label: 'Người ký',
         service: this._HoSoCanBoService,
-        required: true,
         fieldPlus: 'ma',
         funcGetLabel: item => {
           return `${item.ten} (${item.ma})`;
@@ -98,8 +99,6 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
       new DateTimeControlSchema({
         field: 'ngayHieuLuc',
         label: 'Ngày hiệu lực',
-        required: true
-
       }),
       new TextControlSchema({
         field: 'chucVuNguoiKy',
@@ -118,6 +117,7 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
         field: 'danhSachNguoiHoc',
         label: 'Danh sách sinh viên',
         width: 12,
+        disabled: true,
         rowTemplate: [
           new DropdownControlSchema({
             field: 'idNguoiHoc',
@@ -168,7 +168,15 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
     model.ngaySinh = itemNguoiHoc.ngaySinh ? new Date(itemNguoiHoc.ngaySinh) : null;
   }
 
+  override async initDataAdd(evt: EventData): Promise<void> {
+    this.isDaDuyet = false;
+    this.disabledFormQuyetDinh();
+  }
+
   override async modifyDetailData(data: any): Promise<void> {
+    this.isDaDuyet = data.idTrangThai == EnumTrangThaiQuyetDinh.DA_DUYET;
+    this.disabledFormQuyetDinh();
+
     // Lấy danh sách người học
     if (data.lstIdNguoiHoc) {
       const lstNguoiHoc = (await this._hoSoNguoiHocService.getAllByFilter([
@@ -182,6 +190,13 @@ export class DanhSachQuyetDinhHocTapFormComponent extends FormBase implements On
         return result;
       });
     }
+  }
+
+  private disabledFormQuyetDinh() {
+    this.formControls.idLoaiQuyetDinh.disabled = this.isDaDuyet;
+    this.formControls.idNamHoc.disabled = this.isDaDuyet;
+    this.formControls.idHocKy.disabled = this.isDaDuyet;
+    this.formControls.danhSachNguoiHoc.disabled = this.isDaDuyet;
   }
 
   override onBeforeSave(): void | Promise<boolean> {

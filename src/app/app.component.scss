@@ -29,6 +29,7 @@ $width-menu: 285px;
         border: none;
         background: #3192e1;
         box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%);
+
         &:hover {
           background: #3192e1;
         }
@@ -111,10 +112,10 @@ $width-menu: 285px;
           display: none;
           box-shadow: 0 6px 20px 0 rgb(0 0 0 / 19%), 0 8px 17px 0 rgb(0 0 0 / 20%);
 
-          > div {
+          >div {
             padding: 0.5em 1.5em 0.5em 1em;
 
-            > i {
+            >i {
               margin-right: 8px;
               font-size: 12px;
             }
@@ -251,6 +252,7 @@ $width-menu: 285px;
 }
 
 @keyframes bounce {
+
   0%,
   20%,
   50%,
