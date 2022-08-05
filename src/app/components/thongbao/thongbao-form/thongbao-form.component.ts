@@ -55,21 +55,21 @@ export class ThongBaoFormComponent extends FormBase implements OnInit {
         width: 12
       }),
       new DropdownControlSchema({
-        field: 'idHe',
+        field: 'idHes',
         label: 'Hệ đào tạo',
         width: 6,
         service: this._dm_HeDaoTaoService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idKhoaHoc',
+        field: 'idKhoaHocs',
         label: 'Khóa học',
         width: 6,
         service: this._dm_KhoaHocService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idChuongTrinhDaoTao',
+        field: 'idChuongTrinhDaoTaos',
         label: 'Chương trình đào tạo',
         service: this._dm_CTĐTService,
         fieldPlus: 'soCTDT',
@@ -79,13 +79,13 @@ export class ThongBaoFormComponent extends FormBase implements OnInit {
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idLopHanhChinh',
+        field: 'idLopHanhChinhs',
         label: 'Lớp hành chính',
         service: this._danhSachLopHanhChinhService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idTrangThaiSinhVien',
+        field: 'idTrangThaiSinhViens',
         label: 'Trạng thái sinh viên',
         service: this._dm_trangThaiSinhVienService,
         multiple: true

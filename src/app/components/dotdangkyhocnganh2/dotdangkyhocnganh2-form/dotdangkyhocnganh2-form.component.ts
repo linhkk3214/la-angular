@@ -99,19 +99,19 @@ export class DotDangKyHocNganh2FormComponent extends FormBase implements OnInit 
         width: 12
       }),
       new DropdownControlSchema({
-        field: 'idHeDaoTao',
+        field: 'idHeDaoTaos',
         label: 'Hệ đào tạo',
         service: this._dm_HeDaoTaoService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idKhoaHoc',
+        field: 'idKhoaHocs',
         label: 'Khóa học',
         service: this._dm_KhoaHocService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idNganh',
+        field: 'idNganhs',
         label: 'Ngành',
         service: this._dm_CTĐTService,
         multiple: true,
