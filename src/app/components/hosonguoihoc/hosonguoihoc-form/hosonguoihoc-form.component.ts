@@ -172,7 +172,8 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
         required: true,
         service: this._dm_ChuongTrinhDaoTaoService,
         bindingFilters: [
-          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc')
+          this.newBindingFilter('idKhoaHoc', Operator.equal, 'idKhoaHoc'),
+          this.newBindingFilter('idKhoaVien', Operator.equal, 'idKhoaVien'),
         ],
         fieldPlus: 'soCTDT',
         funcGetLabel: item => {
@@ -197,7 +198,6 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new MaskControlSchema({
         field: 'soNamDT',
-        required: true,
         label: 'Số năm đào tạo tối đa',
         width: 3,
         suffix: 'Năm',
@@ -205,7 +205,6 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new MaskControlSchema({
         field: 'soNamDTmax',
-        required: true,
         label: 'Số năm đào tạo tối đa',
         width: 3,
         suffix: 'Năm',
@@ -271,7 +270,6 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new MaskControlSchema({
         field: 'soNamDT2',
-        required: true,
         label: 'Số năm đào tạo',
         width: 3,
         suffix: 'Năm',
@@ -282,7 +280,6 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
       }),
       new MaskControlSchema({
         field: 'soNamDTmax2',
-        required: true,
         label: 'Số năm đào tạo tối đa',
         width: 3,
         suffix: 'Năm',
@@ -433,13 +430,11 @@ export class HoSoNguoiHocFormComponent extends FormBase implements OnInit {
             label: 'Mối quan hệ',
             width: 2,
             dataSource: DataSourceMoiQuanHe,
-            required: true
           }),
           new TextControlSchema({
             field: 'tenNhanThan',
             label: 'Họ và tên',
             width: 2,
-            required: true
           }),
           new DateTimeControlSchema({
             field: 'ngaySinhNhanThan',
