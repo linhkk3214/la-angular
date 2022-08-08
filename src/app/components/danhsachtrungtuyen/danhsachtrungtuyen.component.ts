@@ -1,48 +1,28 @@
 import { Component, Injector, OnInit } from '@angular/core';
-import { ColumnSchema, TabViewData } from '../../shared/models/schema';
+import { DataType } from 'src/app/shared/models/enums';
 import { ListBase } from '../../shared/base-class/list-base';
-import { DanhSachTrungTuyenService } from './services/danhsachtrungtuyen.service';
-import { DataType, Operator } from 'src/app/shared/models/enums';
-import { DM_KhoaHocService } from '../dm-khoahoc/services/dm-khoahoc.service';
-import { GridInfo } from 'src/app/shared/models/grid-info';
-import { DataSourceTrangThaiHoSo } from './models/const';
-import { DM_HeDaoTaoService } from '../dm-hedaotao/services/dm-hedaotao.service';
-import { QuocTichService } from '../user/services/quoctich.service';
-import { DanTocService } from '../user/services/dantoc.service';
-import { DM_GioiTinhService } from '../dm-gioitinh/services/dm-gioitinh.service';
-import { AddressService } from '../user/services/address.service';
-import { DM_NganhService } from '../dm-nganh/services/dm-nganh.service';
-import { DM_KhuVucService } from '../dm-khuvuc/services/dm-khuvuc.service';
-import { DM_HtTuyenSinhService } from '../dm-httuyensinh/services/dm-httuyensinh.service';
-import { DM_DoiTuongTuyenSinhService } from '../dm-doituongtuyensinh/services/dm-doituongtuyensinh.service';
-import { DM_DoiTuongUuTienService } from '../dm-doituonguutien/services/dm-doituonguutien.service';
-import { DM_DoiTuongDaoTaoService } from '../dm-doituongdaotao/services/dm-doituongdaotao.service';
-import { DM_HocLucService } from '../dm-hocluc/services/dm-hocluc.service';
-import { DM_HanhKiemService } from '../dm-hanhkiem/services/dm-hanhkiem.service';
-import { DotNhapHocService } from '../dotnhaphoc/services/dotnhaphoc.service';
+import { ColumnSchema } from '../../shared/models/schema';
 import { DM_ChuongTrinhDaoTaoService } from '../dm-chuongtrinhdaotao/services/dm-chuongtrinhdaotao.service';
+import { DM_DoiTuongDaoTaoService } from '../dm-doituongdaotao/services/dm-doituongdaotao.service';
+import { DM_GioiTinhService } from '../dm-gioitinh/services/dm-gioitinh.service';
+import { DM_HtTuyenSinhService } from '../dm-httuyensinh/services/dm-httuyensinh.service';
+import { DotNhapHocService } from '../dotnhaphoc/services/dotnhaphoc.service';
+import { DataSourceTrangThaiHoSo } from './models/const';
+import { DanhSachTrungTuyenService } from './services/danhsachtrungtuyen.service';
 @Component({
   selector: 'danhsachtrungtuyen',
   templateUrl: './danhsachtrungtuyen.component.html',
   styleUrls: ['./danhsachtrungtuyen.component.scss']
 })
-export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
+export class DanhSachTrungTuyenComponent extends ListBase implements OnInit{
   constructor(
     injector: Injector,
     private _DanhSachTrungTuyenService: DanhSachTrungTuyenService,
     private _dm_DotNhapHocService: DotNhapHocService,
-    private _dm_QuocTichService: QuocTichService,
-    private _dm_DanTocService: DanTocService,
     private _dm_GioiTinhService: DM_GioiTinhService,
-    private _addressService: AddressService,
     private _dm_ChuongTrinhDaoTaoService: DM_ChuongTrinhDaoTaoService,
-    private _DM_KhuVucService: DM_KhuVucService,
     private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
-    private _DM_DoiTuongTuyenSinhService: DM_DoiTuongTuyenSinhService,
-    private _DM_DoiTuongUuTienService: DM_DoiTuongUuTienService,
     private _DM_DoiTuongDaoTaoService: DM_DoiTuongDaoTaoService,
-    private _DM_HocLucService: DM_HocLucService,
-    private _DM_HanhKiemService: DM_HanhKiemService,
   ) {
     super(injector);
   }

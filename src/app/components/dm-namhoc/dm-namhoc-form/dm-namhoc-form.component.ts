@@ -24,7 +24,7 @@ export class DM_NamHocFormComponent extends FormBase implements OnInit {
       new MaskControlSchema({
         field: 'nam',
         label: 'Năm học',
-        // autoFormat: false,
+        autoFormat: false,
         required: true,
         width: 6
       }),

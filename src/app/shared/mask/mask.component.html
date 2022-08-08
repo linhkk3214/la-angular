@@ -1,8 +1,7 @@
 <div class="p-inputgroup">
   <span *ngIf="control.prefix" class="p-inputgroup-addon">{{control.prefix}}</span>
-  <input *ngIf="control.autoFormat" type="text" pInputText [placeholder]="control.placeholder"
-    [attr.disabled]="control.disabled ? true : null" [mask]="maskFormat" [thousandSeparator]="thousandSeperator"
-    [class]="inputStyleClass" [(ngModel)]="value" (focus)="handleFocus()" (blur)="handleBlur()"
-    (change)="handleChangedValue()" />
+  <input type="text" pInputText [placeholder]="control.placeholder" [attr.disabled]="control.disabled ? true : null"
+    [mask]="maskFormat" [thousandSeparator]="thousandSeperator" [class]="inputStyleClass" [(ngModel)]="value"
+    (focus)="handleFocus()" (blur)="handleBlur()" (change)="handleChangedValue()" />
   <span *ngIf="control.suffix" class="p-inputgroup-addon">({{control.suffix}})</span>
 </div>
