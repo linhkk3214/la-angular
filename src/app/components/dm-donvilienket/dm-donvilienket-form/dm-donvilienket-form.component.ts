@@ -56,7 +56,7 @@ export class DM_DonViLienKetFormComponent extends FormBase implements OnInit {
       new TextAreaControlSchema({
         field: 'ghiChu',
         label: 'Ghi chú ',
-        width: 12
+        width: 6
       }),
       new FileControlSchema({
         field: 'dsTaiLieu',

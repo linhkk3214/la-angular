@@ -60,37 +60,37 @@ export class DotCapNhatHoSoNguoiHocFormComponent extends FormBase implements OnI
         width: 12
       }),
       new DropdownControlSchema({
-        field: 'idHeDaoTao',
+        field: 'idHeDaoTaos',
         label: 'Hệ đào tạo',
         service: this._dm_HeDaoTaoService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idKhoaHoc',
+        field: 'idKhoaHocs',
         label: 'Khóa học',
         service: this._dm_KhoaHocService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idKhoaVien',
+        field: 'idKhoaViens',
         label: 'Khoa/Viện',
         service: this._dm_KhoaVienService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idNganh',
+        field: 'idNganhs',
         label: 'Ngành',
         service: this._dm_NganhService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'idLopHanhChinh',
+        field: 'idLopHanhChinhs',
         label: 'Lớp hành chính',
         service: this._dm_LopHanhChinhService,
         multiple: true
       }),
       new DropdownControlSchema({
-        field: 'truongDuocSua',
+        field: 'truongDuocSuas',
         label: 'Trường được phép sửa',
         dataSource: DataSourceTruongDuocSua,
         multiple: true

@@ -274,12 +274,12 @@ export class DanhSachTrungTuyenFormComponent extends FormBase implements OnInit 
         label: 'Thứ tự nguyện vọng'
       }),
       new DropdownControlSchema({
-        field: 'hocLucTHPT',
+        field: 'idHocLucTHPT',
         label: 'Học lực THPT',
         service: this._DM_HocLucService,
       }),
       new DropdownControlSchema({
-        field: 'hanhKiemTHPT',
+        field: 'idHanhKiemTHPT',
         label: 'Hạnh kiểm',
         service: this._DM_HanhKiemService,
       }),

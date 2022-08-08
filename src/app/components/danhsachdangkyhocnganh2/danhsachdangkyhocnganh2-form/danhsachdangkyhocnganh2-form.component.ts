@@ -67,12 +67,20 @@ export class DanhSachDangKyHocNganh2FormComponent extends FormBase implements On
         field: 'idNganh',
         label: 'Ngành',
         service: this._dm_CTĐTService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        },
         disabled: true
       }),
       new DropdownControlSchema({
         field: 'idNganhDangKy',
         label: 'Ngành đăng ký',
-        service: this._dm_CTĐTService
+        service: this._dm_CTĐTService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: item => {
+          return `${item.soCTDT} - ${item.ten}`;
+        },
       }),
     ];
   }

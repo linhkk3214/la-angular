@@ -60,13 +60,13 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
       new ColumnSchema({
         field: 'hoVaTen',
         label: 'Họ và tên',
-        width: '170px'
+        // width: '170px'
       }),
       new ColumnSchema({
         field: 'ngaySinh',
         label: 'Ngày sinh',
         dataType: DataType.date,
-        width: '107px'
+        // width: '107px'
       }),
       new ColumnSchema({
         field: 'gioiTinh',
@@ -80,7 +80,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
         service: this._dm_ChuongTrinhDaoTaoService,
         fieldPlus: 'soCTDT',
         funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
-        width: '200px'
+        // width: '200px'
       }),
       new ColumnSchema({
         field: 'tongDiem',
@@ -97,7 +97,7 @@ export class DanhSachTrungTuyenComponent extends ListBase implements OnInit {
         field: 'idDotNhapHoc',
         label: 'Đợt nhập học',
         service: this._dm_DotNhapHocService,
-        width: '150px'
+        // width: '150px'
       }),
       new ColumnSchema({
         field: 'idDoiTuongDaoTao',
