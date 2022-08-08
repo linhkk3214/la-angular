@@ -22,7 +22,7 @@ export class DM_CoSoDaoTaoComponent extends ListBase implements OnInit {
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
-        label: 'Mã loại',
+        label: 'Mã',
         width: '300px',
         fullTextSearch: true
       }),

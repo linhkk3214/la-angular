@@ -44,6 +44,7 @@ export class HoSoNguoiHoc_ThongTinTuyenSinhComponent extends FormBase implements
     private _dm_GioiTinhService: DM_GioiTinhService,
     private _addressService: AddressService,
     private _DM_NganhService: DM_NganhService,
+    private _dm_ChuongTrinhDaoTaoService: DM_ChuongTrinhDaoTaoService,
     private _DM_KhuVucService: DM_KhuVucService,
     private _DM_HtTuyenSinhService: DM_HtTuyenSinhService,
     private _DM_DoiTuongTuyenSinhService: DM_DoiTuongTuyenSinhService,
@@ -86,13 +87,17 @@ export class HoSoNguoiHoc_ThongTinTuyenSinhComponent extends FormBase implements
       new DropdownControlSchema({
         field: 'idNganhDangKy',
         label: 'Ngành đăng ký',
-        service: this._DM_NganhService,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
         required: true
       }),
       new DropdownControlSchema({
         field: 'idNganhTrungTuyen',
         label: 'Ngành trúng tuyển',
-        service: this._DM_NganhService,
+        service: this._dm_ChuongTrinhDaoTaoService,
+        fieldPlus: 'soCTDT',
+        funcGetLabel: (item) => `${item.soCTDT} - ${item.ten}`,
         required: true
       }),
       new MaskControlSchema({

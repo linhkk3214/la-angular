@@ -29,7 +29,7 @@ export class DM_DoiTuongDaoTaoComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'ten',
-        label: 'Tên hệ',
+        label: 'Tên đối tượng',
         fullTextSearch: true
       }),
       new ColumnSchema({

@@ -41,7 +41,7 @@ export class DanhMucDonViTaiTroComponent extends ListBase implements OnInit {
     this.setting.objectName = 'đơn vị tài trợ';
     this.setting.service = this._danhMucDonViTaiTroService;
     this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 700;
+    this.setting.popupSize.height = 500;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',

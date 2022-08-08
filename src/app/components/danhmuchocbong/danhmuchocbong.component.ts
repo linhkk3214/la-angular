@@ -40,7 +40,7 @@ export class DanhMucHocBongComponent extends ListBase implements OnInit {
     this.setting.objectName = 'học bổng';
     this.setting.service = this._danhMucHocBongService;
     this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 700;
+    this.setting.popupSize.height = 500;
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
@@ -48,7 +48,7 @@ export class DanhMucHocBongComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'ten',
-        label: 'Mã',
+        label: 'Tên',
       }),
       new ColumnSchema({
         field: 'idDonViTaiTro',

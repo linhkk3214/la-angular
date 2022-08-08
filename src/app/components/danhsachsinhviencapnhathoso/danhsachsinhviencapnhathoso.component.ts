@@ -46,7 +46,7 @@ export class DanhSachSinhVienCapNhatHoSoComponent extends ListBase implements On
   }
 
   override ngOnInit(): void {
-    this.setting.objectName = 'sinh viên cập nhật hồ sơ';
+    this.setting.objectName = 'người học cập nhật hồ sơ';
     this.setting.service = this._danhSachSinhVienCapNhatHoSoService;
     this.setting.widthFunctionColumn = '14.5rem'
     this.setting.hiddenAdd = true

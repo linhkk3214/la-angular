@@ -22,7 +22,7 @@ export class DotCapNhatHoSoNguoiHocComponent extends ListBase implements OnInit 
   override ngOnInit(): void {
     this.setting.objectName = 'đợt cập nhật hồ sơ người học';
     this.setting.popupSize.width = 1100;
-    this.setting.popupSize.height = 650;
+    this.setting.popupSize.height = 800;
     this.setting.service = this._dotcapnhathosonguoihocService;
     this.setting.cols = [
       new ColumnSchema({

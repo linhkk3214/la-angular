@@ -82,7 +82,7 @@ export class DanhSachLopHanhChinhFormComponent extends FormBase implements OnIni
 
       new DropdownControlSchema({
         field: 'idGVCN',
-        label: 'Giáo viên chủ nhiệm',
+        label: 'Giảng viên chủ nhiệm',
         service: this._HoSoCanBoService,
         funcGetLabel: item => {
           return `${item.ten} (${item.ma})`;

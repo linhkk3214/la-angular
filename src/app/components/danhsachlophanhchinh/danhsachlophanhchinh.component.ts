@@ -69,7 +69,7 @@ export class DanhSachLopHanhChinhComponent extends ListBase implements OnInit {
       }),
       new ColumnSchema({
         field: 'idGVCN',
-        label: 'Giáo viên chủ nhiệm',
+        label: 'Giảng viên chủ nhiệm',
         service: this._HoSoCanBoService,
         funcGetLabel: item => {
           return `${item.ten} (${item.ma})`;

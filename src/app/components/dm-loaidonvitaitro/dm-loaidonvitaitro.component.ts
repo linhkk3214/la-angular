@@ -22,7 +22,7 @@ export class DM_LoaiDonViTaiTroComponent extends ListBase implements OnInit {
     this.setting.cols = [
       new ColumnSchema({
         field: 'ma',
-        label: 'Mã loại',
+        label: 'Mã loại đơn vị',
         width: '300px',
         fullTextSearch: true
       }),

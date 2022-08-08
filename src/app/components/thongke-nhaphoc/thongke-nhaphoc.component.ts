@@ -11,7 +11,7 @@ import { DanhSachTrungTuyenService } from '../danhsachtrungtuyen/services/danhsa
 })
 export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
   xemChiTietDialogModel = new DialogModel({
-    header: 'Danh sách sinh viên trúng tuyển',
+    header: 'Danh sách thí sinh trúng tuyển',
     popupSize: new PopupSize({
       maximize: true
     })
@@ -24,7 +24,7 @@ export class ThongKe_NhapHocComponent extends ListBase implements OnInit {
   }
 
   override ngOnInit(): void {
-    this.setting.title = 'Danh sách thống kê nhập học';
+    this.setting.title = 'Thống kê nhập học theo ngành';
     this.setting.service = this._DanhSachTrungTuyenService;
     this.setting.popupSize.width = 1100;
     this.setting.popupSize.height = 700;
