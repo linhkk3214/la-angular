@@ -64,8 +64,9 @@ function deQuyReplaceValue(filters: Filter[], filter: FilterWithBinding, model: 
 function getValueFilterFromBindingFilter(sourceField: string, subField: string | number, model: any, rootModel?: any) {
   let valueFilter = null;
   const tryGetBySubField = (value) => {
-    if (!subField) return value;
-    if (isArray(value)) return value.map(q => q[subField]);
+    if (subField === null || subField === undefined || subField === '') return value;
+    // if (isArray(value)) return value.map(q => q[subField]);
+    if (isArray(value)) return value[subField];
     if (isLiteralObject(value)) return value[subField];
     return value;
   };
